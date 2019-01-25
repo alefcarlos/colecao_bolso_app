@@ -26,7 +26,7 @@ class _FancyFabState extends State<FancyFab>
   @override
   initState() {
     _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+        AnimationController(vsync: this, duration: Duration(milliseconds: 250))
           ..addListener(() {
             setState(() {});
           });
@@ -75,6 +75,7 @@ class _FancyFabState extends State<FancyFab>
   Widget addCollection() {
     return Container(
       child: FloatingActionButton(
+        heroTag: 'addCollection',
         onPressed: null,
         tooltip: 'Adicionar coleção',
         child: Icon(Icons.add),
@@ -85,6 +86,7 @@ class _FancyFabState extends State<FancyFab>
   Widget addCollectionItem() {
     return Container(
       child: FloatingActionButton(
+        heroTag: 'addCollectionItem',
         onPressed: null,
         tooltip: 'Adicionar item',
         child: Icon(Icons.image),
@@ -95,6 +97,7 @@ class _FancyFabState extends State<FancyFab>
   Widget toggle() {
     return Container(
       child: FloatingActionButton(
+        heroTag: 'collectionsMenu',
         backgroundColor: _buttonColor.value,
         onPressed: animate,
         tooltip: 'Menu',

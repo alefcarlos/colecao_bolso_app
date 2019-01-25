@@ -47,7 +47,7 @@ class CollectionsPage extends StatelessWidget {
         title: Text('Minhas coleções'),
       ),
       body: _buildDisplay(),
-      // floatingActionButton: FancyFab(),
+      floatingActionButton: FancyFab(),
     );
   }
 }
