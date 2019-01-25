@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import './widgets/collections/collections.dart';
-
-import './entities/collectionEntity.dart';
+import './pages/collections/collections.dart';
+import './data.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.orange,
       ),
-      home: Collection([CollectionEntity(1, 'Bonequinhos'), CollectionEntity(2, 'Mangás', isFav: true)]),
+      home: CollectionsPage(DataHelpers.tempData),
     );
   }
 }

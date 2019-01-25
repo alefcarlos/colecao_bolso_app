@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import './fancy_fab.dart';
 import '../../entities/collectionEntity.dart';
+import '../../helpers/navigator.dart';
+import '../collection/collection.dart';
 
-class Collection extends StatelessWidget {
+class CollectionsPage extends StatelessWidget {
   final List<CollectionEntity> collections;
 
-  Collection(this.collections);
+  CollectionsPage(this.collections);
 
   Widget _buildList() {
     return ListView.builder(
@@ -17,6 +19,7 @@ class Collection extends StatelessWidget {
   Widget _buildListTile(BuildContext context, int index) {
     var item = collections[index];
     return ListTile(
+      onTap: () => NavigatorHelpers.pushMaterialRoute(context, CollectionPage(index, item.id)),
       title: Text(item.name),
       trailing: Icon(
         item.isFav ? Icons.favorite : Icons.favorite_border,
@@ -44,7 +47,7 @@ class Collection extends StatelessWidget {
         title: Text('Minhas coleções'),
       ),
       body: _buildDisplay(),
-      floatingActionButton: FancyFab(),
+      // floatingActionButton: FancyFab(),
     );
   }
 }
