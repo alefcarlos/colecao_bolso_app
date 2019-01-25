@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import './pages/collections/collections.dart';
-import './data.dart';
+import './pages/auth/auth.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.orange,
       ),
-      home: CollectionsPage(DataHelpers.tempData),
+      home: AuthPage(),
     );
   }
 }

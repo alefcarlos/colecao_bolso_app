@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 //Based on https://medium.com/@agungsurya/create-a-simple-animated-floatingactionbutton-in-flutter-2d24f37cfbcc
 
-class FancyFab extends StatefulWidget {
+class CollectionsPageFab extends StatefulWidget {
   final Function() onPressed;
   final String tooltip;
   final IconData icon;
 
-  FancyFab({this.onPressed, this.tooltip, this.icon});
+  CollectionsPageFab({this.onPressed, this.tooltip, this.icon});
 
   @override
-  _FancyFabState createState() => _FancyFabState();
+  _CollectionsPageFabState createState() => _CollectionsPageFabState();
 }
 
-class _FancyFabState extends State<FancyFab>
+class _CollectionsPageFabState extends State<CollectionsPageFab>
     with SingleTickerProviderStateMixin {
   bool isOpened = false;
   AnimationController _animationController;

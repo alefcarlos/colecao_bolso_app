@@ -19,7 +19,7 @@ class CollectionsPage extends StatelessWidget {
   Widget _buildListTile(BuildContext context, int index) {
     var item = collections[index];
     return ListTile(
-      onTap: () => NavigatorHelpers.pushMaterialRoute(context, CollectionPage(index, item.id)),
+      onTap: () => NavigatorHelpers.push(context, CollectionPage(index, item.id)),
       title: Text(item.name),
       trailing: Icon(
         item.isFav ? Icons.favorite : Icons.favorite_border,
@@ -47,7 +47,7 @@ class CollectionsPage extends StatelessWidget {
         title: Text('Minhas coleções'),
       ),
       body: _buildDisplay(),
-      floatingActionButton: FancyFab(),
+      floatingActionButton: CollectionsPageFab(),
     );
   }
 }
