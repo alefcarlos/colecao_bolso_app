@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.orange,
       ),
-      home: Collection([CollectionEntity(id: 1, name: 'Bonequinhos', isFav: false), CollectionEntity(id:2, name: 'Mangás', isFav: true)]),
+      home: Collection([CollectionEntity(1, 'Bonequinhos'), CollectionEntity(2, 'Mangás', isFav: true)]),
     );
   }
 }

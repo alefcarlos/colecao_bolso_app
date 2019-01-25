@@ -1,7 +1,7 @@
 class CollectionEntity {
   int id;
   String name;
-  bool isFav;
+  bool isFav = false;
 
-  CollectionEntity({this.id, this.name, this.isFav});
+  CollectionEntity(this.id, this.name, {this.isFav = false});
 }
