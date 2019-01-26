@@ -22,9 +22,15 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  _createCollection(CollectionEntity entity) {
+    setState(() {
+      tempData.add(entity);
+    });
+  }
+
   _MyAppState() {
     final router = new Router();
-    Routes.configureRoutes(router, tempData, _deleteCollection);
+    Routes.configureRoutes(router, tempData, _deleteCollection, _createCollection);
     Application.router = router;
   }
 

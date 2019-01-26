@@ -11,10 +11,10 @@ class Routes {
   static String createCollection = '/collection/create';
 
   static void configureRoutes(Router router, List<CollectionEntity> collections,
-      Function deleteCollection) {
+      Function deleteCollectionFunc, Function createCollectionFunc) {
     var rootHandler = Handler(
         handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-      return CollectionsPage(collections, deleteCollection);
+      return CollectionsPage(collections, deleteCollectionFunc);
     });
 
     var collectionItemsHandler = new Handler(
@@ -27,7 +27,7 @@ class Routes {
     var createCollectionHandler = Handler(
           handlerFunc: (BuildContext context, Map<String, List<String>> params) {
 
-      return CreateCollectionPage();
+      return CreateCollectionPage(createCollectionFunc);
     });
 
     router.notFoundHandler = new Handler(

@@ -50,7 +50,7 @@ class CollectionsPage extends StatelessWidget {
       onTap: () => Application.router.navigateTo(context, '/collection/$index',
           transition: TransitionType.inFromRight),
       title: Text(item.name),
-      subtitle: Text('10 de 3'),
+      subtitle: Text('10 de ${item.itemCount}'),
       leading: Icon(
         item.isFav ? Icons.favorite : Icons.favorite_border,
         color: item.isFav ? Colors.red : null,

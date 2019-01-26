@@ -78,7 +78,10 @@ class _CollectionsPageFabState extends State<CollectionsPageFab>
     return Container(
       child: FloatingActionButton(
         heroTag: 'addCollection',
-        onPressed: () => Application.router.navigateTo(context, Routes.createCollection),
+        onPressed: () {
+          animate();
+          Application.router.navigateTo(context, Routes.createCollection);
+        },
         tooltip: 'Adicionar coleção',
         child: Icon(Icons.add),
       ),
