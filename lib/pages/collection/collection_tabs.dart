@@ -8,9 +8,8 @@ import './../../entities/collectionEntity.dart';
 class CollectionPage extends StatelessWidget {
   final List<CollectionEntity> collections;
   final int index;
-  final int collectionId;
 
-  CollectionPage(this.collections, this.index, this.collectionId);
+  CollectionPage(this.collections, this.index);
 
   @override
   Widget build(BuildContext context) {

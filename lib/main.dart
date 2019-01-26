@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './pages/auth/auth.dart';
+import './pages/collection/collection_tabs.dart';
 import './pages/collections/collections.dart';
 import './entities/collectionEntity.dart';
 
@@ -42,7 +42,19 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/': (BuildContext context) =>
             CollectionsPage(tempData, _deleteCollection),
-        // '/collections/items': (BuildContext context) => CollectionPage(DataHelpers.tempData, null),
+      },
+      onGenerateRoute: (RouteSettings settings) {
+        final pathElements = settings.name.split('/');
+        if (pathElements[0] != '') return null;
+
+        if (pathElements[1] == 'collections') {
+          final index = int.parse(pathElements[2]);
+          return MaterialPageRoute<Widget>(
+              builder: (BuildContext context) =>
+                  CollectionPage(tempData, index));
+        }
+
+        return null;
       },
     );
   }

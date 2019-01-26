@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import './fancy_fab.dart';
 import '../../entities/collectionEntity.dart';
 import '../../helpers/navigator.dart';
-import '../collection/collection_tabs.dart';
 
 class CollectionsPage extends StatelessWidget {
   final List<CollectionEntity> collections;
@@ -22,7 +21,7 @@ class CollectionsPage extends StatelessWidget {
 
     return ListTile(
       onTap: () =>
-          NavigatorHelpers.push(context, CollectionPage(collections, index, item.id)),
+          NavigatorHelpers.pushNamed(context, '/collections/$index/items'),
       title: Text(item.name),
       subtitle: Text('10 de 3'),
       leading: Icon(

@@ -17,4 +17,12 @@ class NavigatorHelpers {
           builder: (context) => page,
         ));
   }
+
+  static Future<T> pushNamed<T extends Widget>(
+      BuildContext context, String route,
+      {replace = false}) {
+    if (replace) return Navigator.pushReplacementNamed(context, route);
+
+    return Navigator.pushNamed(context, route);
+  }
 }
