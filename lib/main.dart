@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import './pages/collection/collection_tabs.dart';
-import './pages/collections/collections.dart';
 import './entities/collectionEntity.dart';
+import './config/application.dart';
+import './config/routes.dart';
+import 'package:fluro/fluro.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,6 +20,12 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       tempData.removeAt(index);
     });
+  }
+
+  _MyAppState() {
+    final router = new Router();
+    Routes.configureRoutes(router, tempData, _deleteCollection);
+    Application.router = router;
   }
 
   // This widget is the root of your application.
@@ -39,23 +46,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.orange,
       ),
       // home: AuthPage(),
-      routes: {
-        '/': (BuildContext context) =>
-            CollectionsPage(tempData, _deleteCollection),
-      },
-      onGenerateRoute: (RouteSettings settings) {
-        final pathElements = settings.name.split('/');
-        if (pathElements[0] != '') return null;
-
-        if (pathElements[1] == 'collections') {
-          final index = int.parse(pathElements[2]);
-          return MaterialPageRoute<Widget>(
-              builder: (BuildContext context) =>
-                  CollectionPage(tempData, index));
-        }
-
-        return null;
-      },
+      onGenerateRoute: Application.router.generator,
     );
   }
 }
