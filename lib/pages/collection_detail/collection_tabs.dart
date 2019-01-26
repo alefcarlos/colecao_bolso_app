@@ -4,7 +4,6 @@ import './collection_list.dart';
 import './collection_repetead.dart';
 import './../../entities/collectionEntity.dart';
 
-
 class CollectionPage extends StatelessWidget {
   final List<CollectionEntity> collections;
   final int index;
@@ -24,25 +23,29 @@ class CollectionPage extends StatelessWidget {
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(
-                  icon: Icon(Icons.view_list),
+                  icon: Icon(Icons.view_list,
+                      color: Theme.of(context).primaryIconTheme.color),
                   text: 'Itens',
                 ),
                 Tab(
-                  icon: Icon(Icons.playlist_add_check),
+                  icon: Icon(Icons.playlist_add_check,
+                      color: Theme.of(context).primaryIconTheme.color),
                   text: 'Repetidos',
                 ),
                 Tab(
-                  icon: Icon(Icons.favorite_border),
+                  icon: Icon(Icons.favorite_border, color: Colors.red),
                   text: 'Favoritos',
                 )
               ],
             ),
           ),
-          body: TabBarView(children: <Widget>[
-            CollectionListItemsView(),
-            CollectionRepeatedItemsView(),
-            CollectionFavoriteItemsView(),
-          ],),
+          body: TabBarView(
+            children: <Widget>[
+              CollectionListItemsView(),
+              CollectionRepeatedItemsView(),
+              CollectionFavoriteItemsView(),
+            ],
+          ),
         ),
       ),
     );

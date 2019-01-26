@@ -58,12 +58,13 @@ class CollectionsPage extends StatelessWidget {
       trailing: ButtonBar(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          FlatButton(
-            onPressed: () => _showConfirmDeletion(context, index),
-            child: Icon(
+          IconButton(
+            icon: Icon(
               Icons.delete_forever,
               color: Colors.red,
             ),
+            tooltip: 'Excluir coleção',
+            onPressed: () => _showConfirmDeletion(context, index),
           )
         ],
       ),

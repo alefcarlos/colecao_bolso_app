@@ -30,7 +30,8 @@ class _MyAppState extends State<MyApp> {
 
   _MyAppState() {
     final router = new Router();
-    Routes.configureRoutes(router, tempData, _deleteCollection, _createCollection);
+    Routes.configureRoutes(
+        router, tempData, _deleteCollection, _createCollection);
     Application.router = router;
   }
 
@@ -50,6 +51,14 @@ class _MyAppState extends State<MyApp> {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.orange,
+        primaryTextTheme: TextTheme(
+          title: TextStyle(color: Colors.white),
+        ),
+        primaryIconTheme: IconThemeData(color: Colors.white),
+        tabBarTheme: TabBarTheme(
+          labelColor: Colors.white
+        ),
+        accentColor: Colors.deepOrangeAccent,
       ),
       // home: AuthPage(),
       onGenerateRoute: Application.router.generator,
