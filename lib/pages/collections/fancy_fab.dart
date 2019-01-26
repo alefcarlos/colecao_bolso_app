@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../config/application.dart';
+import '../../config/routes.dart';
 
 //Based on https://medium.com/@agungsurya/create-a-simple-animated-floatingactionbutton-in-flutter-2d24f37cfbcc
 
@@ -76,7 +78,7 @@ class _CollectionsPageFabState extends State<CollectionsPageFab>
     return Container(
       child: FloatingActionButton(
         heroTag: 'addCollection',
-        onPressed: null,
+        onPressed: () => Application.router.navigateTo(context, Routes.createCollection),
         tooltip: 'Adicionar coleção',
         child: Icon(Icons.add),
       ),
