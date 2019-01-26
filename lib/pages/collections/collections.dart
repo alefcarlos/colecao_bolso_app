@@ -17,11 +17,38 @@ class CollectionsPage extends StatelessWidget {
     );
   }
 
+  _showConfirmDeletion(BuildContext context, int index) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Confirma a exclusão desssa coleção ?'),
+          content: Text(
+              'A coleção assim como todos os seus itens serão excluídos permanentimente!'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Cancelar'),
+              onPressed: () => Navigator.pop(context),
+            ),
+            FlatButton(
+              child: Text('Excluir'),
+              onPressed: () {
+                deleteCollection(index);
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
   Widget _buildListTile(BuildContext context, int index) {
     var item = collections[index];
 
     return ListTile(
-      onTap: () => Application.router.navigateTo(context, '/collection/$index', transition: TransitionType.inFromRight),
+      onTap: () => Application.router.navigateTo(context, '/collection/$index',
+          transition: TransitionType.inFromRight),
       title: Text(item.name),
       subtitle: Text('10 de 3'),
       leading: Icon(
@@ -32,7 +59,7 @@ class CollectionsPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           FlatButton(
-            onPressed: () => deleteCollection(index),
+            onPressed: () => _showConfirmDeletion(context, index),
             child: Icon(
               Icons.delete_forever,
               color: Colors.red,
