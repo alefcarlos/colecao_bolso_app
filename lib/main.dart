@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
 import './pages/auth/auth.dart';
+import './pages/collections/collections.dart';
+import './entities/collectionEntity.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final List<CollectionEntity> tempData = [
+    CollectionEntity(1, 'Bonequinhos'),
+    CollectionEntity(2, 'Mangás', isFav: true)
+  ];
+
+  _deleteCollection(index) {
+    setState(() {
+      tempData.removeAt(index);
+    });
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -21,7 +38,12 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.orange,
       ),
-      home: AuthPage(),
+      // home: AuthPage(),
+      routes: {
+        '/': (BuildContext context) =>
+            CollectionsPage(tempData, _deleteCollection),
+        // '/collections/items': (BuildContext context) => CollectionPage(DataHelpers.tempData, null),
+      },
     );
   }
 }

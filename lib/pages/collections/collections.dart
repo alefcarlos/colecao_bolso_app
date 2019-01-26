@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import './fancy_fab.dart';
 import '../../entities/collectionEntity.dart';
 import '../../helpers/navigator.dart';
-import '../collection/collection.dart';
+import '../collection/collection_tabs.dart';
 
 class CollectionsPage extends StatelessWidget {
   final List<CollectionEntity> collections;
+  final Function deleteCollection;
 
-  CollectionsPage(this.collections);
+  CollectionsPage(this.collections, this.deleteCollection);
 
   Widget _buildList() {
     return ListView.builder(
@@ -18,12 +19,27 @@ class CollectionsPage extends StatelessWidget {
 
   Widget _buildListTile(BuildContext context, int index) {
     var item = collections[index];
+
     return ListTile(
-      onTap: () => NavigatorHelpers.push(context, CollectionPage(index, item.id)),
+      onTap: () =>
+          NavigatorHelpers.push(context, CollectionPage(collections, index, item.id)),
       title: Text(item.name),
-      trailing: Icon(
+      subtitle: Text('10 de 3'),
+      leading: Icon(
         item.isFav ? Icons.favorite : Icons.favorite_border,
         color: item.isFav ? Colors.red : null,
+      ),
+      trailing: ButtonBar(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          FlatButton(
+            onPressed: () => deleteCollection(index),
+            child: Icon(
+              Icons.delete_forever,
+              color: Colors.red,
+            ),
+          )
+        ],
       ),
     );
   }
