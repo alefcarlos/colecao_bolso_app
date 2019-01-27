@@ -20,5 +20,5 @@ class CollectionModel extends Model {
   }
 
   static CollectionModel of(BuildContext context) =>
-      ScopedModel.of<CollectionModel>(context);
+      ScopedModel.of<CollectionModel>(context, rebuildOnChange: true);
 }

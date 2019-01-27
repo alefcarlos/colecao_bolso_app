@@ -1,20 +1,21 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 import './fancy_fab.dart';
 import '../../scoped_models/collection.dart';
 import '../../config/application.dart';
 import '../../models/collection.dart';
-class CollectionsPage extends StatelessWidget {
 
+class CollectionsPage extends StatelessWidget {
   Widget _buildList(List<Collection> collections, Function deleteCollection) {
     return ListView.builder(
-      itemBuilder: (context, index) => _buildListTile(collections, context, index, deleteCollection),
+      itemBuilder: (context, index) =>
+          _buildListTile(collections, context, index, deleteCollection),
       itemCount: collections.length,
     );
   }
 
-  _showConfirmDeletion(BuildContext context, int index, Function deleteCollection) {
+  _showConfirmDeletion(
+      BuildContext context, int index, Function deleteCollection) {
     showDialog(
       context: context,
       builder: (context) {
@@ -54,7 +55,8 @@ class CollectionsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildButtonBar(BuildContext context, int index, Function deleteCollection) {
+  Widget _buildButtonBar(
+      BuildContext context, int index, Function deleteCollection) {
     return ButtonBar(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -64,13 +66,15 @@ class CollectionsPage extends StatelessWidget {
             color: Colors.red,
           ),
           tooltip: 'Excluir coleção',
-          onPressed: () => _showConfirmDeletion(context, index, deleteCollection),
+          onPressed: () =>
+              _showConfirmDeletion(context, index, deleteCollection),
         )
       ],
     );
   }
 
-  Widget _buildListTile(List<Collection> collections, BuildContext context, int index, Function deleteCollection) {
+  Widget _buildListTile(List<Collection> collections, BuildContext context,
+      int index, Function deleteCollection) {
     var item = collections[index];
 
     return Dismissible(
@@ -108,13 +112,12 @@ class CollectionsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDisplay() {
-    return ScopedModelDescendant<CollectionModel>(
-      builder: (BuildContext context, Widget child, CollectionModel model) {
-        var collections = model.collections;
-        return (collections.length > 0) ? _buildList(collections, model.deleteCollection) : _buildEmpty();
-      },
-    );
+  Widget _buildDisplay(BuildContext context) {
+    var model = CollectionModel.of(context);
+    var collections = model.collections;
+    return (collections.length > 0)
+        ? _buildList(collections, model.deleteCollection)
+        : _buildEmpty();
   }
 
   @override
@@ -125,7 +128,7 @@ class CollectionsPage extends StatelessWidget {
         // the App.build method, and use it to set our appbar title.
         title: Text('Minhas coleções'),
       ),
-      body: _buildDisplay(),
+      body: _buildDisplay(context),
       floatingActionButton: CollectionsPageFab(),
     );
   }

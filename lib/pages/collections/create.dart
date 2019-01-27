@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/application.dart';
 import '../../models/collection.dart';
-import 'package:scoped_model/scoped_model.dart';
 import '../../scoped_models/collection.dart';
 
 class CreateCollectionPage extends StatefulWidget {
@@ -21,15 +20,13 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
     Application.router.pop(context);
   }
 
-  Widget _buildSubmitButton() {
-    return ScopedModelDescendant<CollectionModel>(
-      builder: (BuildContext context, Widget child, CollectionModel model) {
-        return RaisedButton(
-          color: Theme.of(context).accentColor,
-          onPressed: () => _addCollection(model.addCollection),
-          child: Text('Salvar'),
-        );
-      },
+  Widget _buildSubmitButton(BuildContext context) {
+    var model = CollectionModel.of(context);
+
+    return RaisedButton(
+      color: Theme.of(context).accentColor,
+      onPressed: () => _addCollection(model.addCollection),
+      child: Text('Salvar'),
     );
   }
 
@@ -84,7 +81,7 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
                 SizedBox(
                   height: 10.0,
                 ),
-                _buildSubmitButton()
+                _buildSubmitButton(context)
               ],
             ),
           ),

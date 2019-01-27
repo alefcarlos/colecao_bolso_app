@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
-import './collection_favorite.dart';
-import './collection_list.dart';
-import './collection_repetead.dart';
+import './collection_favorite_items.dart';
+import './collection_items.dart';
+import './collection_repetead_items.dart';
+
+import '../../models/collection_item.dart';
+
 import '../../scoped_models/collection.dart';
+import '../../scoped_models/collection_item.dart';
 
 class CollectionPage extends StatelessWidget {
   final int index;
@@ -12,15 +15,18 @@ class CollectionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var collections = CollectionModel.of(context).collections;
+    var collection = collections[index];
+
+    var collectionItemModel = CollectionItemModel.of(context);
+    collectionItemModel.addCollectionItem(collection.id, CollectionItem(number: '1'));
+
     return Container(
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            title: ScopedModelDescendant<CollectionModel>(builder:
-                (BuildContext context, Widget child, CollectionModel model) {
-              return Text(model.collections[index].name);
-            }),
+            title: Text(collection.name),
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(
