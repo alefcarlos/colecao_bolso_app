@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
-import '../../scoped_models/collection_item.dart';
 import '../../models/collection_item.dart';
 
 class CollectionListItemsView extends StatelessWidget {
-  Widget _buildList(List<CollectionItem> items) {
-    return ListView.builder(
-      itemBuilder: (context, index) => _buildListTile(items, context, index),
-      itemCount: items.length,
+  final List<CollectionItem> items;
+
+  CollectionListItemsView(this.items);
+
+  Widget _buildList() {
+    return Container(
+      margin: EdgeInsets.only(top: 7.0),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+        ),
+        itemBuilder: (context, index) => _buildListTile(context, index),
+        itemCount: items.length,
+      ),
     );
   }
 
@@ -17,27 +26,30 @@ class CollectionListItemsView extends StatelessWidget {
   }
 
   Widget _buildListTile(
-    List<CollectionItem> items,
     BuildContext context,
     int index,
   ) {
     var item = items[index];
 
-    return Column(
-      children: <Widget>[
-        ListTile(
-          title: Text(item.number),
-        ),
-        Divider()
-      ],
+    return Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            title: Text('#${item.number}'),
+            subtitle: Text('Tenho ${item.quantity}'),
+            trailing: Icon(
+              item.isFav ? Icons.favorite : Icons.favorite_border,
+              color: item.isFav ? Colors.red : null,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildDisplay(BuildContext context) {
-    var model = CollectionItemModel.of(context);
-
-    var items = model.collectionsItems;
-    return (items.length > 0) ? _buildList(items) : _buildEmpty();
+    return (items.length > 0) ? _buildList() : _buildEmpty();
   }
 
   @override

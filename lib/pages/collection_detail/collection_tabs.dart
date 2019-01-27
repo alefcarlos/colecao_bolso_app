@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import './collection_favorite_items.dart';
 import './collection_items.dart';
 import './collection_repetead_items.dart';
-
-import '../../models/collection_item.dart';
-
 import '../../scoped_models/collection.dart';
 import '../../scoped_models/collection_item.dart';
 
@@ -15,11 +12,10 @@ class CollectionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var collections = CollectionModel.of(context).collections;
-    var collection = collections[index];
-
+    var collectionModel = CollectionModel.of(context);
     var collectionItemModel = CollectionItemModel.of(context);
-    collectionItemModel.addCollectionItem(collection.id, CollectionItem(number: '1'));
+
+    var collection = collectionModel.collections[index];
 
     return Container(
       child: DefaultTabController(
@@ -48,9 +44,9 @@ class CollectionPage extends StatelessWidget {
           ),
           body: TabBarView(
             children: <Widget>[
-              CollectionListItemsView(),
-              CollectionRepeatedItemsView(),
-              CollectionFavoriteItemsView(),
+              CollectionListItemsView(collectionItemModel.getItems(collection.id)),
+              CollectionRepeatedItemsView(collectionItemModel.getRepeatedItems(collection.id)),
+              CollectionFavoriteItemsView(collectionItemModel.getFavItems(collection.id)),
             ],
           ),
         ),
