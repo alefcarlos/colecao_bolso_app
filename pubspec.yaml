@@ -26,6 +26,7 @@ dependencies:
   scoped_model: '^1.0.1'
   flutter_slidable: ^0.4.9
   shimmer: ^1.0.0
+  transparent_image: ^0.1.0
 
 dev_dependencies:
   flutter_test:

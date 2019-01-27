@@ -2,11 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../../scoped_models/collection_item.dart';
 import '../../models/collection_item.dart';
+import '../../helpers/shimmers.dart' as Shimmers;
 
-class CollectionListItemsView extends StatelessWidget {
-  final int collectionId;
+class CollectionListItemsView extends StatefulWidget {
+    final int collectionId;
+  final CollectionItemModel collectionItemModel;
 
-  CollectionListItemsView(this.collectionId);
+  CollectionListItemsView(this.collectionId, this.collectionItemModel);
+
+  _CollectionListItemsViewState createState() =>      _CollectionListItemsViewState();
+}
+
+class _CollectionListItemsViewState extends State<CollectionListItemsView>{
+  @override
+  void initState() {
+    widget.collectionItemModel.fetch(widget.collectionId);
+    super.initState();
+  }
 
   Widget _buildList(List<CollectionItem> items) {
     return Container(
@@ -43,7 +55,7 @@ class CollectionListItemsView extends StatelessWidget {
               title: Text('#${item.number}'),
               subtitle: Text('Tenho ${item.quantity}'),
               trailing: IconButton(
-                onPressed: () => model.toggleFav(collectionId, index),
+                onPressed: () => model.toggleFav(widget.collectionId, index),
                 icon: Icon(
                   item.isFav ? Icons.favorite : Icons.favorite_border,
                   color: item.isFav ? Colors.red : null,
@@ -56,10 +68,24 @@ class CollectionListItemsView extends StatelessWidget {
     );
   }
 
-  Widget _buildDisplay(BuildContext context) {
-    var data = CollectionItemModel.of(context).getItems(collectionId);
 
-    return (data.length > 0) ? _buildList(data) : _buildEmpty();
+      Widget _buildDisplay(BuildContext context) {
+    return ScopedModelDescendant(
+      builder: (BuildContext context, Widget child, CollectionItemModel model) {
+        Widget content = _buildEmpty();
+
+        if (model.collectionsItems.length > 0 && !model.isLoading) {
+          var data = model.getItems(widget.collectionId);
+          content = _buildList(data);
+        } else if (model.isLoading) {
+          content = Shimmers.listView(context);
+        }
+        return RefreshIndicator(
+          child: content,
+          onRefresh: () => model.fetch(widget.collectionId),
+        );
+      },
+    );
   }
 
   @override

@@ -1,38 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+import '../../scoped_models/collection_item.dart';
+import '../../helpers/shimmers.dart' as Shimmers;
 import '../../models/collection_item.dart';
 
-class CollectionRepeatedItemsView extends StatelessWidget {
-  final List<CollectionItem> items;
+class CollectionRepeatedItemsView extends StatefulWidget {
+  final int collectionId;
+  final CollectionItemModel collectionItemModel;
 
-  CollectionRepeatedItemsView(this.items);
+  CollectionRepeatedItemsView(this.collectionId, this.collectionItemModel);
 
-  Widget _buildList() {
+  _CollectionRepeatedItemsViewState createState() =>
+      _CollectionRepeatedItemsViewState();
+}
+
+class _CollectionRepeatedItemsViewState
+    extends State<CollectionRepeatedItemsView> {
+  @override
+  void initState() {
+    widget.collectionItemModel.fetch(widget.collectionId);
+    super.initState();
+  }
+
+  Widget _buildList(List<CollectionItem> data) {
     return Container(
       margin: EdgeInsets.only(top: 7.0),
       child: ListView.builder(
-        itemBuilder: (context, index) => _buildListTile(context, index),
-        itemCount: items.length,
+        itemBuilder: (context, index) => _buildListTile(data, context, index),
+        itemCount: data.length,
       ),
     );
   }
 
   Widget _buildEmpty() {
     return Center(
-      child: Text('Ainda não há nenhum itens repetidos.'),
+      child: Text('Que sorte! Nenhum item repetido, heim ?'),
     );
   }
 
   Widget _buildListTile(
+    List<CollectionItem> data,
     BuildContext context,
     int index,
   ) {
-    var item = items[index];
+    var item = data[index];
 
     return Column(
       children: [
         ListTile(
-          leading:
-              CircleAvatar(backgroundImage: AssetImage('assets/food.jpg')),
+          leading: CircleAvatar(backgroundImage: AssetImage('assets/food.jpg')),
           title: Text('#${item.number}'),
           subtitle: Text('Tenho ${item.quantity}'),
           trailing: Icon(
@@ -45,8 +61,23 @@ class CollectionRepeatedItemsView extends StatelessWidget {
     );
   }
 
-  Widget _buildDisplay(BuildContext context) {
-    return (items.length > 0) ? _buildList() : _buildEmpty();
+    Widget _buildDisplay(BuildContext context) {
+    return ScopedModelDescendant(
+      builder: (BuildContext context, Widget child, CollectionItemModel model) {
+        Widget content = _buildEmpty();
+
+        if (model.collectionsItems.length > 0 && !model.isLoading) {
+          var data = model.getRepeatedItems(widget.collectionId);
+          content = _buildList(data);
+        } else if (model.isLoading) {
+          content = Shimmers.listView(context);
+        }
+        return RefreshIndicator(
+          child: content,
+          onRefresh: () => model.fetch(widget.collectionId),
+        );
+      },
+    );
   }
 
   @override

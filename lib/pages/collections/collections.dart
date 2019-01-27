@@ -100,11 +100,9 @@ class _CollectionsPageState extends State<CollectionsPage> {
       ],
       secondaryActions: <Widget>[
         IconSlideAction(
-          caption: 'Excluir coleção',
-          color: Colors.red,
-          icon: Icons.delete_forever,
-          onTap: () => null,
-        ),
+            caption: 'Excluir coleção',
+            color: Colors.red,
+            icon: Icons.delete_forever),
       ],
     );
   }
@@ -125,7 +123,10 @@ class _CollectionsPageState extends State<CollectionsPage> {
         } else if (model.isLoading) {
           content = Shimmers.listView(context);
         }
-        return content;
+        return RefreshIndicator(
+          child: content,
+          onRefresh: model.fetch,
+        );
       },
     );
   }
@@ -133,7 +134,6 @@ class _CollectionsPageState extends State<CollectionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.

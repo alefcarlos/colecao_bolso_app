@@ -1,14 +1,10 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
 import '../models/collection_item.dart';
+import './loading_model.dart';
 
-class CollectionItemModel extends Model {
-  List<CollectionItem> _data = [
-    CollectionItem(collectionId: 1, isFav: true, number: "1", quantity: 5),
-    CollectionItem(collectionId: 1, isFav: false, number: "2", quantity: 1),
-    CollectionItem(collectionId: 1, isFav: false, number: "3", quantity: 3),
-    CollectionItem(collectionId: 1, isFav: true, number: "4", quantity: 1),
-  ];
+class CollectionItemModel extends LoadingModel {
+  List<CollectionItem> _data = [];
 
   List<CollectionItem> get collectionsItems => List.from(_data);
 
@@ -50,16 +46,16 @@ class CollectionItemModel extends Model {
     return result;
   }
 
-  List<CollectionItem> getFavItems(int collectionId) {
-    var result = _data
-        .where((CollectionItem item) =>
-            item.collectionId == collectionId && item.isFav)
-        .toList();
+  // List<CollectionItem> getFavItems(int collectionId) {
+  //   var result = _data
+  //       .where((CollectionItem item) =>
+  //           item.collectionId == collectionId && item.isFav)
+  //       .toList();
 
-    result.sort((a, b) => a.number.compareTo(b.number));
+  //   result.sort((a, b) => a.number.compareTo(b.number));
 
-    return result;
-  }
+  //   return result;
+  // }
 
   List<CollectionItem> getRepeatedItems(int collectionId) {
     var result = _data
@@ -70,6 +66,27 @@ class CollectionItemModel extends Model {
     result.sort((a, b) => a.number.compareTo(b.number));
 
     return result;
+  }
+
+  Future fetch(int collectionId) {
+    setLoading(true);
+
+    return Future.delayed(const Duration(seconds: 1), () => "5").then((value) {
+      if (_data.length == 0) {
+        _data.addAll([
+          CollectionItem(
+              collectionId: 1, isFav: true, number: "1", quantity: 5),
+          CollectionItem(
+              collectionId: 1, isFav: false, number: "2", quantity: 1),
+          CollectionItem(
+              collectionId: 1, isFav: false, number: "3", quantity: 3),
+          CollectionItem(
+              collectionId: 1, isFav: true, number: "4", quantity: 1),
+        ]);
+      }
+
+      setLoading(false);
+    });
   }
 
   static CollectionItemModel of(BuildContext context) =>

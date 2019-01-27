@@ -39,11 +39,15 @@ class CollectionModel extends LoadingModel {
     notifyListeners();
   }
 
-  fetch() {
+  Future fetch() {
     setLoading(true);
 
-    Future.delayed(const Duration(seconds: 5), () => "5").then((value) {
-      _data.add(Collection.withId(1, isFav: true, name: 'alef', itemCount: 10));
+    return Future.delayed(const Duration(seconds: 1), () => "5").then((value) {
+      if (_data.length == 0) {
+        _data.add(
+            Collection.withId(1, isFav: true, name: 'alef', itemCount: 10));
+      }
+
       setLoading(false);
     });
   }

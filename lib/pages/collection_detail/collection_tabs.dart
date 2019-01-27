@@ -14,12 +14,11 @@ class CollectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var collectionModel = CollectionModel.of(context);
     var collectionItemModel = CollectionItemModel.of(context);
-
     var collection = collectionModel.collections[index];
 
     return Container(
       child: DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text(collection.name),
@@ -44,10 +43,16 @@ class CollectionPage extends StatelessWidget {
           ),
           body: TabBarView(
             children: <Widget>[
-              CollectionListItemsView(collection.id),
-              CollectionRepeatedItemsView(collectionItemModel.getRepeatedItems(collection.id)),
-              CollectionFavoriteItemsView(collectionItemModel.getFavItems(collection.id)),
+              CollectionListItemsView(collection.id, collectionItemModel),
+              CollectionRepeatedItemsView(collection.id, collectionItemModel),
+              // CollectionRepeatedItemsView(collection.id, collectionItemModel),
+              // CollectionFavoriteItemsView(collection.id),
             ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: null,
+            tooltip: 'Adicionar item',
+            child: Icon(Icons.add),
           ),
         ),
       ),
