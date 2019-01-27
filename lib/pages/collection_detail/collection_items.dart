@@ -57,9 +57,9 @@ class CollectionListItemsView extends StatelessWidget {
   }
 
   Widget _buildDisplay(BuildContext context) {
-    var data = CollectionItemModel.of(context).collectionsItems;
+    var data = CollectionItemModel.of(context).getItems(collectionId);
 
-      return (data.length > 0) ? _buildList(data) : _buildEmpty();
+    return (data.length > 0) ? _buildList(data) : _buildEmpty();
   }
 
   @override
