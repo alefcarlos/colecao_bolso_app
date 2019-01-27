@@ -1,23 +1,20 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 import './fancy_fab.dart';
-import '../../entities/collectionEntity.dart';
+import '../../scoped_models/collection.dart';
 import '../../config/application.dart';
-
+import '../../models/collection.dart';
 class CollectionsPage extends StatelessWidget {
-  final List<CollectionEntity> collections;
-  final Function deleteCollection;
 
-  CollectionsPage(this.collections, this.deleteCollection);
-
-  Widget _buildList() {
+  Widget _buildList(List<Collection> collections, Function deleteCollection) {
     return ListView.builder(
-      itemBuilder: _buildListTile,
+      itemBuilder: (context, index) => _buildListTile(collections, context, index, deleteCollection),
       itemCount: collections.length,
     );
   }
 
-  _showConfirmDeletion(BuildContext context, int index) {
+  _showConfirmDeletion(BuildContext context, int index, Function deleteCollection) {
     showDialog(
       context: context,
       builder: (context) {
@@ -57,7 +54,7 @@ class CollectionsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildButtonBar(BuildContext context, int index) {
+  Widget _buildButtonBar(BuildContext context, int index, Function deleteCollection) {
     return ButtonBar(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -67,13 +64,13 @@ class CollectionsPage extends StatelessWidget {
             color: Colors.red,
           ),
           tooltip: 'Excluir coleção',
-          onPressed: () => _showConfirmDeletion(context, index),
+          onPressed: () => _showConfirmDeletion(context, index, deleteCollection),
         )
       ],
     );
   }
 
-  Widget _buildListTile(BuildContext context, int index) {
+  Widget _buildListTile(List<Collection> collections, BuildContext context, int index, Function deleteCollection) {
     var item = collections[index];
 
     return Dismissible(
@@ -97,7 +94,7 @@ class CollectionsPage extends StatelessWidget {
               item.isFav ? Icons.favorite : Icons.favorite_border,
               color: item.isFav ? Colors.red : null,
             ),
-            trailing: _buildButtonBar(context, index),
+            trailing: _buildButtonBar(context, index, deleteCollection),
           ),
           Divider()
         ],
@@ -112,7 +109,12 @@ class CollectionsPage extends StatelessWidget {
   }
 
   Widget _buildDisplay() {
-    return (collections.length > 0) ? _buildList() : _buildEmpty();
+    return ScopedModelDescendant<CollectionModel>(
+      builder: (BuildContext context, Widget child, CollectionModel model) {
+        var collections = model.collections;
+        return (collections.length > 0) ? _buildList(collections, model.deleteCollection) : _buildEmpty();
+      },
+    );
   }
 
   @override

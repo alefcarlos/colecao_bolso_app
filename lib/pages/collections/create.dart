@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../config/application.dart';
-import '../../entities/collectionEntity.dart';
+import '../../models/collection.dart';
+import 'package:scoped_model/scoped_model.dart';
+import '../../scoped_models/collection.dart';
 
 class CreateCollectionPage extends StatefulWidget {
-  final Function createCollection;
-
-  CreateCollectionPage(this.createCollection);
-
   _CreateCollectionPageState createState() => _CreateCollectionPageState();
 }
 
@@ -15,12 +13,24 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
   int _totalItems = 0;
   bool _isFavorite = false;
 
-  _addCollection() {
-    var entity = CollectionEntity.create(_name,
-        isFav: _isFavorite, itemCount: _totalItems);
+  _addCollection(Function addCollection) {
+    var entity =
+        Collection(name: _name, isFav: _isFavorite, itemCount: _totalItems);
 
-    widget.createCollection(entity);
+    addCollection(entity);
     Application.router.pop(context);
+  }
+
+  Widget _buildSubmitButton() {
+    return ScopedModelDescendant<CollectionModel>(
+      builder: (BuildContext context, Widget child, CollectionModel model) {
+        return RaisedButton(
+          color: Theme.of(context).accentColor,
+          onPressed: () => _addCollection(model.addCollection),
+          child: Text('Salvar'),
+        );
+      },
+    );
   }
 
   @override
@@ -74,11 +84,7 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
                 SizedBox(
                   height: 10.0,
                 ),
-                RaisedButton(
-                  color: Theme.of(context).accentColor,
-                  onPressed: _addCollection,
-                  child: Text('Salvar'),
-                )
+                _buildSubmitButton()
               ],
             ),
           ),

@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 import './collection_favorite.dart';
 import './collection_list.dart';
 import './collection_repetead.dart';
-import './../../entities/collectionEntity.dart';
+import '../../scoped_models/collection.dart';
 
 class CollectionPage extends StatelessWidget {
-  final List<CollectionEntity> collections;
   final int index;
 
-  CollectionPage(this.collections, this.index);
+  CollectionPage(this.index);
 
   @override
   Widget build(BuildContext context) {
-    var collection = collections[index];
-
     return Container(
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(collection.name),
+            title: ScopedModelDescendant<CollectionModel>(builder:
+                (BuildContext context, Widget child, CollectionModel model) {
+              return Text(model.collections[index].name);
+            }),
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(

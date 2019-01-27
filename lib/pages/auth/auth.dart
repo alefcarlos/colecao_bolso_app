@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../entities/collectionEntity.dart';
 import '../../config/application.dart';
 import '../../config/routes.dart';
 
 class AuthPage extends StatefulWidget {
-  final List<CollectionEntity> collections;
-  final Function deleteCollection;
-
-  AuthPage(this.collections, this.deleteCollection);
 
   @override
   State<StatefulWidget> createState() {
