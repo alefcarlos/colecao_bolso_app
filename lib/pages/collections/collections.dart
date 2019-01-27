@@ -1,16 +1,19 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+
 import './fancy_fab.dart';
 import '../../scoped_models/collection.dart';
 import '../../config/application.dart';
 import '../../models/collection.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+import '../../helpers/utility.dart';
 
 class CollectionsPage extends StatelessWidget {
-  Widget _buildList(List<Collection> collections, Function deleteCollection, Function toggleFav) {
+  Widget _buildList(List<Collection> collections, Function deleteCollection,
+      Function toggleFav) {
     return ListView.builder(
-      itemBuilder: (context, index) =>
-          _buildListTile(collections, context, index, deleteCollection,toggleFav),
+      itemBuilder: (context, index) => _buildListTile(
+          collections, context, index, deleteCollection, toggleFav),
       itemCount: collections.length,
     );
   }
@@ -37,7 +40,6 @@ class CollectionsPage extends StatelessWidget {
       },
     );
   }
-
 
   Widget _buildListTile(List<Collection> collections, BuildContext context,
       int index, Function deleteCollection, Function toggleFav) {
@@ -80,7 +82,10 @@ class CollectionsPage extends StatelessWidget {
           caption: item.isFav ? 'Desmarcar favorito' : 'Marcar favorito',
           color: Colors.indigo,
           icon: item.isFav ? Icons.favorite_border : Icons.favorite,
-          onTap: () => toggleFav(index),
+          onTap: () {
+            toggleFav(index);
+            showSnackBar(context, 'Ação realizada com sucesso!');
+          },
         ),
       ],
       secondaryActions: <Widget>[
