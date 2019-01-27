@@ -61,14 +61,16 @@ class _CollectionRepeatedItemsViewState
     );
   }
 
-    Widget _buildDisplay(BuildContext context) {
+  Widget _buildDisplay(BuildContext context) {
     return ScopedModelDescendant(
       builder: (BuildContext context, Widget child, CollectionItemModel model) {
         Widget content = _buildEmpty();
 
         if (model.collectionsItems.length > 0 && !model.isLoading) {
           var data = model.getRepeatedItems(widget.collectionId);
-          content = _buildList(data);
+
+          //Depois que obteve o sitens da coleção selecionada
+          if (data.length > 0) content = _buildList(data);
         } else if (model.isLoading) {
           content = Shimmers.listView(context);
         }
