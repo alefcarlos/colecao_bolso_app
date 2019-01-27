@@ -1,13 +1,17 @@
+import 'package:fluro/fluro.dart';
+import 'package:flutter/material.dart';
+
 import '../pages/collections/collections.dart';
 import '../pages/collections/create.dart';
 import '../pages/collection_detail/collection_tabs.dart';
 import '../pages/auth/auth.dart';
-import 'package:fluro/fluro.dart';
-import 'package:flutter/material.dart';
+import '../scoped_models/collection.dart';
 
 var collectionsHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-  return CollectionsPage();
+  var model = CollectionModel.of(context);
+
+  return CollectionsPage(model);
 });
 
 var collectionItemsHandler = new Handler(

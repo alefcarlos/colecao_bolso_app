@@ -7,6 +7,7 @@ class Collection {
   final int itemCount;
 
   Collection({@required this.name, @required this.isFav, @required this.itemCount});
+  Collection.withId(this._id, {@required this.name, @required this.isFav, @required this.itemCount});
 
   int get id => _id;
   setId(int id) => this._id = id;

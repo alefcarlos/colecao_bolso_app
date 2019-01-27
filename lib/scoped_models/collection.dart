@@ -1,15 +1,16 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'dart:async';
 
+import './loading_model.dart';
 import '../models/collection.dart';
 
-class CollectionModel extends Model {
+class CollectionModel extends LoadingModel {
   List<Collection> _data = [];
 
   List<Collection> get collections => List.from(_data);
 
-  deleteCollection(index) {
+  deleteCollection(int index) {
     _data.removeAt(index);
     notifyListeners();
   }
@@ -26,7 +27,7 @@ class CollectionModel extends Model {
     _data.removeAt(index);
     _data.add(newOne);
 
-    _data.sort((a,b) => a.id.compareTo(b.id));
+    _data.sort((a, b) => a.id.compareTo(b.id));
 
     notifyListeners();
   }
@@ -38,8 +39,13 @@ class CollectionModel extends Model {
     notifyListeners();
   }
 
-  fetch(){
-    
+  fetch() {
+    setLoading(true);
+
+    Future.delayed(const Duration(seconds: 5), () => "5").then((value) {
+      _data.add(Collection.withId(1, isFav: true, name: 'alef', itemCount: 10));
+      setLoading(false);
+    });
   }
 
   static CollectionModel of(BuildContext context) =>

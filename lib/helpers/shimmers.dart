@@ -9,7 +9,7 @@ Widget listView(BuildContext context) {
       baseColor: Colors.grey[300],
       highlightColor: Colors.grey[100],
       child: Column(
-        children: [0, 1, 2, 3, 4, 5, 6]
+        children: [0, 1, 2]
             .map((_) => Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Row(

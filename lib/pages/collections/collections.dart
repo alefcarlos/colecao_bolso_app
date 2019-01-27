@@ -1,20 +1,32 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:scoped_model/scoped_model.dart';
 import './fancy_fab.dart';
 import '../../scoped_models/collection.dart';
 import '../../config/application.dart';
-import '../../models/collection.dart';
 import '../../helpers/utility.dart';
 import '../../helpers/shimmers.dart' as Shimmers;
 
-class CollectionsPage extends StatelessWidget {
-  Widget _buildList(List<Collection> collections, Function deleteCollection,
-      Function toggleFav) {
+class CollectionsPage extends StatefulWidget {
+  final CollectionModel collectionModel;
+
+  CollectionsPage(this.collectionModel);
+
+  _CollectionsPageState createState() => _CollectionsPageState();
+}
+
+class _CollectionsPageState extends State<CollectionsPage> {
+  @override
+  void initState() {
+    widget.collectionModel.fetch();
+    super.initState();
+  }
+
+  Widget _buildList() {
     return ListView.builder(
-      itemBuilder: (context, index) => _buildListTile(
-          collections, context, index, deleteCollection, toggleFav),
-      itemCount: collections.length,
+      itemBuilder: (context, index) => _buildListTile(context, index),
+      itemCount: widget.collectionModel.collections.length,
     );
   }
 
@@ -41,9 +53,8 @@ class CollectionsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildListTile(List<Collection> collections, BuildContext context,
-      int index, Function deleteCollection, Function toggleFav) {
-    var item = collections[index];
+  Widget _buildListTile(BuildContext context, int index) {
+    var item = widget.collectionModel.collections[index];
 
     return Slidable(
       key: Key(item.id.toString()),
@@ -51,7 +62,7 @@ class CollectionsPage extends StatelessWidget {
       slideToDismissDelegate: new SlideToDismissDrawerDelegate(
           onDismissed: (actionType) {
             if (actionType == SlideActionType.secondary)
-              deleteCollection(index);
+              widget.collectionModel.deleteCollection(index);
           },
           dismissThresholds: <SlideActionType, double>{
             SlideActionType.primary: 1.0
@@ -72,7 +83,6 @@ class CollectionsPage extends StatelessWidget {
                 item.isFav ? Icons.favorite : Icons.favorite_border,
                 color: item.isFav ? Colors.red : null,
               ),
-              // trailing: _buildButtonBar(context, index, deleteCollection),
             )
           ],
         ),
@@ -83,7 +93,7 @@ class CollectionsPage extends StatelessWidget {
           color: Colors.indigo,
           icon: item.isFav ? Icons.favorite_border : Icons.favorite,
           onTap: () {
-            toggleFav(index);
+            widget.collectionModel.toggleFav(index);
             showSnackBar(context, 'Ação realizada com sucesso!');
           },
         ),
@@ -106,17 +116,24 @@ class CollectionsPage extends StatelessWidget {
   }
 
   Widget _buildDisplay(BuildContext context) {
+    return ScopedModelDescendant(
+      builder: (BuildContext context, Widget child, CollectionModel model) {
+        Widget content = _buildEmpty();
 
-    var model = CollectionModel.of(context);
-    var collections = model.collections;
-    return (collections.length > 0)
-        ? _buildList(collections, model.deleteCollection, model.toggleFav)
-        : _buildEmpty();
+        if (model.collections.length > 0 && !model.isLoading) {
+          content = _buildList();
+        } else if (model.isLoading) {
+          content = Shimmers.listView(context);
+        }
+        return content;
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
