@@ -1,5 +1,7 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 import '../models/collection.dart';
 
 class CollectionModel extends Model {
@@ -34,6 +36,10 @@ class CollectionModel extends Model {
     _data.add(entity);
 
     notifyListeners();
+  }
+
+  fetch(){
+    
   }
 
   static CollectionModel of(BuildContext context) =>

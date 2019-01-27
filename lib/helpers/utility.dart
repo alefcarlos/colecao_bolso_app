@@ -1,5 +1,5 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 void showSnackBar(BuildContext context, String text) {
-    Scaffold.of(context).showSnackBar(SnackBar(content: new Text(text)));
-  }
+  Scaffold.of(context).showSnackBar(SnackBar(content: new Text(text)));
+}

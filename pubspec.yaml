@@ -20,11 +20,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
+  # Rotas
   fluro: "^1.4.0"
 
   scoped_model: '^1.0.1'
   flutter_slidable: ^0.4.9
-  
+  firebase_database: ^1.1.0
+  shimmer: ^1.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

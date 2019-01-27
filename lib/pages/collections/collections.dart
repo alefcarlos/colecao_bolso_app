@@ -1,12 +1,12 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
 import './fancy_fab.dart';
 import '../../scoped_models/collection.dart';
 import '../../config/application.dart';
 import '../../models/collection.dart';
 import '../../helpers/utility.dart';
+import '../../helpers/shimmers.dart' as Shimmers;
 
 class CollectionsPage extends StatelessWidget {
   Widget _buildList(List<Collection> collections, Function deleteCollection,
@@ -106,6 +106,7 @@ class CollectionsPage extends StatelessWidget {
   }
 
   Widget _buildDisplay(BuildContext context) {
+
     var model = CollectionModel.of(context);
     var collections = model.collections;
     return (collections.length > 0)
@@ -121,6 +122,7 @@ class CollectionsPage extends StatelessWidget {
         // the App.build method, and use it to set our appbar title.
         title: Text('Minhas coleções'),
       ),
+      // body:  Shimmers.listView(context),
       body: _buildDisplay(context),
       floatingActionButton: CollectionsPageFab(),
     );
