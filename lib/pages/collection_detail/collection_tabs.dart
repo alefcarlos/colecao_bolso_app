@@ -44,7 +44,7 @@ class CollectionPage extends StatelessWidget {
           ),
           body: TabBarView(
             children: <Widget>[
-              CollectionListItemsView(collectionItemModel.getItems(collection.id)),
+              CollectionListItemsView(collection.id),
               CollectionRepeatedItemsView(collectionItemModel.getRepeatedItems(collection.id)),
               CollectionFavoriteItemsView(collectionItemModel.getFavItems(collection.id)),
             ],

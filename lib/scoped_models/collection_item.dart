@@ -12,10 +12,11 @@ class CollectionItemModel extends Model {
 
   List<CollectionItem> get collectionsItems => List.from(_data);
 
-  // deleteCollection(index) {
-  //   _collections.removeAt(index);
-  //   notifyListeners();
-  // }
+  deleteCollectionItem(index) {
+    _data.removeAt(index);
+
+    notifyListeners();
+  }
 
   addCollectionItem(int collectionId, CollectionItem entity) {
     entity.setId(_data.length + 1);
@@ -24,19 +25,52 @@ class CollectionItemModel extends Model {
     notifyListeners();
   }
 
-  List<CollectionItem> getItems(int collectionId) => collectionsItems
-      .where((CollectionItem item) => item.collectionId == collectionId)
-      .toList();
+  toggleFav(int collectionId, int index) {
+    var model = _data[index];
+    var newOne = CollectionItem(
+        number: model.number,
+        quantity: model.quantity,
+        collectionId: model.collectionId,
+        isFav: !model.isFav);
+    newOne.setId(model.id);
+    _data.removeAt(index);
+    _data.add(newOne);
+    _data.sort((a, b) => a.number.compareTo(b.number));
 
-  List<CollectionItem> getFavItems(int collectionId) => collectionsItems
-      .where((CollectionItem item) =>
-          item.collectionId == collectionId && item.isFav)
-      .toList();
+    notifyListeners();
+  }
 
-  List<CollectionItem> getRepeatedItems(int collectionId) => collectionsItems
-      .where((CollectionItem item) =>
-          item.collectionId == collectionId && item.quantity > 1)
-      .toList();
+  List<CollectionItem> getItems(int collectionId) {
+    var result = _data
+        .where((CollectionItem item) => item.collectionId == collectionId)
+        .toList();
+
+    result.sort((a, b) => a.number.compareTo(b.number));
+
+    return result;
+  }
+
+  List<CollectionItem> getFavItems(int collectionId) {
+    var result = _data
+        .where((CollectionItem item) =>
+            item.collectionId == collectionId && item.isFav)
+        .toList();
+
+    result.sort((a, b) => a.number.compareTo(b.number));
+
+    return result;
+  }
+
+  List<CollectionItem> getRepeatedItems(int collectionId) {
+    var result = _data
+        .where((CollectionItem item) =>
+            item.collectionId == collectionId && item.quantity > 1)
+        .toList();
+
+    result.sort((a, b) => a.number.compareTo(b.number));
+
+    return result;
+  }
 
   static CollectionItemModel of(BuildContext context) =>
       ScopedModel.of<CollectionItemModel>(context, rebuildOnChange: true);

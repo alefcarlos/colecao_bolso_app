@@ -9,10 +9,7 @@ class CollectionRepeatedItemsView extends StatelessWidget {
   Widget _buildList() {
     return Container(
       margin: EdgeInsets.only(top: 7.0),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-        ),
+      child: ListView.builder(
         itemBuilder: (context, index) => _buildListTile(context, index),
         itemCount: items.length,
       ),
@@ -21,7 +18,7 @@ class CollectionRepeatedItemsView extends StatelessWidget {
 
   Widget _buildEmpty() {
     return Center(
-      child: Text('Ainda não há items cadastros.'),
+      child: Text('Ainda não há nenhum itens repetidos.'),
     );
   }
 
@@ -31,20 +28,20 @@ class CollectionRepeatedItemsView extends StatelessWidget {
   ) {
     var item = items[index];
 
-    return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            title: Text('#${item.number}'),
-            subtitle: Text('Tenho ${item.quantity}'),
-            trailing: Icon(
-              item.isFav ? Icons.favorite : Icons.favorite_border,
-              color: item.isFav ? Colors.red : null,
-            ),
+    return Column(
+      children: [
+        ListTile(
+          leading:
+              CircleAvatar(backgroundImage: AssetImage('assets/food.jpg')),
+          title: Text('#${item.number}'),
+          subtitle: Text('Tenho ${item.quantity}'),
+          trailing: Icon(
+            item.isFav ? Icons.favorite : Icons.favorite_border,
+            color: item.isFav ? Colors.red : null,
           ),
-        ],
-      ),
+        ),
+        Divider()
+      ],
     );
   }
 

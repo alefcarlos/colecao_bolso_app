@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+import '../../scoped_models/collection_item.dart';
 import '../../models/collection_item.dart';
 
 class CollectionListItemsView extends StatelessWidget {
-  final List<CollectionItem> items;
+  final int collectionId;
 
-  CollectionListItemsView(this.items);
+  CollectionListItemsView(this.collectionId);
 
-  Widget _buildList() {
+  Widget _buildList(List<CollectionItem> items) {
     return Container(
       margin: EdgeInsets.only(top: 7.0),
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
         ),
-        itemBuilder: (context, index) => _buildListTile(context, index),
+        itemBuilder: (context, index) => _buildListTile(items, context, index),
         itemCount: items.length,
       ),
     );
@@ -26,6 +28,7 @@ class CollectionListItemsView extends StatelessWidget {
   }
 
   Widget _buildListTile(
+    List<CollectionItem> items
     BuildContext context,
     int index,
   ) {
@@ -35,21 +38,28 @@ class CollectionListItemsView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ListTile(
-            title: Text('#${item.number}'),
-            subtitle: Text('Tenho ${item.quantity}'),
-            trailing: Icon(
-              item.isFav ? Icons.favorite : Icons.favorite_border,
-              color: item.isFav ? Colors.red : null,
-            ),
-          ),
+          ScopedModelDescendant<CollectionItemModel>(builder: (BuildContext context, Widget child, CollectionItemModel model) {
+            return ListTile(
+              title: Text('#${item.number}'),
+              subtitle: Text('Tenho ${item.quantity}'),
+              trailing: IconButton(
+                onPressed: () => model.toggleFav(collectionId, index),
+                icon: Icon(
+                  item.isFav ? Icons.favorite : Icons.favorite_border,
+                  color: item.isFav ? Colors.red : null,
+                ),
+              ),
+            );
+          },),
         ],
       ),
     );
   }
 
   Widget _buildDisplay(BuildContext context) {
-    return (items.length > 0) ? _buildList() : _buildEmpty();
+    var data = CollectionItemModel.of(context).collectionsItems;
+
+      return (data.length > 0) ? _buildList(data) : _buildEmpty();
   }
 
   @override
