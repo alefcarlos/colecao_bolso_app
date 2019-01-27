@@ -4,19 +4,19 @@ import './fancy_fab.dart';
 import '../../scoped_models/collection.dart';
 import '../../config/application.dart';
 import '../../models/collection.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class CollectionsPage extends StatelessWidget {
-  Widget _buildList(List<Collection> collections, Function deleteCollection) {
+  Widget _buildList(List<Collection> collections, Function deleteCollection, Function toggleFav) {
     return ListView.builder(
       itemBuilder: (context, index) =>
-          _buildListTile(collections, context, index, deleteCollection),
+          _buildListTile(collections, context, index, deleteCollection,toggleFav),
       itemCount: collections.length,
     );
   }
 
-  _showConfirmDeletion(
-      BuildContext context, int index, Function deleteCollection) {
-    showDialog(
+  Future<bool> _showConfirmDeletion(BuildContext context, int index) {
+    return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -26,14 +26,11 @@ class CollectionsPage extends StatelessWidget {
           actions: <Widget>[
             FlatButton(
               child: Text('Cancelar'),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.of(context).pop(false),
             ),
             FlatButton(
               child: Text('Excluir'),
-              onPressed: () {
-                deleteCollection(index);
-                Navigator.pop(context);
-              },
+              onPressed: () => Navigator.of(context).pop(true),
             )
           ],
         );
@@ -41,68 +38,59 @@ class CollectionsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildListTileDismissBackground() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
-      color: Colors.red,
-      alignment: Alignment.centerRight,
-      child: Text(
-        'Excluir coleção',
-        textAlign: TextAlign.right,
-        style: TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 26.0),
-      ),
-    );
-  }
-
-  Widget _buildButtonBar(
-      BuildContext context, int index, Function deleteCollection) {
-    return ButtonBar(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        IconButton(
-          icon: Icon(
-            Icons.delete_forever,
-            color: Colors.red,
-          ),
-          tooltip: 'Excluir coleção',
-          onPressed: () =>
-              _showConfirmDeletion(context, index, deleteCollection),
-        )
-      ],
-    );
-  }
 
   Widget _buildListTile(List<Collection> collections, BuildContext context,
-      int index, Function deleteCollection) {
+      int index, Function deleteCollection, Function toggleFav) {
     var item = collections[index];
 
-    return Dismissible(
-      key: Key(item.name),
-      direction: DismissDirection.endToStart,
-      background: _buildListTileDismissBackground(),
-      onDismissed: (DismissDirection direction) {
-        if (direction == DismissDirection.endToStart) {
-          deleteCollection(index);
-        }
-      },
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            onTap: () => Application.router.navigateTo(
-                context, '/collection/$index',
-                transition: TransitionType.inFromRight),
-            title: Text(item.name),
-            subtitle: Text('10 de ${item.itemCount}'),
-            leading: Icon(
-              item.isFav ? Icons.favorite : Icons.favorite_border,
-              color: item.isFav ? Colors.red : null,
-            ),
-            trailing: _buildButtonBar(context, index, deleteCollection),
-          ),
-          Divider()
-        ],
+    return Slidable(
+      key: Key(item.id.toString()),
+      delegate: SlidableBehindDelegate(),
+      slideToDismissDelegate: new SlideToDismissDrawerDelegate(
+          onDismissed: (actionType) {
+            if (actionType == SlideActionType.secondary)
+              deleteCollection(index);
+          },
+          dismissThresholds: <SlideActionType, double>{
+            SlideActionType.primary: 1.0
+          },
+          onWillDismiss: (actionType) => _showConfirmDeletion(context, index)),
+      actionExtentRatio: 0.25,
+      child: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              onTap: () => Application.router.navigateTo(
+                  context, '/collection/$index',
+                  transition: TransitionType.inFromRight),
+              title: Text(item.name),
+              subtitle: Text('10 de ${item.itemCount}'),
+              leading: Icon(
+                item.isFav ? Icons.favorite : Icons.favorite_border,
+                color: item.isFav ? Colors.red : null,
+              ),
+              // trailing: _buildButtonBar(context, index, deleteCollection),
+            )
+          ],
+        ),
       ),
+      actions: <Widget>[
+        IconSlideAction(
+          caption: item.isFav ? 'Desmarcar favorito' : 'Marcar favorito',
+          color: Colors.indigo,
+          icon: item.isFav ? Icons.favorite_border : Icons.favorite,
+          onTap: () => toggleFav(index),
+        ),
+      ],
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: 'Excluir coleção',
+          color: Colors.red,
+          icon: Icons.delete_forever,
+          onTap: () => null,
+        ),
+      ],
     );
   }
 
@@ -116,7 +104,7 @@ class CollectionsPage extends StatelessWidget {
     var model = CollectionModel.of(context);
     var collections = model.collections;
     return (collections.length > 0)
-        ? _buildList(collections, model.deleteCollection)
+        ? _buildList(collections, model.deleteCollection, model.toggleFav)
         : _buildEmpty();
   }
 

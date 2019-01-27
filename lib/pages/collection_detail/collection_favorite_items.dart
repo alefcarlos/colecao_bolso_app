@@ -34,10 +34,6 @@ class CollectionFavoriteItemsView extends StatelessWidget {
           leading: CircleAvatar(backgroundImage: AssetImage('assets/food.jpg')),
           title: Text('#${item.number}'),
           subtitle: Text('Tenho ${item.quantity}'),
-          trailing: Icon(
-            item.isFav ? Icons.favorite : Icons.favorite_border,
-            color: item.isFav ? Colors.red : null,
-          ),
         ),
         Divider()
       ],

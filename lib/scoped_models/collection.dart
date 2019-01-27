@@ -3,18 +3,35 @@ import 'package:flutter/material.dart';
 import '../models/collection.dart';
 
 class CollectionModel extends Model {
-  List<Collection> _collections = [];
+  List<Collection> _data = [];
 
-  List<Collection> get collections => List.from(_collections);
+  List<Collection> get collections => List.from(_data);
 
   deleteCollection(index) {
-    _collections.removeAt(index);
+    _data.removeAt(index);
+    notifyListeners();
+  }
+
+  toggleFav(int index) {
+    var model = _data[index];
+    var newOne = Collection(
+      itemCount: model.itemCount,
+      name: model.name,
+      isFav: !model.isFav,
+    );
+
+    newOne.setId(model.id);
+    _data.removeAt(index);
+    _data.add(newOne);
+
+    _data.sort((a,b) => a.id.compareTo(b.id));
+
     notifyListeners();
   }
 
   addCollection(Collection entity) {
-    entity.setId(_collections.length + 1);
-    _collections.add(entity);
+    entity.setId(_data.length + 1);
+    _data.add(entity);
 
     notifyListeners();
   }
