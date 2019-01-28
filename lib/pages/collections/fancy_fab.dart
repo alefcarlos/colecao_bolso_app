@@ -94,7 +94,7 @@ class _CollectionsPageFabState extends State<CollectionsPageFab>
         heroTag: 'addCollectionItem',
         onPressed: () {
           animate();
-          Application.router.navigateTo(context, Routes.createItemRoute, replace: true);
+          Application.router.navigateTo(context, Routes.createItemRoute);
         },
         tooltip: 'Adicionar item',
         child: Icon(Icons.camera_enhance),

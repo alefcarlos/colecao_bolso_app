@@ -55,12 +55,12 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
           quantity: _formData['quantity'],
         ));
 
-    if (widget.collectionId == null) {
-      print('/collection/$collectionId');
-      Application.router.navigateTo(context, '/collection/${collectionId - 1}',
-          replace: true);
-    } else
-      Application.router.pop(context);
+    // if (widget.collectionId == null) {
+    //   print('/collection/$collectionId');
+    //   Application.router.navigateTo(context, '/collection/${collectionId - 1}',
+    //       replace: true);
+    // } else
+    Application.router.pop(context);
   }
 
   Widget _buildNumberTextField() {
