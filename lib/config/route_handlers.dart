@@ -36,7 +36,8 @@ var authHandler = Handler(
 var createItemHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   var model = CollectionItemModel.of(context);
-  return EditCollectionItemPage(collectionItemModel: model);
+  var model2 = CollectionModel.of(context);
+  return EditCollectionItemPage(collectionItemModel: model, collectionModel: model2);
 });
 
 var createCollectionItemHandler = Handler(
@@ -44,8 +45,11 @@ var createCollectionItemHandler = Handler(
   var index = int.parse(params['id']?.first);
 
   var model = CollectionItemModel.of(context);
+  var model2 = CollectionModel.of(context);
+
   return EditCollectionItemPage(
     collectionId: index,
     collectionItemModel: model,
+    collectionModel: model2,
   );
 });

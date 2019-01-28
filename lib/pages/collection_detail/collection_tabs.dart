@@ -3,7 +3,6 @@ import './collection_items.dart';
 import './collection_items_listview.dart';
 import '../../scoped_models/collection.dart';
 import '../../scoped_models/collection_item.dart';
-import '../../config/routes.dart';
 import '../../config/application.dart';
 
 class CollectionPage extends StatelessWidget {

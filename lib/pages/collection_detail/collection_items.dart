@@ -69,7 +69,7 @@ class _CollectionListItemsViewState extends State<CollectionListItemsView>{
   }
 
 
-      Widget _buildDisplay(BuildContext context) {
+  Widget _buildDisplay(BuildContext context) {
     return ScopedModelDescendant(
       builder: (BuildContext context, Widget child, CollectionItemModel model) {
         Widget content = _buildEmpty();
