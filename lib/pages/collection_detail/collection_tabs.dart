@@ -3,6 +3,8 @@ import './collection_items.dart';
 import './collection_items_listview.dart';
 import '../../scoped_models/collection.dart';
 import '../../scoped_models/collection_item.dart';
+import '../../config/routes.dart';
+import '../../config/application.dart';
 
 class CollectionPage extends StatelessWidget {
   final int index;
@@ -43,12 +45,16 @@ class CollectionPage extends StatelessWidget {
           body: TabBarView(
             children: <Widget>[
               CollectionListItemsView(collection.id, collectionItemModel),
-              CollectionListItemsDefaultView(collection.id, collectionItemModel, collectionItemModel.getRepeatedItems),
-              CollectionListItemsDefaultView(collection.id, collectionItemModel, collectionItemModel.getFavItems),
+              CollectionListItemsDefaultView(collection.id, collectionItemModel,
+                  collectionItemModel.getRepeatedItems),
+              CollectionListItemsDefaultView(collection.id, collectionItemModel,
+                  collectionItemModel.getFavItems),
             ],
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: null,
+            onPressed: () {
+              Application.router.navigateTo(context, '/collection/${collection.id}/item/create');
+            },
             tooltip: 'Adicionar item',
             child: Icon(Icons.camera_enhance),
           ),

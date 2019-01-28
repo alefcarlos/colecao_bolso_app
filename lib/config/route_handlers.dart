@@ -6,6 +6,8 @@ import '../pages/collections/create.dart';
 import '../pages/collection_detail/collection_tabs.dart';
 import '../pages/auth/auth.dart';
 import '../scoped_models/collection.dart';
+import '../scoped_models/collection_item.dart';
+import '../pages/collection_detail/edit_collection_item.dart';
 
 var collectionsHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -29,4 +31,21 @@ var createCollectionHandler = Handler(
 var authHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   return AuthPage();
+});
+
+var createItemHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  var model = CollectionItemModel.of(context);
+  return EditCollectionItemPage(collectionItemModel: model);
+});
+
+var createCollectionItemHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  var index = int.parse(params['id']?.first);
+
+  var model = CollectionItemModel.of(context);
+  return EditCollectionItemPage(
+    collectionId: index,
+    collectionItemModel: model,
+  );
 });

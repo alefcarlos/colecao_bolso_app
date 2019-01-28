@@ -53,7 +53,7 @@ class _CollectionListItemsViewState extends State<CollectionListItemsView>{
           ScopedModelDescendant<CollectionItemModel>(builder: (BuildContext context, Widget child, CollectionItemModel model) {
             return ListTile(
               title: Text('#${item.number}'),
-              subtitle: Text('Tenho ${item.quantity}'),
+              subtitle: Text('${item.quantity}'),
               trailing: IconButton(
                 onPressed: () => model.toggleFav(widget.collectionId, index),
                 icon: Icon(
