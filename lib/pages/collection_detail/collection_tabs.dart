@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import './collection_favorite_items.dart';
 import './collection_items.dart';
-import './collection_repetead_items.dart';
+import './collection_items_listview.dart';
 import '../../scoped_models/collection.dart';
 import '../../scoped_models/collection_item.dart';
 
@@ -18,7 +17,7 @@ class CollectionPage extends StatelessWidget {
 
     return Container(
       child: DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             title: Text(collection.name),
@@ -44,15 +43,14 @@ class CollectionPage extends StatelessWidget {
           body: TabBarView(
             children: <Widget>[
               CollectionListItemsView(collection.id, collectionItemModel),
-              CollectionRepeatedItemsView(collection.id, collectionItemModel),
-              // CollectionRepeatedItemsView(collection.id, collectionItemModel),
-              // CollectionFavoriteItemsView(collection.id),
+              CollectionListItemsDefaultView(collection.id, collectionItemModel, collectionItemModel.getRepeatedItems),
+              CollectionListItemsDefaultView(collection.id, collectionItemModel, collectionItemModel.getFavItems),
             ],
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: null,
             tooltip: 'Adicionar item',
-            child: Icon(Icons.add),
+            child: Icon(Icons.camera_enhance),
           ),
         ),
       ),

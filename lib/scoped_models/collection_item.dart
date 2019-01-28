@@ -46,16 +46,16 @@ class CollectionItemModel extends LoadingModel {
     return result;
   }
 
-  // List<CollectionItem> getFavItems(int collectionId) {
-  //   var result = _data
-  //       .where((CollectionItem item) =>
-  //           item.collectionId == collectionId && item.isFav)
-  //       .toList();
+  List<CollectionItem> getFavItems(int collectionId) {
+    var result = _data
+        .where((CollectionItem item) =>
+            item.collectionId == collectionId && item.isFav)
+        .toList();
 
-  //   result.sort((a, b) => a.number.compareTo(b.number));
+    result.sort((a, b) => a.number.compareTo(b.number));
 
-  //   return result;
-  // }
+    return result;
+  }
 
   List<CollectionItem> getRepeatedItems(int collectionId) {
     var result = _data

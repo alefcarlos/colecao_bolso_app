@@ -4,18 +4,19 @@ import '../../scoped_models/collection_item.dart';
 import '../../helpers/shimmers.dart' as Shimmers;
 import '../../models/collection_item.dart';
 
-class CollectionRepeatedItemsView extends StatefulWidget {
+class CollectionListItemsDefaultView extends StatefulWidget {
   final int collectionId;
   final CollectionItemModel collectionItemModel;
+  final Function getData;
 
-  CollectionRepeatedItemsView(this.collectionId, this.collectionItemModel);
+  CollectionListItemsDefaultView(this.collectionId, this.collectionItemModel, this.getData);
 
-  _CollectionRepeatedItemsViewState createState() =>
-      _CollectionRepeatedItemsViewState();
+  _CollectionListItemsViewDefaultState createState() =>
+      _CollectionListItemsViewDefaultState();
 }
 
-class _CollectionRepeatedItemsViewState
-    extends State<CollectionRepeatedItemsView> {
+class _CollectionListItemsViewDefaultState
+    extends State<CollectionListItemsDefaultView> {
   @override
   void initState() {
     widget.collectionItemModel.fetch(widget.collectionId);
@@ -34,7 +35,7 @@ class _CollectionRepeatedItemsViewState
 
   Widget _buildEmpty() {
     return Center(
-      child: Text('Que sorte! Nenhum item repetido, heim ?'),
+      child: Text('Ainda não há items marcados como favoritos.'),
     );
   }
 
@@ -51,10 +52,6 @@ class _CollectionRepeatedItemsViewState
           leading: CircleAvatar(backgroundImage: AssetImage('assets/food.jpg')),
           title: Text('#${item.number}'),
           subtitle: Text('Tenho ${item.quantity}'),
-          trailing: Icon(
-            item.isFav ? Icons.favorite : Icons.favorite_border,
-            color: item.isFav ? Colors.red : null,
-          ),
         ),
         Divider()
       ],
@@ -67,7 +64,7 @@ class _CollectionRepeatedItemsViewState
         Widget content = _buildEmpty();
 
         if (model.collectionsItems.length > 0 && !model.isLoading) {
-          var data = model.getRepeatedItems(widget.collectionId);
+          var data = widget.getData(widget.collectionId);
 
           //Depois que obteve o sitens da coleção selecionada
           if (data.length > 0) content = _buildList(data);

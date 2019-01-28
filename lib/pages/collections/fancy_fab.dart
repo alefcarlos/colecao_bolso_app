@@ -94,7 +94,7 @@ class _CollectionsPageFabState extends State<CollectionsPageFab>
         heroTag: 'addCollectionItem',
         onPressed: null,
         tooltip: 'Adicionar item',
-        child: Icon(Icons.image),
+        child: Icon(Icons.camera_enhance),
       ),
     );
   }
