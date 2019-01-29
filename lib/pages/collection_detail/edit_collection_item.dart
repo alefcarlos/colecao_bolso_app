@@ -6,6 +6,7 @@ import '../../scoped_models/collection_item.dart';
 import '../../models/collection_item.dart';
 import '../../helpers/utility.dart';
 import '../../models/create_collecion_item_result.dart';
+import '../../widgets/forms-input/image.dart';
 
 class EditCollectionItemPage extends StatefulWidget {
   /// É possível criamos um item para uma determinada coleção, basta informar o ID da mesma
@@ -127,10 +128,10 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
           return Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
             Text(
               'Coleção',
-              style: TextStyle(fontSize: 16.0),
+              style: TextStyle(fontSize: 18.0),
             ),
             SizedBox(
-              width: 10.0,
+              width: 25.0,
             ),
             DropdownButton(
                 value: _selectedCollectionId,
@@ -161,9 +162,6 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
   List<Widget> _buildFields(BuildContext context) {
     return [
       buildCollectionField(),
-      SizedBox(
-        height: 10.0,
-      ),
       _buildNumberTextField(),
       SizedBox(
         height: 10.0,
@@ -173,6 +171,10 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
         height: 10.0,
       ),
       _buildIsFavSwitch(),
+      SizedBox(
+        height: 10.0,
+      ),
+      ImageInput(),
       SizedBox(
         height: 10.0,
       ),
@@ -191,15 +193,11 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
         title: Text('Novo item'),
       ),
       body: Container(
-        padding: EdgeInsets.all(10.0),
-        child: SingleChildScrollView(
-          child: Container(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: _buildFields(context),
-              ),
-            ),
+        margin: EdgeInsets.all(10.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: _buildFields(context),
           ),
         ),
       ),
