@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:flutter_tags/input_tags.dart';
 
 import '../../scoped_models/collection.dart';
 import '../../scoped_models/collection_item.dart';
@@ -38,11 +39,13 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
     'quantity': 1,
     'isFav': false
   };
+  List<String> _tags = [];
 
   @override
   void initState() {
     _selectedCollectionId = widget.collectionId;
     widget.collectionModel.fetch();
+    _tags = [];
     super.initState();
   }
 
@@ -62,6 +65,7 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
       isFav: _formData['isFav'],
       number: _formData['number'],
       quantity: _formData['quantity'],
+      tags: _tags
     );
 
     widget.collectionItemModel.addCollectionItem(_selectedCollectionId, entity);
@@ -159,6 +163,23 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
     );
   }
 
+  Widget _buildTagsInput() {
+    return InputTags(
+      tags: [],
+      placeholder: 'Adicione tagas a seu item',
+      onDelete: (tag) {
+        setState(() {
+          _tags.removeWhere((item) => item == tag);
+        });
+      },
+      onInsert: (tag) {
+        setState(() {
+          _tags.add(tag);
+        });
+      },
+    );
+  }
+
   List<Widget> _buildFields(BuildContext context) {
     return [
       buildCollectionField(),
@@ -174,6 +195,7 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
       SizedBox(
         height: 10.0,
       ),
+      _buildTagsInput(),
       ImageInput(),
       SizedBox(
         height: 10.0,
