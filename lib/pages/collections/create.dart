@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../config/application.dart';
 import '../../models/collection.dart';
 import '../../scoped_models/collection.dart';
 
@@ -17,7 +16,7 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
         Collection(name: _name, isFav: _isFavorite, itemCount: _totalItems);
 
     addCollection(entity);
-    Application.router.pop(context);
+    Navigator.pop(context, entity.id);
   }
 
   Widget _buildSubmitButton(BuildContext context) {

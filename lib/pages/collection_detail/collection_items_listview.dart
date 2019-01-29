@@ -9,7 +9,8 @@ class CollectionListItemsDefaultView extends StatefulWidget {
   final CollectionItemModel collectionItemModel;
   final Function getData;
 
-  CollectionListItemsDefaultView(this.collectionId, this.collectionItemModel, this.getData);
+  CollectionListItemsDefaultView(
+      this.collectionId, this.collectionItemModel, this.getData);
 
   _CollectionListItemsViewDefaultState createState() =>
       _CollectionListItemsViewDefaultState();
@@ -68,6 +69,8 @@ class _CollectionListItemsViewDefaultState
 
           //Depois que obteve o sitens da coleção selecionada
           if (data.length > 0) content = _buildList(data);
+        } else if (model.collectionsItems.length == 0 && !model.isLoading) {
+          content = _buildEmpty();
         } else if (model.isLoading) {
           content = Shimmers.listView(context);
         }

@@ -79,7 +79,8 @@ class _CollectionListItemsViewState extends State<CollectionListItemsView>{
 
           //Depois que obteve o sitens da coleção selecionada
           if (data.length > 0) content = _buildList(data);
-          
+        } else if(model.collectionsItems.length ==0 && !model.isLoading){
+          content = _buildEmpty();
         } else if (model.isLoading) {
           content = Shimmers.listView(context);
         }

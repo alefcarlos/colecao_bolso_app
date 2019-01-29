@@ -44,8 +44,8 @@ class CollectionModel extends LoadingModel {
 
     return Future.delayed(const Duration(seconds: 1), () => "5").then((value) {
       if (_data.length == 0) {
-        _data.add(
-            Collection.withId(1, isFav: true, name: 'alef', itemCount: 10));
+        // _data.add(
+        //     Collection.withId(1, isFav: true, name: 'alef', itemCount: 10));
       }
 
       setLoading(false);

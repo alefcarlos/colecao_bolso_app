@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../config/application.dart';
 import '../../config/routes.dart';
+import '../../helpers/utility.dart';
 
 //Based on https://medium.com/@agungsurya/create-a-simple-animated-floatingactionbutton-in-flutter-2d24f37cfbcc
 
@@ -80,7 +81,21 @@ class _CollectionsPageFabState extends State<CollectionsPageFab>
         heroTag: 'addCollection',
         onPressed: () {
           animate();
-          Application.router.navigateTo(context, Routes.createCollectionRoute);
+          Application.router
+              .navigateTo(context, Routes.createCollectionRoute)
+              .then(
+                (createdId) => createdId != null
+                    ? showSnackBar(
+                        context,
+                        'Coleção criada com sucesso',
+                        action: SnackBarAction(
+                          label: 'Ver coleção',
+                          onPressed: () => Application.router.navigateTo(
+                              context, '/collection/${createdId - 1}'),
+                        ),
+                      )
+                    : null,
+              );
         },
         tooltip: 'Adicionar coleção',
         child: Icon(Icons.add),
@@ -94,7 +109,19 @@ class _CollectionsPageFabState extends State<CollectionsPageFab>
         heroTag: 'addCollectionItem',
         onPressed: () {
           animate();
-          Application.router.navigateTo(context, Routes.createItemRoute);
+          Application.router
+              .navigateTo(context, Routes.createItemRoute)
+              .then((result) => result != null
+                  ? showSnackBar(
+                      context,
+                      'Item criado com sucesso',
+                      action: SnackBarAction(
+                        label: 'Ver item',
+                        onPressed: () => Application.router.navigateTo(
+                            context, '/collection/${result.collectionId - 1}'),
+                      ),
+                    )
+                  : null);
         },
         tooltip: 'Adicionar item',
         child: Icon(Icons.camera_enhance),

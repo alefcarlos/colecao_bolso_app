@@ -120,6 +120,8 @@ class _CollectionsPageState extends State<CollectionsPage> {
 
         if (model.collections.length > 0 && !model.isLoading) {
           content = _buildList();
+        } else if (model.collections.length == 0 && !model.isLoading) {
+          content = _buildEmpty();
         } else if (model.isLoading) {
           content = Shimmers.listView(context);
         }
