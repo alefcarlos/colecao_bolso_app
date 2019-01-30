@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import '../../scoped_models/collection_item.dart';
 import '../../models/collection_item.dart';
 import '../../helpers/shimmers.dart' as Shimmers;
+import '../../widgets/ui-elements/tag.dart';
 
 class CollectionListItemsView extends StatefulWidget {
     final int collectionId;
@@ -48,12 +49,12 @@ class _CollectionListItemsViewState extends State<CollectionListItemsView>{
 
     return Card(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
+          Image.asset('assets/food.jpg',),
           ScopedModelDescendant<CollectionItemModel>(builder: (BuildContext context, Widget child, CollectionItemModel model) {
             return ListTile(
               title: Text('#${item.number}'),
-              subtitle: Text('${item.quantity} - ${item.tags == null ? 0 : item.tags.length} tags'),
+              subtitle: Text('Tenho ${item.quantity}'),
               trailing: IconButton(
                 onPressed: () => model.toggleFav(widget.collectionId, index),
                 icon: Icon(
@@ -62,7 +63,8 @@ class _CollectionListItemsViewState extends State<CollectionListItemsView>{
                 ),
               ),
             );
-          },),
+          }),
+          CollectionItemTag(item.tags)
         ],
       ),
     );
@@ -77,7 +79,7 @@ class _CollectionListItemsViewState extends State<CollectionListItemsView>{
         if (model.collectionsItems.length > 0 && !model.isLoading) {
           var data = model.getItems(widget.collectionId);
 
-          //Depois que obteve o sitens da coleção selecionada
+          //Depois que obteve os itens da coleção selecionada
           if (data.length > 0) content = _buildList(data);
         } else if(model.collectionsItems.length ==0 && !model.isLoading){
           content = _buildEmpty();
