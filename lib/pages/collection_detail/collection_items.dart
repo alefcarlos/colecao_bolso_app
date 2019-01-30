@@ -25,7 +25,7 @@ class _CollectionListItemsViewState extends State<CollectionListItemsView>{
       margin: EdgeInsets.only(top: 7.0),
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 1,
         ),
         itemBuilder: (context, index) => _buildListTile(items, context, index),
         itemCount: items.length,
