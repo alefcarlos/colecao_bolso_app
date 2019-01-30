@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "513015052109",
+    "firebase_url": "https://colecaodebolso.firebaseio.com",
+    "project_id": "colecaodebolso",
+    "storage_bucket": "colecaodebolso.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513015052109:android:09130caba11f8258",
+        "android_client_info": {
+          "package_name": "br.com.colecaobolsoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "513015052109-dm1d5ntqhghqhrdpq989pi9k2taj4dfd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUboF_n_hHGunU5U5Jm5qNKTwwUJeyzD0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
