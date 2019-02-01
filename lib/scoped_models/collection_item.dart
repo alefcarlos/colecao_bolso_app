@@ -21,13 +21,14 @@ class CollectionItemModel extends LoadingModel {
     notifyListeners();
   }
 
-  toggleFav(int collectionId, int index) {
-    var model = _data[index];
+  toggleFav(int collectionId, int index, int collectionItemId) {
+    var model = _data.firstWhere((d) => d.collectionId == collectionId && d.id == collectionItemId);
     var newOne = CollectionItem(
         number: model.number,
         quantity: model.quantity,
         collectionId: model.collectionId,
-        isFav: !model.isFav);
+        isFav: !model.isFav,
+        tags: model.tags);
     newOne.setId(model.id);
     _data.removeAt(index);
     _data.add(newOne);

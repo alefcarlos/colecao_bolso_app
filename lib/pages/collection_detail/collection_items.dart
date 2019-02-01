@@ -47,27 +47,29 @@ class _CollectionListItemsViewState extends State<CollectionListItemsView>{
   ) {
     var item = items[index];
 
-    return Card(
+    return ScopedModelDescendant(
+    builder: (BuildContext context, Widget child, CollectionItemModel model) {
+          return Card(
       child: Column(
         children: [
           Image.asset('assets/food.jpg',),
-          ScopedModelDescendant<CollectionItemModel>(builder: (BuildContext context, Widget child, CollectionItemModel model) {
-            return ListTile(
+          ListTile(
               title: Text('#${item.number}'),
               subtitle: Text('Tenho ${item.quantity}'),
               trailing: IconButton(
-                onPressed: () => model.toggleFav(widget.collectionId, index),
+                onPressed: () => model.toggleFav(widget.collectionId, index, item.id),
                 icon: Icon(
                   item.isFav ? Icons.favorite : Icons.favorite_border,
                   color: item.isFav ? Colors.red : null,
                 ),
               ),
-            );
-          }),
+            ),
           CollectionItemTag(item.tags)
         ],
-      ),
+        ),
     );
+    });
+
   }
 
 
