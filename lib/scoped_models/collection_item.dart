@@ -30,7 +30,7 @@ class CollectionItemModel extends LoadingModel {
         isFav: !model.isFav,
         tags: model.tags);
     newOne.setId(model.id);
-    _data.removeAt(index);
+    _data.remove(model);
     _data.add(newOne);
     _data.sort((a, b) => a.number.compareTo(b.number));
 
