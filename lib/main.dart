@@ -5,16 +5,23 @@ import 'package:fluro/fluro.dart';
 import 'package:scoped_model/scoped_model.dart';
 import './scoped_models/collection.dart';
 import './scoped_models/collection_item.dart';
+import './scoped_models/item_tag.dart';
 
 void main() => runApp(MyApp(
-    collectionModel: CollectionModel(),
-    collectionItemModel: CollectionItemModel()));
+      collectionModel: CollectionModel(),
+      collectionItemModel: CollectionItemModel(),
+      itemTagModel: ItemTagModel(),
+    ));
 
 class MyApp extends StatelessWidget {
   final CollectionModel collectionModel;
   final CollectionItemModel collectionItemModel;
+  final ItemTagModel itemTagModel;
 
-  MyApp({@required this.collectionModel, @required this.collectionItemModel}) {
+  MyApp(
+      {@required this.collectionModel,
+      @required this.collectionItemModel,
+      @required this.itemTagModel}) {
     final router = new Router();
     Routes.configureRoutes(router);
     Application.router = router;
@@ -25,7 +32,10 @@ class MyApp extends StatelessWidget {
       model: collectionModel,
       child: ScopedModel<CollectionItemModel>(
         model: collectionItemModel,
-        child: child,
+        child: ScopedModel<ItemTagModel>(
+          model: itemTagModel,
+          child: child,
+        ),
       ),
     );
   }

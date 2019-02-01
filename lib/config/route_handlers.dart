@@ -8,6 +8,8 @@ import '../pages/auth/auth.dart';
 import '../scoped_models/collection.dart';
 import '../scoped_models/collection_item.dart';
 import '../pages/collection_detail/edit_collection_item.dart';
+import '../pages/tags/tags.dart';
+import '../scoped_models/item_tag.dart';
 
 var collectionsHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
@@ -52,4 +54,10 @@ var createCollectionItemHandler = Handler(
     collectionItemModel: model,
     collectionModel: model2,
   );
+});
+
+
+var tagsHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  var model = ItemTagModel.of(context);
+  return TagsPage(model);
 });

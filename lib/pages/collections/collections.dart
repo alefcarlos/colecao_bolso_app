@@ -7,6 +7,7 @@ import '../../scoped_models/collection.dart';
 import '../../config/application.dart';
 import '../../helpers/utility.dart';
 import '../../helpers/shimmers.dart' as Shimmers;
+import '../../config/routes.dart';
 
 class CollectionsPage extends StatefulWidget {
   final CollectionModel collectionModel;
@@ -133,9 +134,36 @@ class _CollectionsPageState extends State<CollectionsPage> {
     );
   }
 
+  Widget _buildSideDrawer(BuildContext context) {
+    return Drawer(
+      child: Column(
+        children: <Widget>[
+          AppBar(
+            automaticallyImplyLeading: false,
+            title: Text('Menu'),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.bookmark,
+              color: Colors.black,
+            ),
+            title: Text(
+              'Tags mais utilizadas',
+              style: TextStyle(
+                color: Colors.black54,
+              ),
+            ),
+            onTap: () => Application.router.navigateTo(context, Routes.tags),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: _buildSideDrawer(context),
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.

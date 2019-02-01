@@ -7,6 +7,7 @@ class Routes {
   static String collectionsRoute = '/collections';
   static String collectionItemsRoute = '/collection/:id';
   static String createCollectionRoute = '/collection/create';
+  static String tags = '/tags';
 
   /// Rota /collection/item/create
   static String createItemRoute = '/collection/item/create';
@@ -27,5 +28,6 @@ class Routes {
     router.define(collectionItemsRoute, handler: collectionItemsHandler);
     router.define(createItemRoute, handler: createItemHandler);
     router.define(createCollectionItemRoute, handler: createCollectionItemHandler);
+    router.define(tags, handler: tagsHandler);
   }
 }

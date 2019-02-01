@@ -36,6 +36,8 @@ dependencies:
   
   image_cropper: ^0.0.9
 
+  flutter_scatter: ^0.1.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
