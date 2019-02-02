@@ -7,16 +7,15 @@ import './collection_scoped_model.dart';
 import '../config/app_config.dart';
 import '../common/common.dart';
 
-
 class CollectionsList extends StatefulWidget {
-  final  CollectionModel collectionModel;
+  final CollectionModel collectionModel;
   CollectionsList(this.collectionModel);
-  
+
   _CollectionsListState createState() => _CollectionsListState();
 }
 
 class _CollectionsListState extends State<CollectionsList> {
-    @override
+  @override
   void initState() {
     widget.collectionModel.fetch();
     super.initState();
@@ -105,7 +104,6 @@ class _CollectionsListState extends State<CollectionsList> {
       ],
     );
   }
-
 
   @override
   Widget build(BuildContext context) {

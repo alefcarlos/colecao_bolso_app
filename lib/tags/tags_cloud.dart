@@ -29,7 +29,7 @@ class _TagsCloud extends State<TagsCloud> {
   ];
 
   Widget _buildEmpty() =>
-      Center(child: Text('Você ainda não tem itens cadastrados'));
+      Empty(text: Text('Você ainda não tem itens cadastrados'));
 
   Widget _buildTags(context, List<ItemTag> tags) {
     List<Widget> widgets = tags
@@ -59,13 +59,19 @@ class _TagsCloud extends State<TagsCloud> {
     return BlocBuilder<TagsEvent, TagsState>(
         bloc: widget._bloc,
         builder: (BuildContext context, TagsState state) {
-          print('[TagsCloud] - builder');
-          if (state is TagsIsLoadingState) {
-            print('[TagsCloud] - builder, TagsIsLoadingState');
+          if (state is TagsLoadingState) {
             return LoadingIndicator();
-          } else if (state is TagsIsReadyState) {
-            var tags = state.props[0] as List;
+          }
+
+          if (state is TagsLoadedState) {
+            var tags = state.tags;
             return tags.length > 0 ? _buildTags(context, tags) : _buildEmpty();
+          }
+
+          if (state is TagsErrorState) {
+            return Empty(
+              text: Text(state.error),
+            );
           }
         });
   }

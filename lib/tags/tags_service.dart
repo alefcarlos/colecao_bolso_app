@@ -1,18 +1,22 @@
+import 'dart:convert';
 import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
+
 import 'tag_model.dart';
 
 class TagsService {
+  final http.Client httpClient;
+  TagsService({@required this.httpClient}) : assert(httpClient != null);
+
   Future<List<ItemTag>> fetch() async {
-    await Future.delayed(Duration(seconds: 2));
-    return [
-      ItemTag('books', 10),
-      ItemTag('avenda', 50),
-      ItemTag('mangá', 20),
-      ItemTag('outra tag', 14),
-      ItemTag('tenis', 13),
-      ItemTag('camisas', 45),
-      ItemTag('maratona', 39),
-      ItemTag('tag2', 40),
-    ];
+    final response = await httpClient.get(
+        'https://my-json-server.typicode.com/alefcarlos/colecao_bolso_app/tags');
+
+    if (response.statusCode != 200)
+      throw 'Não foi possível recuperar as tags, tente novamente.';
+
+    final data = json.decode(response.body) as List;
+    return data.map((item) => ItemTag.fromMap(item)).toList();
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:http/http.dart' as http;
 
 import './collections/collections.dart';
 import './tags/tags.dart';
@@ -23,7 +24,7 @@ void main() {
     collectionModel: CollectionModel(),
     collectionItemModel: CollectionItemModel(),
     itemTagModel: ItemTagModel(),
-    tagsService: TagsService(),
+    tagsService: TagsService(httpClient: http.Client()),
   ));
 }
 

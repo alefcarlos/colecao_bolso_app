@@ -9,18 +9,21 @@ class TagsBloc extends Bloc<TagsEvent, TagsState> {
   TagsBloc(this._service) : assert(_service != null);
 
   @override
-  TagsState get initialState => TagsIsLoadingState();
+  TagsState get initialState => TagsLoadingState();
 
   @override
   Stream<TagsState> mapEventToState(
       TagsState currentState, TagsEvent event) async* {
-
     if (event == TagsEvent.loading) {
-      yield TagsIsLoadingState(); 
-      print('[TagsEvent.loading]');
-      var result = await _service.fetch();
-      print('[TagsEvent.loading] - fetched');
-      yield TagsIsReadyState(tags: result);
+      yield TagsLoadingState();
+
+      try {
+        var result = await _service.fetch();
+        yield TagsLoadedState(tags: result);
+      } catch (e) {
+        print(e);
+        yield TagsErrorState(e);
+      }
     }
   }
 }

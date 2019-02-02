@@ -6,14 +6,25 @@ abstract class TagsState extends Equatable {
   TagsState([List props = const []]) : super(props);
 }
 
-class TagsIsInitiatingState extends TagsState {}
+class TagsErrorState extends TagsState {
+  final String error;
+  TagsErrorState(this.error)
+      : assert(error != null && error.isNotEmpty),
+        super([error]);
+}
 
-class TagsIsLoadingState extends TagsState {}
+class TagsLoadingState extends TagsState {}
 
-class TagsIsReadyState extends TagsState {
+class TagsLoadedState extends TagsState {
   final List<ItemTag> tags;
 
-  TagsIsReadyState({@required this.tags})
+  TagsLoadedState({@required this.tags})
       : assert(tags != null),
         super([tags]);
+
+  // TagsLoadedState copyWith({
+  //   List<ItemTag> tags,
+  // }) {
+  //   return TagsLoadedState(tags: tags ?? this.tags);
+  // }
 }

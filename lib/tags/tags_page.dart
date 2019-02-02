@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import './tags_cloud.dart';
-import './tag_scoped_model.dart';
 import 'bloc/bloc.dart';
 
 class TagsPage extends StatelessWidget {
-  final ItemTagModel model;
   final TagsBloc _tagsBloc;
 
-  TagsPage(this.model, this._tagsBloc);
+  TagsPage(this._tagsBloc);
 
   @override
   Widget build(BuildContext context) {

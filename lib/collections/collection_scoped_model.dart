@@ -42,7 +42,7 @@ class CollectionModel extends LoadingModel {
   Future fetch() {
     setLoading(true);
 
-    return Future.delayed(const Duration(seconds: 1), () => "5").then((value) {
+    return Future.delayed(const Duration(seconds: 3), () => "5").then((value) {
       if (_data.length == 0) {
         // _data.add(
         //     Collection.withId(1, isFav: true, name: 'alef', itemCount: 10));
