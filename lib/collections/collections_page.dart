@@ -4,11 +4,13 @@ import './fancy_fab.dart';
 import './collection_scoped_model.dart';
 import 'drawer.dart';
 import 'collections_list.dart';
+import 'bloc/bloc.dart';
 
 class CollectionsPage extends StatelessWidget {
   final CollectionModel collectionModel;
+  final  CollectionsBloc collectionsBloc;
 
-  CollectionsPage(this.collectionModel);
+  CollectionsPage(this.collectionModel, this.collectionsBloc);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class CollectionsPage extends StatelessWidget {
         title: Text('Minhas coleções'),
       ),
       // body:  Shimmers.listView(context),
-      body: CollectionsList(collectionModel),
+      body: CollectionsList(collectionModel, collectionsBloc),
       floatingActionButton: CollectionsPageFab(),
     );
   }

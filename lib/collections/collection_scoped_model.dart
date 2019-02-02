@@ -18,9 +18,10 @@ class CollectionModel extends LoadingModel {
   toggleFav(int index) {
     var model = _data[index];
     var newOne = Collection(
-      itemCount: model.itemCount,
-      name: model.name,
-      isFav: !model.isFav,
+      0,
+      model.name,
+      !model.isFav,
+      model.itemCount,
     );
 
     newOne.setId(model.id);

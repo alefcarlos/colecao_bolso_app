@@ -11,9 +11,15 @@ class TagsErrorState extends TagsState {
   TagsErrorState(this.error)
       : assert(error != null && error.isNotEmpty),
         super([error]);
+
+  @override
+  String toString() => "TagsErrorState";
 }
 
-class TagsLoadingState extends TagsState {}
+class TagsLoadingState extends TagsState {
+  @override
+  String toString() => "TagsLoadingState";
+}
 
 class TagsLoadedState extends TagsState {
   final List<ItemTag> tags;
@@ -27,4 +33,7 @@ class TagsLoadedState extends TagsState {
   // }) {
   //   return TagsLoadedState(tags: tags ?? this.tags);
   // }
+
+  @override
+  String toString() => "TagsLoadedState";
 }

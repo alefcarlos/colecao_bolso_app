@@ -25,6 +25,7 @@ void main() {
     collectionItemModel: CollectionItemModel(),
     itemTagModel: ItemTagModel(),
     tagsService: TagsService(httpClient: http.Client()),
+    collectionsService: CollectionsService(httpClient: http.Client()),
   ));
 }
 
@@ -33,13 +34,14 @@ class ColecaoDeBolsoApp extends StatefulWidget {
   final CollectionItemModel collectionItemModel;
   final ItemTagModel itemTagModel;
   final TagsService tagsService;
+  final CollectionsService collectionsService;
 
-  ColecaoDeBolsoApp({
-    @required this.collectionModel,
-    @required this.collectionItemModel,
-    @required this.itemTagModel,
-    @required this.tagsService,
-  }) {
+  ColecaoDeBolsoApp(
+      {@required this.collectionModel,
+      @required this.collectionItemModel,
+      @required this.itemTagModel,
+      @required this.tagsService,
+      @required this.collectionsService}) {
     final router = new Router();
 
     //Configurar rotas
@@ -57,16 +59,19 @@ class ColecaoDeBolsoApp extends StatefulWidget {
 
 class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
   TagsBloc tagsBloc;
+  CollectionsBloc collectionsBloc;
 
   @override
   void initState() {
     tagsBloc = TagsBloc(widget.tagsService);
+    collectionsBloc = CollectionsBloc(widget.collectionsService);
     super.initState();
   }
 
   @override
   void dispose() {
     tagsBloc.dispose();
+    collectionsBloc.dispose();
     super.dispose();
   }
 
@@ -86,7 +91,10 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
   _injectBloc({@required Widget child}) {
     return BlocProvider<TagsBloc>(
       bloc: tagsBloc,
-      child: child,
+      child: BlocProvider<CollectionsBloc>(
+        bloc: collectionsBloc,
+        child: child,
+      ),
     );
   }
 

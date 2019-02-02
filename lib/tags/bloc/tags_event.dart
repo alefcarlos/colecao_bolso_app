@@ -1,1 +1,1 @@
-enum TagsEvent { loading, ready }
+enum TagsEvent { fetch }

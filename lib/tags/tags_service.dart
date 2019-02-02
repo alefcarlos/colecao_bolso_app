@@ -10,8 +10,8 @@ class TagsService {
   final http.Client httpClient;
   TagsService({@required this.httpClient}) : assert(httpClient != null);
 
-  Future<List<ItemTag>> fetch() async {
-    final response = await httpClient.get('${Application.apiUri}/tags');
+  Future<List<ItemTag>> fetch(int limit) async {
+    final response = await httpClient.get('${Application.apiUri}/tags?limit=$limit');
 
     if (response.statusCode != 200)
       throw 'Não foi possível recuperar as tags, tente novamente.';

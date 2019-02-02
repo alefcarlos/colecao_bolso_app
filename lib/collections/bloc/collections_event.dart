@@ -1,0 +1,1 @@
+enum CollectionsEvent { fetch, ready }

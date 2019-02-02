@@ -13,7 +13,7 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
 
   _addCollection(Function addCollection) {
     var entity =
-        Collection(name: _name, isFav: _isFavorite, itemCount: _totalItems);
+        Collection(0, _name, _isFavorite, _totalItems);
 
     addCollection(entity);
     Navigator.pop(context, entity.id);

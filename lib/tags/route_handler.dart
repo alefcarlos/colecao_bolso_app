@@ -11,7 +11,7 @@ class TagsRoute {
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     var tagsBloc = BlocProvider.of<TagsBloc>(context);
     
-    tagsBloc.dispatch(TagsEvent.loading);
+    tagsBloc.dispatch(TagsEvent.fetch);
     return TagsPage(tagsBloc);
     // return TagsPage();
   });
