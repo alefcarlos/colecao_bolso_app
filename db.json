@@ -1,0 +1,34 @@
+{
+    "collections": [
+        {
+            "id": 1,
+            "name:": "Boruto",
+            "itemCount": 21,
+            "isFav": true
+        },
+        {
+            "id": 2,
+            "name:": "Bonequinhos",
+            "itemCount": 15,
+            "isFav": false
+        }
+    ],
+    "tags": [
+        {
+            "tag:": "avenda",
+            "count": "20"
+        },
+        {
+            "tag:": "tag2",
+            "count": "30"
+        },
+        {
+            "tag:": "novo",
+            "count": "14"
+        },
+        {
+            "tag:": "usado",
+            "count": "15"
+        }
+    ]
+}
