@@ -2,13 +2,121 @@
     "collections": [
         {
             "id": 1,
-            "name:": "Boruto",
+            "name": "Boruto",
             "itemCount": 21,
             "isFav": true
         },
         {
             "id": 2,
-            "name:": "Bonequinhos",
+            "name": "Bonequinhos",
+            "itemCount": 15,
+            "isFav": false
+        },
+        {
+            "id": 3,
+            "name": "Boruto",
+            "itemCount": 21,
+            "isFav": true
+        },
+        {
+            "id": 4,
+            "name": "Bonequinhos",
+            "itemCount": 15,
+            "isFav": false
+        },
+        {
+            "id": 5,
+            "name": "Boruto",
+            "itemCount": 21,
+            "isFav": true
+        },
+        {
+            "id": 6,
+            "name": "Bonequinhos",
+            "itemCount": 15,
+            "isFav": false
+        },
+        {
+            "id": 7,
+            "name": "Boruto",
+            "itemCount": 21,
+            "isFav": true
+        },
+        {
+            "id": 8,
+            "name": "Bonequinhos",
+            "itemCount": 15,
+            "isFav": false
+        },
+        {
+            "id": 9,
+            "name": "Boruto",
+            "itemCount": 21,
+            "isFav": true
+        },
+        {
+            "id": 10,
+            "name": "Bonequinhos",
+            "itemCount": 15,
+            "isFav": false
+        },
+        {
+            "id": 11,
+            "name": "Boruto",
+            "itemCount": 21,
+            "isFav": true
+        },
+        {
+            "id": 12,
+            "name": "Bonequinhos",
+            "itemCount": 15,
+            "isFav": false
+        },
+        {
+            "id": 3,
+            "name": "Boruto",
+            "itemCount": 21,
+            "isFav": true
+        },
+        {
+            "id": 14,
+            "name": "Bonequinhos",
+            "itemCount": 15,
+            "isFav": false
+        },
+        {
+            "id": 15,
+            "name": "Boruto",
+            "itemCount": 21,
+            "isFav": true
+        },
+        {
+            "id": 16,
+            "name": "Bonequinhos",
+            "itemCount": 15,
+            "isFav": false
+        },
+        {
+            "id": 17,
+            "name": "Boruto",
+            "itemCount": 21,
+            "isFav": true
+        },
+        {
+            "id": 18,
+            "name": "Bonequinhos",
+            "itemCount": 15,
+            "isFav": false
+        },
+        {
+            "id": 19,
+            "name": "Boruto",
+            "itemCount": 21,
+            "isFav": true
+        },
+        {
+            "id": 20,
+            "name": "Bonequinhos",
             "itemCount": 15,
             "isFav": false
         }
