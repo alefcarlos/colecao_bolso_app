@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/collection.dart';
-import '../../scoped_models/collection.dart';
+import './collection_model.dart';
+import './collection_scoped_model.dart';
 
 class CreateCollectionPage extends StatefulWidget {
   _CreateCollectionPageState createState() => _CreateCollectionPageState();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../config/application.dart';
-import '../../config/routes.dart';
+import '../config/app_config.dart';
+import '../collections/route_handler.dart';
 
 class AuthPage extends StatefulWidget {
 
@@ -24,7 +24,7 @@ class _AuthPageState extends State<AuthPage> {
     _formKey.currentState.save();
 
     Application.router
-        .navigateTo(context, Routes.collectionsRoute, replace: true);
+        .navigateTo(context, CollectionsRoute.collectionsRoute, replace: true);
   }
 
   Widget _buildEmailTextField() {

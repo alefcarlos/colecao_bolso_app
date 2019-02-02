@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../config/application.dart';
-import '../../config/routes.dart';
-import '../../helpers/utility.dart';
+import '../config/app_config.dart';
+import '../common/common.dart';
+import 'route_handler.dart';
+import '../collection/route_handler.dart';
 
 //Based on https://medium.com/@agungsurya/create-a-simple-animated-floatingactionbutton-in-flutter-2d24f37cfbcc
 
@@ -82,7 +83,7 @@ class _CollectionsPageFabState extends State<CollectionsPageFab>
         onPressed: () {
           animate();
           Application.router
-              .navigateTo(context, Routes.createCollectionRoute)
+              .navigateTo(context, CollectionsRoute.createCollectionRoute)
               .then(
                 (createdId) => createdId != null
                     ? showSnackBar(
@@ -110,7 +111,7 @@ class _CollectionsPageFabState extends State<CollectionsPageFab>
         onPressed: () {
           animate();
           Application.router
-              .navigateTo(context, Routes.createItemRoute)
+              .navigateTo(context, CollectionRoute.createItemRoute)
               .then((result) => result != null
                   ? showSnackBar(
                       context,

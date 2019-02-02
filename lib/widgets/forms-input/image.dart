@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../helpers/utility.dart';
+import '../../common/common.dart';
 
 class ImageInput extends StatefulWidget {
   _ImageInputState createState() => _ImageInputState();

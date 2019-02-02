@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import '../../scoped_models/collection_item.dart';
-import '../../models/collection_item.dart';
-import '../../helpers/shimmers.dart' as Shimmers;
-import '../../widgets/ui-elements/tag.dart';
+import '../widgets/ui-elements/tag.dart';
+import 'collection_item_model.dart';
+import 'collection_item_scoped_model.dart';
+import '../common/common.dart';
 
 class CollectionListItemsView extends StatefulWidget {
     final int collectionId;
@@ -86,7 +86,7 @@ class _CollectionListItemsViewState extends State<CollectionListItemsView>{
         } else if(model.collectionsItems.length ==0 && !model.isLoading){
           content = _buildEmpty();
         } else if (model.isLoading) {
-          content = Shimmers.listView(context);
+          content = ShimmerList();
         }
         return RefreshIndicator(
           child: content,

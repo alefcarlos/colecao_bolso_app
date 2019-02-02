@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import './config/application.dart';
-import './config/routes.dart';
 import 'package:fluro/fluro.dart';
 import 'package:scoped_model/scoped_model.dart';
-import './scoped_models/collection.dart';
-import './scoped_models/collection_item.dart';
-import './scoped_models/item_tag.dart';
+
+import './collections/collections.dart';
+import './tags/tags.dart';
+import './collection/collection.dart';
+import './config/app_config.dart';
 
 void main() => runApp(MyApp(
       collectionModel: CollectionModel(),
@@ -23,7 +23,13 @@ class MyApp extends StatelessWidget {
       @required this.collectionItemModel,
       @required this.itemTagModel}) {
     final router = new Router();
+    
+    //Configurar rotas
     Routes.configureRoutes(router);
+    CollectionRoute.configureRoutes(router);
+    CollectionsRoute.configureRoutes(router);
+    TagsRoute.configureRoutes(router);
+
     Application.router = router;
   }
 

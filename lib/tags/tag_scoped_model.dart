@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
-import './loading_model.dart';
-import '../models/item_tag.dart';
+import './tag_model.dart';
+import '../scoped_models/scoped_models.dart';
 
 class ItemTagModel extends LoadingModel {
   List<ItemTag> _data = [];

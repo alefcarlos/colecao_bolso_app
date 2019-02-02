@@ -1,7 +1,7 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
-import '../models/collection_item.dart';
-import './loading_model.dart';
+import './collection_item_model.dart';
+import '../scoped_models/scoped_models.dart';
 
 class CollectionItemModel extends LoadingModel {
   List<CollectionItem> _data = [];

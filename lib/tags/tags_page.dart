@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './word_cloud.dart';
-import '../../scoped_models/item_tag.dart';
+import './tag_scoped_model.dart';
 
 class TagsPage extends StatelessWidget {
   final ItemTagModel model;

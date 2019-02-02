@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:scoped_model/scoped_model.dart';
 import './fancy_fab.dart';
-import '../../scoped_models/collection.dart';
-import '../../config/application.dart';
-import '../../helpers/utility.dart';
-import '../../helpers/shimmers.dart' as Shimmers;
-import '../../config/routes.dart';
+
+import './collection_scoped_model.dart';
+import '../config/app_config.dart';
+import '../common/common.dart';
+import '../tags/route_handler.dart';
 
 class CollectionsPage extends StatefulWidget {
   final CollectionModel collectionModel;
@@ -124,7 +124,7 @@ class _CollectionsPageState extends State<CollectionsPage> {
         } else if (model.collections.length == 0 && !model.isLoading) {
           content = _buildEmpty();
         } else if (model.isLoading) {
-          content = Shimmers.listView(context);
+          content = ShimmerList();
         }
         return RefreshIndicator(
           child: content,
@@ -153,7 +153,7 @@ class _CollectionsPageState extends State<CollectionsPage> {
                 color: Colors.black54,
               ),
             ),
-            onTap: () => Application.router.navigateTo(context, Routes.tags),
+            onTap: () => Application.router.navigateTo(context, TagsRoute.tags),
           )
         ],
       ),

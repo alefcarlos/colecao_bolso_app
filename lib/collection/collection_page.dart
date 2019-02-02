@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import './collection_items.dart';
-import './collection_items_listview.dart';
-import '../../scoped_models/collection.dart';
-import '../../scoped_models/collection_item.dart';
-import '../../config/application.dart';
+import 'collection_item_scoped_model.dart';
+import '../collections/collection_scoped_model.dart';
+import 'collection_items_listview.dart';
+import 'collection_items_default_listview.dart';
+import '../config/app_config.dart';
 
 class CollectionPage extends StatelessWidget {
   final int index;

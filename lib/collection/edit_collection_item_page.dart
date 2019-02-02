@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_tags/input_tags.dart';
 
-import '../../scoped_models/collection.dart';
-import '../../scoped_models/collection_item.dart';
-import '../../models/collection_item.dart';
-import '../../helpers/utility.dart';
-import '../../models/create_collecion_item_result.dart';
-import '../../widgets/forms-input/image.dart';
+import 'collection_item_scoped_model.dart';
+import 'collection_item_model.dart';
+import 'create_collecion_item_result_model.dart';
+import '../collections/collection_scoped_model.dart';
+
+import '../widgets/forms-input/image.dart';
+import '../common/common.dart';
 
 class EditCollectionItemPage extends StatefulWidget {
   /// É possível criamos um item para uma determinada coleção, basta informar o ID da mesma

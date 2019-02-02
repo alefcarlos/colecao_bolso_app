@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_scatter/flutter_scatter.dart';
 import 'package:scoped_model/scoped_model.dart';
-import '../../scoped_models/item_tag.dart';
-import '../../models/item_tag.dart';
-import '../../helpers/shimmers.dart' as Shimmers;
+import '../common/common.dart';
+import './tag_scoped_model.dart';
+import './tag_model.dart';
 
 class WordCloud extends StatefulWidget {
   final ItemTagModel model;
@@ -72,7 +72,7 @@ class _WordCloudState extends State<WordCloud> {
       } else if (model.tags.length == 0 && !model.isLoading) {
         content = _buildEmpty();
       } else if (model.isLoading) {
-        content = Shimmers.listView(context);
+        content = ShimmerList();
       }
 
       return RefreshIndicator(

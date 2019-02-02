@@ -2,8 +2,8 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import './loading_model.dart';
-import '../models/collection.dart';
+import '../scoped_models/scoped_models.dart';
+import './collection_model.dart';
 
 class CollectionModel extends LoadingModel {
   List<Collection> _data = [];
