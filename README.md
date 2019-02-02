@@ -5,5 +5,5 @@ A primeira versão foi construída nativamente com Android Studio + Java, agora 
 
 # Demonstração
 
-![Minion](docs/demo.gif)
+<!-- ![Minion](docs/demo.gif) -->
 ![Minion](docs/demov2.gif)
