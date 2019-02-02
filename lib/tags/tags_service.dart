@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
+import '../config/application.dart';
 
 import 'tag_model.dart';
 
@@ -10,8 +11,7 @@ class TagsService {
   TagsService({@required this.httpClient}) : assert(httpClient != null);
 
   Future<List<ItemTag>> fetch() async {
-    final response = await httpClient.get(
-        'https://my-json-server.typicode.com/alefcarlos/colecao_bolso_app/tags');
+    final response = await httpClient.get('${Application.apiUri}/tags');
 
     if (response.statusCode != 200)
       throw 'Não foi possível recuperar as tags, tente novamente.';
