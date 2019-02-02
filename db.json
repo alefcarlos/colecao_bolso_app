@@ -15,19 +15,19 @@
     ],
     "tags": [
         {
-            "tag:": "avenda",
+            "tag": "avenda",
             "count": 20
         },
         {
-            "tag:": "tag2",
+            "tag": "tag2",
             "count": 30
         },
         {
-            "tag:": "novo",
+            "tag": "novo",
             "count": 14
         },
         {
-            "tag:": "usado",
+            "tag": "usado",
             "count": 15
         }
     ]
