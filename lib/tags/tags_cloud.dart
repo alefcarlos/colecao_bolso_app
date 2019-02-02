@@ -2,22 +2,23 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_scatter/flutter_scatter.dart';
-import 'package:scoped_model/scoped_model.dart';
-import '../common/common.dart';
-import './tag_scoped_model.dart';
 import './tag_model.dart';
+import 'bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../common/common.dart';
 
-class WordCloud extends StatefulWidget {
-  final ItemTagModel model;
+class TagsCloud extends StatefulWidget {
+  final TagsBloc _bloc;
 
-  WordCloud(this.model);
+  TagsCloud(this._bloc) : assert(_bloc != null);
 
-  _WordCloudState createState() => _WordCloudState();
+  @override
+  State<StatefulWidget> createState() => _TagsCloud();
 }
 
-class _WordCloudState extends State<WordCloud> {
+class _TagsCloud extends State<TagsCloud> {
   final Random _random = Random();
-  List<Color> tagColors = [
+  final List<Color> _tagColors = const [
     Colors.red,
     Colors.green,
     Colors.grey,
@@ -27,19 +28,16 @@ class _WordCloudState extends State<WordCloud> {
     Colors.cyanAccent
   ];
 
-  @override
-  void initState() {
-    widget.model.fetch();
-    super.initState();
-  }
-
   Widget _buildEmpty() =>
       Center(child: Text('Você ainda não tem itens cadastrados'));
 
   Widget _buildTags(context, List<ItemTag> tags) {
     List<Widget> widgets = tags
-        .map((tag) => ScatterItem(FlutterHashtag('#${tag.tag}',
-            tagColors[_random.nextInt(tagColors.length)], tag.count + 10, _random.nextBool())))
+        .map((tag) => ScatterItem(FlutterHashtag(
+            '#${tag.tag}',
+            _tagColors[_random.nextInt(_tagColors.length)],
+            tag.count + 10,
+            _random.nextBool())))
         .toList();
 
     final screenSize = MediaQuery.of(context).size;
@@ -58,28 +56,18 @@ class _WordCloudState extends State<WordCloud> {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant(builder: (
-      BuildContext context,
-      Widget child,
-      ItemTagModel model,
-    ) {
-      Widget content = _buildEmpty();
-
-      if (model.tags == null) return content;
-
-      if (model.tags.length > 0 && !model.isLoading) {
-        content = _buildTags(context, model.tags);
-      } else if (model.tags.length == 0 && !model.isLoading) {
-        content = _buildEmpty();
-      } else if (model.isLoading) {
-        content = ShimmerList();
-      }
-
-      return RefreshIndicator(
-        child: content,
-        onRefresh: model.fetch,
-      );
-    });
+    return BlocBuilder<TagsEvent, TagsState>(
+        bloc: widget._bloc,
+        builder: (BuildContext context, TagsState state) {
+          print('[TagsCloud] - builder');
+          if (state is TagsIsLoadingState) {
+            print('[TagsCloud] - builder, TagsIsLoadingState');
+            return LoadingIndicator();
+          } else if (state is TagsIsReadyState) {
+            var tags = state.props[0] as List;
+            return tags.length > 0 ? _buildTags(context, tags) : _buildEmpty();
+          }
+        });
   }
 }
 
