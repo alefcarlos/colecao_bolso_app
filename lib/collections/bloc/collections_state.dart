@@ -18,10 +18,10 @@ class CollectionsErrorState extends CollectionsState {
   String toString() => "CollectionsErrorState";
 }
 
-class CollectionsLoadingState extends CollectionsState {
-  @override
-  String toString() => "CollectionsLoadingState";
-}
+// class CollectionsLoadingState extends CollectionsState {
+//   @override
+//   String toString() => "CollectionsLoadingState";
+// }
 
 class CollectionsLoadedState extends CollectionsState {
   final List<Collection> data;
@@ -31,7 +31,8 @@ class CollectionsLoadedState extends CollectionsState {
     @required this.data,
     @required this.hasReachedMax,
   })  : assert(data != null),
-        super([data]);
+        assert(hasReachedMax != null),
+        super([data, hasReachedMax]);
 
   CollectionsLoadedState copyWith({
     List<Collection> data,

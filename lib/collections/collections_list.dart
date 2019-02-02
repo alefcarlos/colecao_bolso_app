@@ -32,31 +32,27 @@ class _CollectionsListState extends State<CollectionsList> {
     }
   }
 
-  // @override
-  // void initState() {
-  //   widget.collectionModel.fetch();
-  //   super.initState();
-  // }
-
   Widget _buildList(CollectionsLoadedState state) {
     return ListView.builder(
-      itemBuilder: (context, index) => index >= state.data.length
-          ? BottomLoader()
-          : CollectionsListTile(state.data[index]),
+      itemBuilder: (context, index) {
+        if (index >= state.data.length) {
+          return BottomLoader();
+        }
+
+        return CollectionsListTile(state.data[index]);
+      },
       itemCount:
           state.hasReachedMax ? state.data.length : state.data.length + 1,
       controller: _scrollController,
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CollectionsEvent, CollectionsState>(
       bloc: widget._collectionsBloc,
       builder: (BuildContext context, CollectionsState state) {
-        if (state is CollectionsLoadingState || state is CollectionsUninitializedState) {
+        if (state is CollectionsUninitializedState) {
           return ShimmerList();
         }
 
@@ -73,7 +69,6 @@ class _CollectionsListState extends State<CollectionsList> {
             );
           }
           return _buildList(state);
-          
         }
       },
     );
@@ -95,23 +90,5 @@ class _CollectionsListState extends State<CollectionsList> {
     //     );
     //   },
     // );
-  }
-}
-
-class BottomLoader extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Center(
-        child: SizedBox(
-          width: 33,
-          height: 33,
-          child: CircularProgressIndicator(
-            strokeWidth: 1.5,
-          ),
-        ),
-      ),
-    );
   }
 }
