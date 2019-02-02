@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import '../widgets/ui-elements/tag.dart';
 import 'collection_item_model.dart';
 import 'collection_item_scoped_model.dart';
 import '../common/common.dart';
