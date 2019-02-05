@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './collections_page.dart';
 import './create.dart';
-import 'collection_scoped_model.dart';
 import 'bloc/bloc.dart';
 
 class CollectionsRoute {
@@ -12,13 +11,12 @@ class CollectionsRoute {
 
   static final collectionsHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    var model = CollectionModel.of(context);
 
     var tagsBloc = BlocProvider.of<CollectionsBloc>(context);
     
-    tagsBloc.dispatch(CollectionsEvent.fetch);
+    tagsBloc.dispatch(CollectionsFetchEvent());
 
-    return CollectionsPage(model, tagsBloc);
+    return CollectionsPage(tagsBloc);
   });
 
   static final createCollectionHandler = Handler(

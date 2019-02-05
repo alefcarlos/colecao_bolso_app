@@ -19,4 +19,6 @@ class Collection {
   String get name => _name;
   bool get isFav => _isFav;
   int get itemCount => _itemCount;
+
+  void setFav(bool fav) => _isFav = fav;
 }

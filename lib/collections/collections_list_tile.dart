@@ -4,22 +4,27 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../common/common.dart';
 import '../config/app_config.dart';
 import 'collection_model.dart';
+import 'bloc/bloc.dart';
 
 class CollectionsListTile extends StatelessWidget {
   final Collection _collection;
+  final CollectionsBloc _collectionsBloc;
+  final SlidableController slidableController = new SlidableController();
 
-  CollectionsListTile(this._collection) : assert(_collection != null);
+  CollectionsListTile(this._collection, this._collectionsBloc)
+      : assert(_collection != null),
+        assert(_collectionsBloc != null);
 
   @override
   Widget build(BuildContext context) {
     return Slidable(
+      controller: slidableController,
       key: Key(_collection.id.toString()),
       delegate: SlidableBehindDelegate(),
       slideToDismissDelegate: new SlideToDismissDrawerDelegate(
         onDismissed: (actionType) {
           if (actionType == SlideActionType.secondary) {
-            //TODO: deletar coleção
-            // widget.collectionModel.deleteCollection(index);
+            _collectionsBloc.dispatch(CollectionsDeleteEvent(_collection.id));
           }
         },
         dismissThresholds: <SlideActionType, double>{
@@ -52,17 +57,23 @@ class CollectionsListTile extends StatelessWidget {
           color: Colors.indigo,
           icon: _collection.isFav ? Icons.favorite_border : Icons.favorite,
           onTap: () {
-            //TODO: funcionalidade de marcar favorito
-            // widget.collectionModel.toggleFav(index);
-            showSnackBar(context, 'Ação realizada com sucesso!');
+            _collectionsBloc.dispatch(CollectionsToggleFavEvent(_collection.id));
           },
         ),
       ],
       secondaryActions: <Widget>[
         IconSlideAction(
-            caption: 'Excluir coleção',
-            color: Colors.red,
-            icon: Icons.delete_forever),
+          caption: 'Excluir coleção',
+          color: Colors.red,
+          icon: Icons.delete_forever,
+          closeOnTap: false,
+          onTap: () async {
+            if (await _showConfirmDeletion(context)) {
+              _collectionsBloc.dispatch(CollectionsDeleteEvent(_collection.id));
+              showSnackBar(context, 'Exclusão realizada com sucesso!');
+            }
+          },
+        ),
       ],
     );
   }

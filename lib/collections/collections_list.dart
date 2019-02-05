@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import './collection_scoped_model.dart';
 import '../common/common.dart';
 import 'bloc/bloc.dart';
 import 'collections_list_tile.dart';
 
 class CollectionsList extends StatefulWidget {
-  final CollectionModel collectionModel;
   final CollectionsBloc _collectionsBloc;
 
-  CollectionsList(this.collectionModel, this._collectionsBloc)
+  CollectionsList(this._collectionsBloc)
       : assert(_collectionsBloc != null);
 
   _CollectionsListState createState() => _CollectionsListState();
@@ -28,7 +26,7 @@ class _CollectionsListState extends State<CollectionsList> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      widget._collectionsBloc.dispatch(CollectionsEvent.fetch);
+      widget._collectionsBloc.dispatch(CollectionsFetchEvent());
     }
   }
 
@@ -39,7 +37,7 @@ class _CollectionsListState extends State<CollectionsList> {
           return BottomLoader();
         }
 
-        return CollectionsListTile(state.data[index]);
+        return CollectionsListTile(state.data[index], widget._collectionsBloc);
       },
       itemCount:
           state.hasReachedMax ? state.data.length : state.data.length + 1,
@@ -52,7 +50,7 @@ class _CollectionsListState extends State<CollectionsList> {
     return BlocBuilder<CollectionsEvent, CollectionsState>(
       bloc: widget._collectionsBloc,
       builder: (BuildContext context, CollectionsState state) {
-        if (state is CollectionsUninitializedState) {
+        if (state is CollectionsLoadingState) {
           return ShimmerList();
         }
 

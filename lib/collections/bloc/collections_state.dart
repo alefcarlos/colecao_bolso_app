@@ -6,7 +6,7 @@ abstract class CollectionsState extends Equatable {
   CollectionsState([List props = const []]) : super(props);
 }
 
-class CollectionsUninitializedState extends CollectionsState{}
+class CollectionsLoadingState extends CollectionsState{}
 
 class CollectionsErrorState extends CollectionsState {
   final String error;
@@ -18,10 +18,6 @@ class CollectionsErrorState extends CollectionsState {
   String toString() => "CollectionsErrorState";
 }
 
-// class CollectionsLoadingState extends CollectionsState {
-//   @override
-//   String toString() => "CollectionsLoadingState";
-// }
 
 class CollectionsLoadedState extends CollectionsState {
   final List<Collection> data;

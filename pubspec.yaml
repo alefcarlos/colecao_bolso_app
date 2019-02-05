@@ -38,7 +38,7 @@ dependencies:
 
   flutter_scatter: ^0.1.0
 
-  flutter_bloc: ^0.5.3
+  flutter_bloc: ^0.5.4
 
   equatable: ^0.1.10
 
