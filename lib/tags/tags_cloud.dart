@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_scatter/flutter_scatter.dart';
 import './tag_model.dart';
-import 'bloc/bloc.dart';
+import 'bloc/exporter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../common/common.dart';
 

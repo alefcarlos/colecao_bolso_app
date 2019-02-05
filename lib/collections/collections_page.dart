@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './fancy_fab.dart';
 import 'drawer.dart';
 import 'collections_list.dart';
-import 'bloc/bloc.dart';
+import 'bloc/list/exporter.dart';
 
 class CollectionsPage extends StatelessWidget {
   final  CollectionsBloc collectionsBloc;

@@ -4,7 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../common/common.dart';
 import '../config/app_config.dart';
 import 'collection_model.dart';
-import 'bloc/bloc.dart';
+import 'bloc/list/exporter.dart';
 
 class CollectionsListTile extends StatelessWidget {
   final Collection _collection;

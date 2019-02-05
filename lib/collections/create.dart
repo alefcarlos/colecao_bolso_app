@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import './collection_model.dart';
+import 'bloc/list/exporter.dart';
 
 class CreateCollectionPage extends StatefulWidget {
+  final CollectionsCreateBloc bloc;
+
+  CreateCollectionPage(this.bloc);
+
   _CreateCollectionPageState createState() => _CreateCollectionPageState();
 }
 
@@ -10,20 +15,17 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
   int _totalItems = 0;
   bool _isFavorite = false;
 
-  _addCollection(Function addCollection) {
-    var entity =
-        Collection(0, _name, _isFavorite, _totalItems);
+  _addCollection() {
+    var entity = Collection(0, _name, _isFavorite, _totalItems);
 
-    addCollection(entity);
+    widget.collectionsBloc.dispatch(CollectionsCreateEvent(entity));
     Navigator.pop(context, entity.id);
   }
 
   Widget _buildSubmitButton(BuildContext context) {
-    var model = CollectionModel.of(context);
-
     return RaisedButton(
       color: Theme.of(context).accentColor,
-      onPressed: () => _addCollection(model.addCollection),
+      onPressed: () => _addCollection(),
       child: Text('Salvar'),
     );
   }

@@ -1,3 +1,37 @@
-export 'tags_event.dart';
-export 'tags_state.dart';
-export 'tags_bloc.dart';
+import 'package:bloc/bloc.dart';
+import 'package:rxdart/rxdart.dart';
+import 'event.dart';
+import 'state.dart';
+import '../tags_service.dart';
+
+class TagsBloc extends Bloc<TagsEvent, TagsState> {
+  final TagsService _service;
+
+  TagsBloc(this._service) : assert(_service != null);
+
+  //TODO: entender melhor o que isso faz.
+  @override
+  Stream<TagsEvent> transform(Stream<TagsEvent> events) {
+    return (events as Observable<TagsEvent>)
+        .debounce(Duration(milliseconds: 500));
+  }
+
+  @override
+  TagsState get initialState => TagsLoadingState();
+
+  @override
+  Stream<TagsState> mapEventToState(
+      TagsState currentState, TagsEvent event) async* {
+    if (event == TagsEvent.fetch) {
+      yield TagsLoadingState();
+
+      try {
+        var result = await _service.fetch(10);
+        yield TagsLoadedState(tags: result);
+      } catch (e) {
+        print(e);
+        yield TagsErrorState(e);
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './tags_page.dart';
-import './bloc/bloc.dart';
+import 'bloc/exporter.dart';
 
 class TagsRoute {
   static String tags = '/tags';
