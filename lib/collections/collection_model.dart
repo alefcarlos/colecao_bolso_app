@@ -14,11 +14,17 @@ class Collection {
   }
 
   int get id => _id;
-  setId(int id) => this._id = id;
-
   String get name => _name;
   bool get isFav => _isFav;
   int get itemCount => _itemCount;
 
   void setFav(bool fav) => _isFav = fav;
+  dynamic toMap() {
+    return {
+      'id': this.id,
+      'name': this.name,
+      'isFav': this.isFav,
+      'itemCount': this.itemCount
+    };
+  }
 }

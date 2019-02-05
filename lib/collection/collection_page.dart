@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'collection_item_scoped_model.dart';
-import '../collections/collection_scoped_model.dart';
 import 'collection_items_listview.dart';
 import 'collection_items_default_listview.dart';
 import '../config/app_config.dart';

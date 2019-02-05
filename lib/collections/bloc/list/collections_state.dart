@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import '../collection_model.dart';
+import '../../collection_model.dart';
 
 abstract class CollectionsState extends Equatable {
   CollectionsState([List props = const []]) : super(props);

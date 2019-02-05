@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'collections_event.dart';
 import 'collections_state.dart';
-import '../collections_service.dart';
-import '../collection_model.dart';
+import '../../collections_service.dart';
+import '../../collection_model.dart';
 
 class CollectionsBloc extends Bloc<CollectionsEvent, CollectionsState> {
   final CollectionsService _service;

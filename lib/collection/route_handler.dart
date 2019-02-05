@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'collection_page.dart';
 import 'collection_item_scoped_model.dart';
 import 'edit_collection_item_page.dart';
-import '../collections/collection_scoped_model.dart';
 
 class CollectionRoute {
   static String collectionItemsRoute = '/collection/:id';

@@ -21,25 +21,19 @@ void main() {
   BlocSupervisor().delegate = SimpleBlocDelegate();
 
   runApp(ColecaoDeBolsoApp(
-    collectionModel: CollectionModel(),
     collectionItemModel: CollectionItemModel(),
-    itemTagModel: ItemTagModel(),
     tagsService: TagsService(httpClient: http.Client()),
     collectionsService: CollectionsService(httpClient: http.Client()),
   ));
 }
 
 class ColecaoDeBolsoApp extends StatefulWidget {
-  final CollectionModel collectionModel;
   final CollectionItemModel collectionItemModel;
-  final ItemTagModel itemTagModel;
   final TagsService tagsService;
   final CollectionsService collectionsService;
 
   ColecaoDeBolsoApp(
-      {@required this.collectionModel,
-      @required this.collectionItemModel,
-      @required this.itemTagModel,
+      {@required this.collectionItemModel,
       @required this.tagsService,
       @required this.collectionsService}) {
     final router = new Router();
@@ -76,16 +70,8 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
   }
 
   _injectScopedModels({@required Widget child}) {
-    return ScopedModel<CollectionModel>(
-      model: widget.collectionModel,
-      child: ScopedModel<CollectionItemModel>(
-        model: widget.collectionItemModel,
-        child: ScopedModel<ItemTagModel>(
-          model: widget.itemTagModel,
-          child: child,
-        ),
-      ),
-    );
+    return ScopedModel<CollectionItemModel>(
+        model: widget.collectionItemModel, child: child);
   }
 
   _injectBloc({@required Widget child}) {
