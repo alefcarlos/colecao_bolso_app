@@ -1,14 +1,10 @@
-import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import '../../collection_model.dart';
+import '../../../bloc/state_base.dart';
 
-abstract class CollectionsState extends Equatable {
-  CollectionsState([List props = const []]) : super(props);
-}
+class CollectionsLoadingState extends BlocBaseState {}
 
-class CollectionsLoadingState extends CollectionsState{}
-
-class CollectionsErrorState extends CollectionsState {
+class CollectionsErrorState extends BlocBaseState {
   final String error;
   CollectionsErrorState(this.error)
       : assert(error != null && error.isNotEmpty),
@@ -18,8 +14,7 @@ class CollectionsErrorState extends CollectionsState {
   String toString() => "CollectionsErrorState";
 }
 
-
-class CollectionsLoadedState extends CollectionsState {
+class CollectionsLoadedState extends BlocBaseState {
   final List<Collection> data;
   final bool hasReachedMax;
 
@@ -41,5 +36,6 @@ class CollectionsLoadedState extends CollectionsState {
   }
 
   @override
-  String toString() => "CollectionsLoadedState, data.lenght(${data.length}, hasReachedMax($hasReachedMax))";
+  String toString() =>
+      "CollectionsLoadedState, data.lenght(${data.length}, hasReachedMax($hasReachedMax))";
 }

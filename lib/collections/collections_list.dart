@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../common/common.dart';
 import 'bloc/list/exporter.dart';
 import 'collections_list_tile.dart';
+import '../bloc/exporter.dart';
 
 class CollectionsList extends StatefulWidget {
   final CollectionsBloc _collectionsBloc;
@@ -47,9 +48,9 @@ class _CollectionsListState extends State<CollectionsList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CollectionsEvent, CollectionsState>(
+    return BlocBuilder<BlocBaseEvent, BlocBaseState>(
       bloc: widget._collectionsBloc,
-      builder: (BuildContext context, CollectionsState state) {
+      builder: (BuildContext context, BlocBaseState state) {
         if (state is CollectionsLoadingState) {
           return ShimmerList();
         }
@@ -70,23 +71,5 @@ class _CollectionsListState extends State<CollectionsList> {
         }
       },
     );
-
-    // return ScopedModelDescendant(
-    //   builder: (BuildContext context, Widget child, CollectionModel model) {
-    //     Widget content = Empty();
-
-    //     if (model.collections.length > 0 && !model.isLoading) {
-    //       content = _buildList();
-    //     } else if (model.collections.length == 0 && !model.isLoading) {
-    //       content = content;
-    //     } else if (model.isLoading) {
-    //       content = ShimmerList();
-    //     }
-    //     return RefreshIndicator(
-    //       child: content,
-    //       onRefresh: model.fetch,
-    //     );
-    //   },
-    // );
   }
 }

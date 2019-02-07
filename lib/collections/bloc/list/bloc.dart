@@ -4,25 +4,26 @@ import 'event.dart';
 import 'state.dart';
 import '../../collections_service.dart';
 import '../../collection_model.dart';
+import '../../../bloc/exporter.dart';
 
-class CollectionsBloc extends Bloc<CollectionsEvent, CollectionsState> {
+class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   final CollectionsService _service;
 
   CollectionsBloc(this._service) : assert(_service != null);
 
   //TODO: entender melhor o que isso faz.
   @override
-  Stream<CollectionsEvent> transform(Stream<CollectionsEvent> events) {
-    return (events as Observable<CollectionsEvent>)
+  Stream<BlocBaseEvent> transform(Stream<BlocBaseEvent> events) {
+    return (events as Observable<BlocBaseEvent>)
         .debounce(Duration(milliseconds: 500));
   }
 
   @override
-  CollectionsState get initialState => CollectionsLoadingState();
+  BlocBaseState get initialState => CollectionsLoadingState();
 
   @override
-  Stream<CollectionsState> mapEventToState(
-      CollectionsState currentState, CollectionsEvent event) async* {
+  Stream<BlocBaseState> mapEventToState(
+      BlocBaseState currentState, BlocBaseEvent event) async* {
     if (event is CollectionsDeleteEvent && currentState is CollectionsLoadedState) {
       yield CollectionsLoadingState();
       var data = await _delete(event.collectionId, currentState);
@@ -71,6 +72,6 @@ class CollectionsBloc extends Bloc<CollectionsEvent, CollectionsState> {
     return loadedState.data;
   }
 
-  bool _hasReachedMax(CollectionsState state) =>
+  bool _hasReachedMax(BlocBaseState state) =>
       state is CollectionsLoadedState && state.hasReachedMax;
 }

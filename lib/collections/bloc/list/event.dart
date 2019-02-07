@@ -1,23 +1,13 @@
-import 'package:equatable/equatable.dart';
-import '../../collection_model.dart';
+import '../../../bloc/event_base.dart';
 
-abstract class CollectionsEvent extends Equatable {
-  CollectionsEvent([List props = const []]) : super(props);
-}
+class CollectionsFetchEvent extends BlocBaseEvent {}
 
-class CollectionsFetchEvent extends CollectionsEvent {}
-
-class CollectionsDeleteEvent extends CollectionsEvent {
+class CollectionsDeleteEvent extends BlocBaseEvent {
   final int collectionId;
   CollectionsDeleteEvent(this.collectionId): super([collectionId]);
 }
 
-class CollectionsToggleFavEvent extends CollectionsEvent {
+class CollectionsToggleFavEvent extends BlocBaseEvent {
   final int collectionId;
   CollectionsToggleFavEvent(this.collectionId): super([collectionId]);
-}
-
-class CollectionsCreateEvent extends CollectionsEvent {
-  final Collection entity;
-  CollectionsCreateEvent(this.entity): super([entity]);
 }

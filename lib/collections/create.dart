@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './collection_model.dart';
-import 'bloc/list/exporter.dart';
+import 'bloc/create/exporter.dart';
 
 class CreateCollectionPage extends StatefulWidget {
   final CollectionsCreateBloc bloc;

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './collections_page.dart';
 import './create.dart';
-import 'bloc/list/export.dart';
+import 'bloc/list/exporter.dart';
 
 class CollectionsRoute {
   static String collectionsRoute = '/collections';
