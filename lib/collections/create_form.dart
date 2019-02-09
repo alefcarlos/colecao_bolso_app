@@ -16,20 +16,30 @@ class CollectionCreateForm extends StatefulWidget {
 }
 
 class _CollectionCreateFormState extends State<CollectionCreateForm> {
-  String _name = '';
-  int _totalItems = 0;
-  bool _isFavorite = false;
-
-  _addCollection() {
-    var entity = Collection(0, _name, _isFavorite, _totalItems);
-
-    widget.bloc.dispatch(CreateCollectionEvent(entity));
-  }
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final Map<String, dynamic> _formData = {
+    'name': '',
+    'totalItems': 1,
+    'isFav': false,
+    'color': null
+  };
 
   void _onWidgetDidBuild(Function callback) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       callback();
     });
+  }
+
+  _submitForm() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+
+    var entity = Collection(
+        0, _formData['name'], _formData['isFav'], _formData['totalItems']);
+
+    widget.bloc.dispatch(CreateCollectionEvent(entity));
   }
 
   Widget _buildSubmitButton(BuildContext context, BlocBaseState state) {
@@ -39,9 +49,71 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
 
     return RaisedButton(
       color: Theme.of(context).accentColor,
-      onPressed: () => _addCollection(),
+      onPressed: () => _submitForm(),
       child: Text('Salvar'),
     );
+  }
+
+  Widget _buildNameField() {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: 'Nome',
+        filled: true,
+      ),
+      validator: (String value){
+        if (value.isEmpty) return 'O campo nome é obrigatório!';
+      },
+      onSaved: (String value) {
+        _formData['name'] = value;
+      },
+    );
+  }
+
+  Widget _buildTotalItemsField() {
+    return TextField(
+      keyboardType:
+          TextInputType.numberWithOptions(decimal: false, signed: false),
+      decoration: InputDecoration(
+        labelText: 'Quantidade de itens',
+        filled: true,
+      ),
+      onChanged: (String value) {
+        _formData['itemsCount'] = int.parse(value);
+      },
+    );
+  }
+
+  Widget _buildIsFavField() {
+    return SwitchListTile(
+      value: _formData['isFav'],
+      onChanged: (bool value) {
+        setState(() {
+          _formData['isFav'] = value;
+        });
+      },
+      title: Text('Marcar como favorito'),
+    );
+  }
+
+  List<Widget> _buildFields(BuildContext context, BlocBaseState state) {
+    return [
+      _buildNameField(),
+      SizedBox(
+        height: 10.0,
+      ),
+      _buildTotalItemsField(),
+      SizedBox(
+        height: 10.0,
+      ),
+      _buildIsFavField(),
+      SizedBox(
+        height: 10.0,
+      ),
+      SizedBox(
+        height: 10.0,
+      ),
+      _buildSubmitButton(context, state)
+    ];
   }
 
   @override
@@ -68,52 +140,10 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
 
         return Container(
           margin: EdgeInsets.all(10.0),
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Nome',
-                      filled: true,
-                    ),
-                    onChanged: (String value) {
-                      setState(() {
-                        _name = value;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  TextField(
-                    keyboardType: TextInputType.numberWithOptions(
-                        decimal: false, signed: false),
-                    decoration: InputDecoration(
-                      labelText: 'Quantidade de itens',
-                      filled: true,
-                    ),
-                    onChanged: (String value) {
-                      setState(() {
-                        _totalItems = int.parse(value);
-                      });
-                    },
-                  ),
-                  SwitchListTile(
-                    value: _isFavorite,
-                    title: Text('Marcar como favorito'),
-                    onChanged: (bool value) {
-                      setState(() {
-                        _isFavorite = value;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  _buildSubmitButton(context, state)
-                ],
-              ),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: _buildFields(context, state),
             ),
           ),
         );
