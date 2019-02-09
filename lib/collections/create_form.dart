@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/block_picker.dart';
 
 import 'collection_model.dart';
 import 'bloc/create/exporter.dart';
@@ -21,8 +22,10 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
     'name': '',
     'totalItems': 1,
     'isFav': false,
-    'color': null
+    'color': Colors.grey
   };
+
+  _changeColor(Color color) => setState(() =>_formData['color'] = color);
 
   void _onWidgetDidBuild(Function callback) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -60,7 +63,7 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
         labelText: 'Nome',
         filled: true,
       ),
-      validator: (String value){
+      validator: (String value) {
         if (value.isEmpty) return 'O campo nome é obrigatório!';
       },
       onSaved: (String value) {
@@ -95,6 +98,29 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
     );
   }
 
+  Widget _buildColorPicker() {
+    return RaisedButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Selecione uma cor'),
+                content: SingleChildScrollView(
+                  child: BlockPicker(
+                    pickerColor: _formData['color'],
+                    onColorChanged: _changeColor,
+                  ),
+                ),
+              );
+            },
+          );
+        },
+        child: Text('Cor da coleção'),
+        color: _formData['color'],
+        textColor: Colors.white);
+  }
+
   List<Widget> _buildFields(BuildContext context, BlocBaseState state) {
     return [
       _buildNameField(),
@@ -109,6 +135,7 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
       SizedBox(
         height: 10.0,
       ),
+      _buildColorPicker(),
       SizedBox(
         height: 10.0,
       ),
