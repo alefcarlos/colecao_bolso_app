@@ -1,10 +1,9 @@
-// import '../../collection_model.dart';
+import '../../collection_model.dart';
 import '../../../bloc/exporter.dart';
 
-class CollectionCreateFetchCollectionsEvent extends BlocBaseEvent {}
+// class CreateCollectionFetchCollectionsEvent extends BlocBaseEvent {}
 
-
-// class CollectionCreateEvent extends CollectionCreateEvent {
-//   final Collection entity;
-//   CollectionsCreateEvent(this.entity): super([entity]);
-// }
+class CreateCollectionEvent extends BlocBaseEvent {
+  final Collection entity;
+  CreateCollectionEvent(this.entity) : super([entity]);
+}

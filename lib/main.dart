@@ -54,11 +54,13 @@ class ColecaoDeBolsoApp extends StatefulWidget {
 class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
   TagsBloc tagsBloc;
   CollectionsBloc collectionsBloc;
+  CreateCollectionBloc createCollectionBloc;
 
   @override
   void initState() {
     tagsBloc = TagsBloc(widget.tagsService);
     collectionsBloc = CollectionsBloc(widget.collectionsService);
+    createCollectionBloc = CreateCollectionBloc(widget.collectionsService);
     super.initState();
   }
 
@@ -79,7 +81,10 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
       bloc: tagsBloc,
       child: BlocProvider<CollectionsBloc>(
         bloc: collectionsBloc,
-        child: child,
+        child: BlocProvider<CreateCollectionBloc>(
+          bloc: createCollectionBloc,
+          child: child,
+        ),
       ),
     );
   }

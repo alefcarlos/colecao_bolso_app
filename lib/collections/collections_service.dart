@@ -44,7 +44,18 @@ class CollectionsService {
     var response = await httpClient.post('${Application.apiUri}/collections/',
         body: json.encode(model.toMap()));
 
-    if (response.statusCode != 200)
+    if (response.statusCode != 201)
       throw 'Não foi possível criar a coleção, tente novamente.';
+  }
+
+  Future<List<Collection>> fetchAll() async {
+    final response = await httpClient.get(
+        '${Application.apiUri}/collections');
+
+    if (response.statusCode != 200)
+      throw 'Não foi possível recuperar as coleções, tente novamente.';
+
+    final data = json.decode(response.body) as List;
+    return data.map((item) => Collection.fromMap(item)).toList();
   }
 }
