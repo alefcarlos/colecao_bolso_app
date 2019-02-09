@@ -20,8 +20,8 @@ class CollectionsRoute {
 
   static final createCollectionHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    var bloc = BlocProvider.of<CreateCollectionBloc>(context);
 
+    var bloc = BlocProvider.of<CreateCollectionBloc>(context);
     return CreateCollectionPage(bloc);
   });
 

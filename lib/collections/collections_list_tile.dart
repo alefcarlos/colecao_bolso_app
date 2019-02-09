@@ -17,6 +17,8 @@ class CollectionsListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var color = _collection.rgbColor.split(',');
+
     return Slidable(
       controller: slidableController,
       key: Key(_collection.id.toString()),
@@ -47,7 +49,15 @@ class CollectionsListTile extends StatelessWidget {
                 _collection.isFav ? Icons.favorite : Icons.favorite_border,
                 color: _collection.isFav ? Colors.red : null,
               ),
-            )
+              trailing: CircleAvatar(
+                backgroundColor: Color.fromARGB(255, int.parse(color[0]),
+                    int.parse(color[1]), int.parse(color[2])),
+                child: Container(
+                  width: 1,
+                  height: 1,
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -57,7 +67,8 @@ class CollectionsListTile extends StatelessWidget {
           color: Colors.indigo,
           icon: _collection.isFav ? Icons.favorite_border : Icons.favorite,
           onTap: () {
-            _collectionsBloc.dispatch(CollectionsToggleFavEvent(_collection.id));
+            _collectionsBloc
+                .dispatch(CollectionsToggleFavEvent(_collection.id));
           },
         ),
       ],

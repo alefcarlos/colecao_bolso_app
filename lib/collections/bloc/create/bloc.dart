@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-
 import '../../../bloc/exporter.dart';
 import 'state.dart';
 import 'event.dart';
@@ -22,13 +21,18 @@ class CreateCollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
     //   yield CreateCollectionsLoadedState(data: data);
     // }
 
+    if (event is CreateCollectionClearStateEvent) {
+      yield CreateCollectionUnintialized();
+    }
+
     if (event is CreateCollectionEvent) {
       try {
         yield CreateCollectionCreatingState();
         await _service.add(event.entity);
         yield CreateCollectionCreatingSuccessfulState(event.entity.id);
       } catch (e) {
-        yield CreateCollectionCreatingFailedState('Não foi possível criar a coleção, tente novamente.');
+        yield CreateCollectionCreatingFailedState(
+            'Não foi possível criar a coleção, tente novamente.');
       }
     }
   }

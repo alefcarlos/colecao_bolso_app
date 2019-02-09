@@ -25,7 +25,10 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
     'color': Colors.grey
   };
 
-  _changeColor(Color color) => setState(() =>_formData['color'] = color);
+  _changeColor(Color color) => setState(() {
+        _formData['color'] = color;
+        Navigator.of(context).pop();
+      });
 
   void _onWidgetDidBuild(Function callback) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -40,7 +43,7 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
     _formKey.currentState.save();
 
     var entity = Collection(
-        0, _formData['name'], _formData['isFav'], _formData['totalItems']);
+        0, _formData['name'], _formData['isFav'], _formData['totalItems'], rgbColor: "${_formData['color'].red},${_formData['color'].green},${_formData['color'].blue}");
 
     widget.bloc.dispatch(CreateCollectionEvent(entity));
   }
@@ -73,14 +76,17 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
   }
 
   Widget _buildTotalItemsField() {
-    return TextField(
+    return TextFormField(
       keyboardType:
           TextInputType.numberWithOptions(decimal: false, signed: false),
       decoration: InputDecoration(
         labelText: 'Quantidade de itens',
         filled: true,
       ),
-      onChanged: (String value) {
+      validator: (String value){
+        if (value.isEmpty) return 'É obrigatório informar uma quantidade de itens.';
+      },
+      onSaved: (String value) {
         _formData['itemsCount'] = int.parse(value);
       },
     );
@@ -161,6 +167,7 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
 
         if (state is CreateCollectionCreatingSuccessfulState) {
           _onWidgetDidBuild(() {
+            widget.bloc.dispatch(CreateCollectionClearStateEvent());
             Navigator.pop(context, state.collectionId);
           });
         }
