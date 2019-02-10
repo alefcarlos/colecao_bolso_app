@@ -18,6 +18,8 @@ class CollectionRoute {
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     var collectionId = int.parse(params['id']?.first);
     var bloc = CollectionBloc.of(context);
+    
+    bloc.dispatch(CollectionFetchItemsEvent(collectionId));
 
     return CollectionPage(collectionId, bloc);
   });

@@ -7,7 +7,7 @@ class CollectionService {
 
   CollectionService({@required this.httpClient}) : assert(httpClient != null);
 
-  Future<List<CollectionItem>> fetch(int startIndex, int limit) async {
+  Future<List<CollectionItem>> fetch(int collectionId, int startIndex, int limit) async {
     await Future.delayed(Duration(seconds: 1));
     // final response = await httpClient.get(
     //     '${Application.apiUri}/collections?_start=$startIndex&_limit=$limit');
@@ -15,9 +15,12 @@ class CollectionService {
     // if (response.statusCode != 200)
     //   throw 'Não foi possível recuperar as coleções, tente novamente.';
 
-    return Application.collectionItems.skip(limit).take(limit).toList();
+    return Application.collectionItems
+      .where((i) => i.collectionId == collectionId)
+      .skip(startIndex)
+      .take(limit)
+      .toList();
     // final data = json.decode(response.body) as List;
     // return data.map((item) => Collection.fromMap(item)).toList();
   }
-
 }

@@ -25,12 +25,12 @@ class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
       BlocBaseState currentState, BlocBaseEvent event) async* {
     if (event is CollectionFetchItemsEvent && !_hasReachedMax(currentState)) {
       try {
-        if (currentState is CollectionItemsLoadedState) {
-          final data = await _service.fetch(0, 10);
+        if (currentState is BlocLoadingIndicatorState) {
+          final data = await _service.fetch(event.collectionId, 0, 10);
           yield CollectionItemsLoadedState(data: data, hasReachedMax: false);
         }
         if (currentState is CollectionItemsLoadedState) {
-          final data = await _service.fetch(currentState.data.length, 10);
+          final data = await _service.fetch(event.collectionId, currentState.data.length, 10);
           yield data.isEmpty
               ? currentState.copyWith(hasReachedMax: true)
               : CollectionItemsLoadedState(

@@ -34,7 +34,7 @@ class _CollectionListItemsViewState extends State<CollectionListItemsView> {
 
   Widget _buildList(CollectionItemsLoadedState state) {
     return Container(
-      margin: EdgeInsets.only(top: 7.0),
+      // margin: EdgeInsets.only(top: 7.0),
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 1,
