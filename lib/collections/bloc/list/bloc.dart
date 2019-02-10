@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'event.dart';
 import 'state.dart';
@@ -24,16 +26,20 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   @override
   Stream<BlocBaseState> mapEventToState(
       BlocBaseState currentState, BlocBaseEvent event) async* {
-    if (event is CollectionsDeleteEvent && currentState is CollectionsLoadedState) {
+    if (event is CollectionsDeleteEvent &&
+        currentState is CollectionsLoadedState) {
       yield CollectionsLoadingState();
       var data = await _delete(event.collectionId, currentState);
-      yield currentState.copyWith(data: data, hasReachedMax: currentState.hasReachedMax);
+      yield currentState.copyWith(
+          data: data, hasReachedMax: currentState.hasReachedMax);
     }
 
-    if (event is CollectionsToggleFavEvent&& currentState is CollectionsLoadedState) {
+    if (event is CollectionsToggleFavEvent &&
+        currentState is CollectionsLoadedState) {
       yield CollectionsLoadingState();
       var data = await _toggleFav(event.collectionId, currentState);
-      yield currentState.copyWith(data: data, hasReachedMax: currentState.hasReachedMax);
+      yield currentState.copyWith(
+          data: data, hasReachedMax: currentState.hasReachedMax);
     }
 
     if (event is CollectionsFetchEvent && !_hasReachedMax(currentState)) {
@@ -52,19 +58,21 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
                 );
         }
       } catch (e) {
-        yield CollectionsErrorState(e);
+        yield BlocErrorState(e);
       }
     }
   }
 
-  Future<List<Collection>> _delete(int collectionId, CollectionsLoadedState loadedState) async {
+  Future<List<Collection>> _delete(
+      int collectionId, CollectionsLoadedState loadedState) async {
     await _service.delete(collectionId);
     // var deletedItemIndex = loadedState.data.indexWhere((x) => x.id == collectionId);
     // loadedState.data.removeAt(deletedItemIndex);
     return loadedState.data;
   }
 
-  Future<List<Collection>> _toggleFav(int collectionId, CollectionsLoadedState loadedState) async {
+  Future<List<Collection>> _toggleFav(
+      int collectionId, CollectionsLoadedState loadedState) async {
     await _service.toggleFav(collectionId);
     // var updatedItemIndex = loadedState.data.indexWhere((x) => x.id == collectionId);
     // var isFav = loadedState.data[updatedItemIndex].isFav;
@@ -74,4 +82,7 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
 
   bool _hasReachedMax(BlocBaseState state) =>
       state is CollectionsLoadedState && state.hasReachedMax;
+
+  static CollectionsBloc of(BuildContext context) =>
+      BlocProvider.of<CollectionsBloc>(context);
 }

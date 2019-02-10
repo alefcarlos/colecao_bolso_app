@@ -4,7 +4,7 @@ import 'package:flutter_tags/input_tags.dart';
 
 import 'collection_item_scoped_model.dart';
 import 'collection_item_model.dart';
-import 'create_collecion_item_result_model.dart';
+import 'create_result_model.dart';
 
 import '../widgets/forms-input/image.dart';
 import '../common/common.dart';

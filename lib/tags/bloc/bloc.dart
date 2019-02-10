@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'event.dart';
 import 'state.dart';
@@ -34,4 +36,7 @@ class TagsBloc extends Bloc<TagsEvent, TagsState> {
       }
     }
   }
+
+  static TagsBloc of(BuildContext context) =>
+      BlocProvider.of<TagsBloc>(context);
 }

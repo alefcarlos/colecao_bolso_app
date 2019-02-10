@@ -55,7 +55,7 @@ class _CollectionsListState extends State<CollectionsList> {
           return ShimmerList();
         }
 
-        if (state is CollectionsErrorState) {
+        if (state is BlocErrorState) {
           return Empty(
             text: Text(state.error),
           );

@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/exporter.dart';
 import 'state.dart';
 import 'event.dart';
@@ -36,4 +38,7 @@ class CreateCollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
       }
     }
   }
+
+  static CreateCollectionBloc of(BuildContext context) =>
+      BlocProvider.of<CreateCollectionBloc>(context);
 }

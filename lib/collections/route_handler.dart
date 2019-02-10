@@ -1,6 +1,5 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import './collections_page.dart';
 import './create.dart';
 import 'bloc/list/exporter.dart';
@@ -12,7 +11,7 @@ class CollectionsRoute {
 
   static final collectionsHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    var bloc = BlocProvider.of<CollectionsBloc>(context);
+    var bloc = CollectionsBloc.of(context);
     bloc.dispatch(CollectionsFetchEvent());
 
     return CollectionsPage(bloc);
@@ -21,7 +20,7 @@ class CollectionsRoute {
   static final createCollectionHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
 
-    var bloc = BlocProvider.of<CreateCollectionBloc>(context);
+    var bloc = CreateCollectionBloc.of(context);
     return CreateCollectionPage(bloc);
   });
 

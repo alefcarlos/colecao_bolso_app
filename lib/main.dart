@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
 
-import './collections/collections.dart';
+import './collections/exporter.dart';
 import './tags/tags.dart';
 import './collection/collection.dart';
 import './config/app_config.dart';

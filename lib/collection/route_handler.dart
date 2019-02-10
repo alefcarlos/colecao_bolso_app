@@ -2,7 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'collection_page.dart';
 import 'collection_item_scoped_model.dart';
-import 'edit_collection_item_page.dart';
+import 'create.dart';
 
 class CollectionRoute {
   static String collectionItemsRoute = '/collection/:id';
@@ -15,9 +15,9 @@ class CollectionRoute {
 
   static final collectionItemsHandler = new Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    var index = int.parse(params['id']?.first);
+    var collectionId = int.parse(params['id']?.first);
 
-    return CollectionPage(index);
+    return CollectionPage(collectionId);
   });
 
   static final createItemHandler = Handler(
