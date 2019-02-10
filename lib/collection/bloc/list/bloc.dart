@@ -23,6 +23,16 @@ class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   @override
   Stream<BlocBaseState> mapEventToState(
       BlocBaseState currentState, BlocBaseEvent event) async* {
+    if (event is CollectionFetchFavItemsEvent) {
+      try {
+        yield BlocLoadingIndicatorState();
+        var data = await _service.fetchFav(event.collectionId);
+        yield CollectionItemsLoadedFavState(data);
+      } catch (e) {
+        yield CollectionItemsLoadingFavErrorState(e);
+      }
+    }
+
     if (event is CollectionFetchItemsEvent && !_hasReachedMax(currentState)) {
       try {
         if (currentState is BlocLoadingIndicatorState) {
@@ -30,7 +40,8 @@ class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
           yield CollectionItemsLoadedState(data: data, hasReachedMax: false);
         }
         if (currentState is CollectionItemsLoadedState) {
-          final data = await _service.fetch(event.collectionId, currentState.data.length, 10);
+          final data = await _service.fetch(
+              event.collectionId, currentState.data.length, 10);
           yield data.isEmpty
               ? currentState.copyWith(hasReachedMax: true)
               : CollectionItemsLoadedState(

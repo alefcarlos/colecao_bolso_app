@@ -89,6 +89,7 @@ class _CollectionsPageFabState extends State<CollectionsPageFab>
               .navigateTo(context, CollectionsRoute.createCollectionRoute)
               .then((createdId) {
             if (createdId != null) {
+              print('CollectionsFetchEvent from addCollection');
               widget.collectionsBloc.dispatch(CollectionsFetchEvent());
               
               showSnackBar(

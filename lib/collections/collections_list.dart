@@ -27,6 +27,7 @@ class _CollectionsListState extends State<CollectionsList> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
+      print('CollectionsFetchEvent from _onScroll');
       widget._collectionsBloc.dispatch(CollectionsFetchEvent());
     }
   }

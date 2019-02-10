@@ -25,6 +25,9 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   @override
   Stream<BlocBaseState> mapEventToState(
       BlocBaseState currentState, BlocBaseEvent event) async* {
+
+    print('mapEventToState ${event.toString()}');
+
     if (event is CollectionsDeleteEvent &&
         currentState is CollectionsLoadedState) {
       yield CollectionsLoadingState();

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_tags/input_tags.dart';
 
-import 'collection_item_scoped_model.dart';
 import 'collection_item_model.dart';
 import 'create_result_model.dart';
 
@@ -16,7 +15,7 @@ class EditCollectionItemPage extends StatefulWidget {
   /// Quando collectionId for nulo, deve ser passado valor
   // final CollectionModel collectionModel;
 
-  final CollectionItemModel collectionItemModel;
+  final Object collectionItemModel;
 
   EditCollectionItemPage(
       {this.collectionId,
@@ -66,7 +65,7 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
       tags: _tags
     );
 
-    widget.collectionItemModel.addCollectionItem(_selectedCollectionId, entity);
+    // widget.collectionItemModel.addCollectionItem(_selectedCollectionId, entity);
 
     var result = CreateItemResult(_selectedCollectionId, entity.id);
     Navigator.pop(context, result);

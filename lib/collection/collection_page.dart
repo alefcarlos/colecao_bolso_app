@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'collection_items_grid.dart';
-import 'collection_items_default_listview.dart';
+import 'collection_items_fav_page.dart';
 import '../config/app_config.dart';
 import 'bloc/list/exporter.dart';
 
@@ -14,7 +14,7 @@ class CollectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: DefaultTabController(
-        length: 1,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text('Detalhes da coleção'),
@@ -30,18 +30,17 @@ class CollectionPage extends StatelessWidget {
                 //       color: Theme.of(context).primaryIconTheme.color),
                 //   text: 'Repetidos',
                 // ),
-                // Tab(
-                //   icon: Icon(Icons.favorite_border, color: Colors.red),
-                //   text: 'Favoritos',
-                // )
+                Tab(
+                  icon: Icon(Icons.favorite_border, color: Colors.red),
+                  text: 'Favoritos',
+                )
               ],
             ),
           ),
           body: TabBarView(
             children: <Widget>[
               CollectionListItemsView(collectionId, bloc),
-              // CollectionListItemsDefaultView(collection.id, collectionItemModel,
-              //     collectionItemModel.getRepeatedItems),
+              CollectionFavItemsPage(collectionId, bloc),
               // CollectionListItemsDefaultView(collection.id, collectionItemModel,
               //     collectionItemModel.getFavItems),
             ],

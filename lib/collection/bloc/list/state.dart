@@ -42,13 +42,21 @@ class CollectionItemsLoadedState extends BlocBaseState {
 //   String toString() => "CollectionLoadingState, data.length(${data.length})";
 // }
 
-// class CollectionLoadingFavItemsState extends BlocBaseState {
-//   final List<CollectionItem> data;
-//   CollectionLoadingFavItemsState(this.data) : super([data]);
+class CollectionItemsLoadedFavState extends BlocBaseState {
+  final List<CollectionItem> data;
+  CollectionItemsLoadedFavState(this.data) : super([data]);
 
-//   @override
-//   String toString() => "CollectionLoadingState, data.length(${data.length})";
-// }
+  @override
+  String toString() =>
+      "CollectionItemsLoadedFavState, data.length(${data.length})";
+}
+
+class CollectionItemsLoadingFavState extends BlocBaseState {}
+
+class CollectionItemsLoadingFavErrorState extends BlocErrorState {
+  final String error;
+  CollectionItemsLoadingFavErrorState(this.error) : super(error);
+}
 
 // class CollectionLoadingRepeatedItemsState extends BlocBaseState {
 //   final List<CollectionItem> data;

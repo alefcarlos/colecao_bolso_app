@@ -13,6 +13,7 @@ class CollectionsRoute {
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     var bloc = CollectionsBloc.of(context);
 
+    print('CollectionsFetchEvent from collectionsHandler');
     bloc.dispatch(CollectionsFetchEvent());
 
     return CollectionsPage(bloc);
@@ -20,7 +21,6 @@ class CollectionsRoute {
 
   static final createCollectionHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-
     var bloc = CreateCollectionBloc.of(context);
     return CreateCollectionPage(bloc);
   });
