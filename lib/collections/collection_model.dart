@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Collection {
   int _id;
   String _name;

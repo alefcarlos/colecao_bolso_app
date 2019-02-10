@@ -51,13 +51,6 @@ class CollectionItemsLoadedFavState extends BlocBaseState {
       "CollectionItemsLoadedFavState, data.length(${data.length})";
 }
 
-class CollectionItemsLoadingFavState extends BlocBaseState {}
-
-class CollectionItemsLoadingFavErrorState extends BlocErrorState {
-  final String error;
-  CollectionItemsLoadingFavErrorState(this.error) : super(error);
-}
-
 // class CollectionLoadingRepeatedItemsState extends BlocBaseState {
 //   final List<CollectionItem> data;
 //   CollectionLoadingRepeatedItemsState(this.data) : super([data]);

@@ -1,27 +1,4 @@
-import 'package:meta/meta.dart';
-
 import '../../../bloc/state_base.dart';
-import '../../collection_model.dart';
-
-// class CreateLoadingCollectionsState extends BlocBaseState {
-//   @override
-//   String toString() {
-//     return "LoadingCollectionsState";
-//   }
-// }
-
-// class CreateCollectionsLoadedState extends BlocBaseState {
-//   final List<Collection> data;
-
-//   CreateCollectionsLoadedState({
-//     @required this.data,
-//   })  : assert(data != null),
-//         super([data]);
-
-//   @override
-//   String toString() =>
-//       "CreateCollectionsLoadedState, data.lenght(${data.length})";
-// }
 
 class CreateCollectionUnintialized extends BlocBaseState {
   @override
@@ -39,8 +16,9 @@ class CreateCollectionCreatingState extends BlocBaseState {
 
 class CreateCollectionCreatingSuccessfulState extends BlocBaseState {
   final int collectionId;
-  
-  CreateCollectionCreatingSuccessfulState(this.collectionId): super([collectionId]);
+
+  CreateCollectionCreatingSuccessfulState(this.collectionId)
+      : super([collectionId]);
 
   @override
   String toString() {

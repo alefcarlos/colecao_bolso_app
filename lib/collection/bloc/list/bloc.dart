@@ -29,7 +29,7 @@ class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
         var data = await _service.fetchFav(event.collectionId);
         yield CollectionItemsLoadedFavState(data);
       } catch (e) {
-        yield CollectionItemsLoadingFavErrorState(e);
+        yield BlocErrorState(e);
       }
     }
 

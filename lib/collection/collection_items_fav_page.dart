@@ -15,10 +15,12 @@ class CollectionFavItemsPage extends StatefulWidget {
 }
 
 class _CollectionFavItemsPageState extends State<CollectionFavItemsPage> {
-  // _CollectionFavItemsPageState() {
-  //   widget._collectionBloc
-  //       .dispatch(CollectionFetchFavItemsEvent(widget._collectionId));
-  // }
+  @override
+  void initState() {
+    widget._collectionBloc
+        .dispatch(CollectionFetchFavItemsEvent(widget._collectionId));
+    super.initState();
+  }
 
   Widget _buildList(CollectionItemsLoadedFavState state) {
     return Container(
@@ -55,11 +57,11 @@ class _CollectionFavItemsPageState extends State<CollectionFavItemsPage> {
     return BlocBuilder<BlocBaseEvent, BlocBaseState>(
       bloc: widget._collectionBloc,
       builder: (BuildContext context, BlocBaseState state) {
-        if (state is CollectionItemsLoadingFavState) {
+        if (state is BlocLoadingIndicatorState) {
           return ShimmerList();
         }
 
-        if (state is CollectionItemsLoadingFavErrorState) {
+        if (state is BlocErrorState) {
           return Empty(
             text: Text(state.error),
           );
