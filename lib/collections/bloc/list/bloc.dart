@@ -7,6 +7,7 @@ import 'state.dart';
 import '../../collections_service.dart';
 import '../../collection_model.dart';
 import '../../../bloc/exporter.dart';
+import '../../../config/application.dart';
 
 class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   final CollectionsService _service;
@@ -25,9 +26,6 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   @override
   Stream<BlocBaseState> mapEventToState(
       BlocBaseState currentState, BlocBaseEvent event) async* {
-
-    print('mapEventToState ${event.toString()}');
-
     if (event is CollectionsDeleteEvent &&
         currentState is CollectionsLoadedState) {
       yield CollectionsLoadingState();
@@ -44,20 +42,28 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
           data: data, hasReachedMax: currentState.hasReachedMax);
     }
 
-    if (event is CollectionsFetchEvent && !_hasReachedMax(currentState)) {
+    if (event is CollectionsFetchEvent) {
+      if (event.fromScroll && _hasReachedMax(currentState)) return;
+      yield CollectionsLoadingState();
       try {
         if (currentState is CollectionsLoadingState) {
           final collections = await _service.fetch(0, 10);
           yield CollectionsLoadedState(data: collections, hasReachedMax: false);
         }
         if (currentState is CollectionsLoadedState) {
-          final posts = await _service.fetch(currentState.data.length, 10);
-          yield posts.isEmpty
-              ? currentState.copyWith(hasReachedMax: true)
-              : CollectionsLoadedState(
-                  data: currentState.data + posts,
-                  hasReachedMax: false,
-                );
+          final data = await _service.fetch(currentState.data.length, 10);
+
+          if (data.isEmpty) {
+            yield currentState.copyWith(hasReachedMax: true);
+          } else if (data.last.id == Application.collections.length) {
+            yield currentState.copyWith(
+                data: currentState.data + data, hasReachedMax: true);
+          } else {
+            yield CollectionsLoadedState(
+              data: currentState.data + data,
+              hasReachedMax: false,
+            );
+          }
         }
       } catch (e) {
         yield BlocErrorState(e);
@@ -68,17 +74,19 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   Future<List<Collection>> _delete(
       int collectionId, CollectionsLoadedState loadedState) async {
     await _service.delete(collectionId);
-    // var deletedItemIndex = loadedState.data.indexWhere((x) => x.id == collectionId);
-    // loadedState.data.removeAt(deletedItemIndex);
+    var deletedItemIndex =
+        loadedState.data.indexWhere((x) => x.id == collectionId);
+    loadedState.data.removeAt(deletedItemIndex);
     return loadedState.data;
   }
 
   Future<List<Collection>> _toggleFav(
       int collectionId, CollectionsLoadedState loadedState) async {
     await _service.toggleFav(collectionId);
-    // var updatedItemIndex = loadedState.data.indexWhere((x) => x.id == collectionId);
-    // var isFav = loadedState.data[updatedItemIndex].isFav;
-    // loadedState.data[updatedItemIndex].setFav(!isFav);
+    var updatedItemIndex =
+        loadedState.data.indexWhere((x) => x.id == collectionId);
+    var isFav = loadedState.data[updatedItemIndex].isFav;
+    loadedState.data[updatedItemIndex].setFav(!isFav);
     return loadedState.data;
   }
 

@@ -18,9 +18,7 @@ class CollectionRoute {
     var collectionId = int.parse(params['id']?.first);
     var bloc = CollectionBloc.of(context);
     
-    bloc.dispatch(CollectionFetchItemsEvent(collectionId));
-
-    return CollectionPage(collectionId, bloc);
+        return CollectionPage(collectionId, bloc);
   });
 
   static final createItemHandler = Handler(

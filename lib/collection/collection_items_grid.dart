@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'collection_item_model.dart';
 import 'bloc/list/exporter.dart';
 import 'collection_item_grid_item.dart';
 import '../common/common.dart';
@@ -19,6 +18,13 @@ class CollectionListItemsView extends StatefulWidget {
 class _CollectionListItemsViewState extends State<CollectionListItemsView> {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+    widget._bloc.dispatch(CollectionFetchItemsEvent(widget._collectionId));
+  }
 
   _CollectionListItemsViewState() {
     _scrollController.addListener(_onScroll);

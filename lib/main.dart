@@ -70,6 +70,7 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
     tagsBloc.dispose();
     collectionsBloc.dispose();
     createCollectionBloc.dispose();
+    collectionBloc.dispose();
     super.dispose();
   }
 
