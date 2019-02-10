@@ -9,8 +9,7 @@ import '../bloc/exporter.dart';
 class CollectionsList extends StatefulWidget {
   final CollectionsBloc _collectionsBloc;
 
-  CollectionsList(this._collectionsBloc)
-      : assert(_collectionsBloc != null);
+  CollectionsList(this._collectionsBloc) : assert(_collectionsBloc != null);
 
   _CollectionsListState createState() => _CollectionsListState();
 }
@@ -19,8 +18,11 @@ class _CollectionsListState extends State<CollectionsList> {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
 
-  _CollectionsListState() {
+  @override
+  void initState() {
+    super.initState();
     _scrollController.addListener(_onScroll);
+    widget._collectionsBloc.dispatch(CollectionsFetchEvent());
   }
 
   void _onScroll() {
@@ -72,5 +74,11 @@ class _CollectionsListState extends State<CollectionsList> {
         }
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }

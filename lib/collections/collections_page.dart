@@ -6,7 +6,7 @@ import 'collections_list.dart';
 import 'bloc/list/exporter.dart';
 
 class CollectionsPage extends StatelessWidget {
-  final  CollectionsBloc collectionsBloc;
+  final CollectionsBloc collectionsBloc;
 
   CollectionsPage(this.collectionsBloc);
 
