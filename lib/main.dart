@@ -69,6 +69,7 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
   void dispose() {
     tagsBloc.dispose();
     collectionsBloc.dispose();
+    createCollectionBloc.dispose();
     super.dispose();
   }
 
