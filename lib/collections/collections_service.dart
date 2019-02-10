@@ -17,7 +17,7 @@ class CollectionsService {
     // if (response.statusCode != 200)
     //   throw 'Não foi possível recuperar as coleções, tente novamente.';
 
-    return Application.collections.skip(limit).take(limit).toList();
+    return Application.collections.skip(startIndex).take(limit).toList();
     // final data = json.decode(response.body) as List;
     // return data.map((item) => Collection.fromMap(item)).toList();
   }

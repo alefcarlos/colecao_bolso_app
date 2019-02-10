@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 import './collections/exporter.dart';
 import './tags/tags.dart';
-import './collection/collection.dart';
+import './collection/exporter.dart';
 import './config/app_config.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
@@ -24,6 +24,7 @@ void main() {
     collectionItemModel: CollectionItemModel(),
     tagsService: TagsService(httpClient: http.Client()),
     collectionsService: CollectionsService(httpClient: http.Client()),
+    collectionService: CollectionService(httpClient: http.Client()),
   ));
 }
 
@@ -31,11 +32,13 @@ class ColecaoDeBolsoApp extends StatefulWidget {
   final CollectionItemModel collectionItemModel;
   final TagsService tagsService;
   final CollectionsService collectionsService;
+  final CollectionService collectionService;
 
   ColecaoDeBolsoApp(
       {@required this.collectionItemModel,
       @required this.tagsService,
-      @required this.collectionsService}) {
+      @required this.collectionsService,
+      @required this.collectionService}) {
     final router = new Router();
 
     //Configurar rotas
@@ -55,12 +58,14 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
   TagsBloc tagsBloc;
   CollectionsBloc collectionsBloc;
   CreateCollectionBloc createCollectionBloc;
+  CollectionBloc collectionBloc;
 
   @override
   void initState() {
     tagsBloc = TagsBloc(widget.tagsService);
     collectionsBloc = CollectionsBloc(widget.collectionsService);
     createCollectionBloc = CreateCollectionBloc(widget.collectionsService);
+    collectionBloc = CollectionBloc(widget.collectionService);
     super.initState();
   }
 
@@ -83,7 +88,10 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
         bloc: collectionsBloc,
         child: BlocProvider<CreateCollectionBloc>(
           bloc: createCollectionBloc,
-          child: child,
+          child: BlocProvider<CollectionBloc>(
+            bloc: collectionBloc,
+            child: child,
+          ),
         ),
       ),
     );

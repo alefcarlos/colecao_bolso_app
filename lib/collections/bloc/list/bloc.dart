@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'event.dart';
@@ -13,7 +13,6 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
 
   CollectionsBloc(this._service) : assert(_service != null);
 
-  //TODO: entender melhor o que isso faz.
   @override
   Stream<BlocBaseEvent> transform(Stream<BlocBaseEvent> events) {
     return (events as Observable<BlocBaseEvent>)

@@ -48,6 +48,7 @@ class _CollectionsListState extends State<CollectionsList> {
 
   @override
   Widget build(BuildContext context) {
+    print('build');
     return BlocBuilder<BlocBaseEvent, BlocBaseState>(
       bloc: widget._collectionsBloc,
       builder: (BuildContext context, BlocBaseState state) {

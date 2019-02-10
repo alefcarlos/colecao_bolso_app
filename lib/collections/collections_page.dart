@@ -20,7 +20,7 @@ class CollectionsPage extends StatelessWidget {
         title: Text('Minhas coleções'),
       ),
       body: CollectionsList(collectionsBloc),
-      floatingActionButton: CollectionsPageFab(),
+      floatingActionButton: CollectionsPageFab(collectionsBloc),
     );
   }
 }

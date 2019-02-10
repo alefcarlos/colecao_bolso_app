@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'event.dart';
@@ -11,7 +11,6 @@ class TagsBloc extends Bloc<TagsEvent, TagsState> {
 
   TagsBloc(this._service) : assert(_service != null);
 
-  //TODO: entender melhor o que isso faz.
   @override
   Stream<TagsEvent> transform(Stream<TagsEvent> events) {
     return (events as Observable<TagsEvent>)

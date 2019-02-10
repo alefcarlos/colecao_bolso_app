@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'collection_page.dart';
 import 'collection_item_scoped_model.dart';
 import 'create.dart';
+import 'bloc/list/exporter.dart';
 
 class CollectionRoute {
   static String collectionItemsRoute = '/collection/:id';
-  
+
   /// Rota /collection/item/create
   static String createItemRoute = '/collection/item/create';
 
@@ -16,16 +17,16 @@ class CollectionRoute {
   static final collectionItemsHandler = new Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     var collectionId = int.parse(params['id']?.first);
+    var bloc = CollectionBloc.of(context);
 
-    return CollectionPage(collectionId);
+    return CollectionPage(collectionId, bloc);
   });
 
   static final createItemHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     var model = CollectionItemModel.of(context);
     // var model2 = CollectionModel.of(context);
-    return EditCollectionItemPage(
-        collectionItemModel: model);
+    return EditCollectionItemPage(collectionItemModel: model);
   });
 
   static final createCollectionItemHandler = Handler(
@@ -36,9 +37,7 @@ class CollectionRoute {
     // var model2 = CollectionModel.of(context);
 
     return EditCollectionItemPage(
-      collectionId: index,
-      collectionItemModel: model
-    );
+        collectionId: index, collectionItemModel: model);
   });
 
   static void configureRoutes(Router router) {
