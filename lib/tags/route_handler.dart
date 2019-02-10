@@ -9,8 +9,7 @@ class TagsRoute {
   static final tagsHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     var tagsBloc = TagsBloc.of(context);
-    tagsBloc.dispatch(TagsEvent.fetch);
-
+    
     return TagsPage(tagsBloc);
   });
 

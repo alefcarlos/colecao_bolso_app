@@ -28,8 +28,11 @@ class _TagsCloud extends State<TagsCloud> {
     Colors.cyanAccent
   ];
 
-  Widget _buildEmpty() =>
-      Empty(text: Text('Você ainda não tem itens cadastrados'));
+  @override
+  void initState() { 
+    widget._bloc.dispatch(TagsEvent.fetch);
+    super.initState();
+  }
 
   Widget _buildTags(context, List<ItemTag> tags) {
     List<Widget> widgets = tags
@@ -57,23 +60,24 @@ class _TagsCloud extends State<TagsCloud> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TagsEvent, TagsState>(
-        bloc: widget._bloc,
-        builder: (BuildContext context, TagsState state) {
-          if (state is TagsLoadingState) {
-            return LoadingIndicator();
-          }
+      bloc: widget._bloc,
+      builder: (BuildContext context, TagsState state) {
+        if (state is TagsLoadingState) {
+          return LoadingIndicator();
+        }
 
-          if (state is TagsLoadedState) {
-            var tags = state.tags;
-            return tags.length > 0 ? _buildTags(context, tags) : _buildEmpty();
-          }
+        if (state is TagsLoadedState) {
+          var tags = state.tags;
+          return tags.length > 0 ? _buildTags(context, tags) : Empty(text: Text('Você ainda não tem itens cadastrados'));
+        }
 
-          if (state is TagsErrorState) {
-            return Empty(
-              text: Text(state.error),
-            );
-          }
-        });
+        if (state is TagsErrorState) {
+          return Empty(
+            text: Text(state.error),
+          );
+        }
+      },
+    );
   }
 }
 
