@@ -49,12 +49,13 @@ class CollectionsListTile extends StatelessWidget {
                 _collection.isFav ? Icons.favorite : Icons.favorite_border,
                 color: _collection.isFav ? Colors.red : null,
               ),
-              trailing: CircleAvatar(
-                backgroundColor: Color.fromARGB(255, int.parse(color[0]),
-                    int.parse(color[1]), int.parse(color[2])),
-                child: Container(
-                  width: 1,
-                  height: 1,
+              trailing: Icon(
+                Icons.label,
+                color: Color.fromARGB(
+                  255,
+                  int.parse(color[0]),
+                  int.parse(color[1]),
+                  int.parse(color[2]),
                 ),
               ),
             ),

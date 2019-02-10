@@ -59,16 +59,16 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
 
   Future<List<Collection>> _delete(int collectionId, CollectionsLoadedState loadedState) async {
     await _service.delete(collectionId);
-    var deletedItemIndex = loadedState.data.indexWhere((x) => x.id == collectionId);
-    loadedState.data.removeAt(deletedItemIndex);
+    // var deletedItemIndex = loadedState.data.indexWhere((x) => x.id == collectionId);
+    // loadedState.data.removeAt(deletedItemIndex);
     return loadedState.data;
   }
 
   Future<List<Collection>> _toggleFav(int collectionId, CollectionsLoadedState loadedState) async {
     await _service.toggleFav(collectionId);
-    var updatedItemIndex = loadedState.data.indexWhere((x) => x.id == collectionId);
-    var isFav = loadedState.data[updatedItemIndex].isFav;
-    loadedState.data[updatedItemIndex].setFav(!isFav);
+    // var updatedItemIndex = loadedState.data.indexWhere((x) => x.id == collectionId);
+    // var isFav = loadedState.data[updatedItemIndex].isFav;
+    // loadedState.data[updatedItemIndex].setFav(!isFav);
     return loadedState.data;
   }
 
