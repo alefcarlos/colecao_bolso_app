@@ -13,8 +13,6 @@ class CollectionsRoute {
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     var bloc = CollectionsBloc.of(context);
 
-    bloc.dispatch(CollectionsFetchEvent());
-
     return CollectionsPage(bloc);
   });
 
