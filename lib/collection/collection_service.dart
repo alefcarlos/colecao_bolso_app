@@ -41,4 +41,12 @@ class CollectionService {
         .where((i) => i.collectionId == collectionId && i.quantity > 1)
         .toList();
   }
+
+  Future<void> toggleFav(int itemId) async {
+    await Future.delayed(Duration(seconds: 1));
+
+    var index = Application.collectionItems.indexWhere((c) => c.id == itemId);
+    Application.collectionItems[index]
+        .setFav(!Application.collectionItems[index].isFav);
+  }
 }

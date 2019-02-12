@@ -21,9 +21,9 @@ class CollectionItemGridItem extends StatelessWidget {
             title: Text('#${_item.number}'),
             subtitle: Text('Tenho ${_item.quantity}'),
             trailing: IconButton(
-              onPressed: () => {},
-              //TODO: toogle fav
-              // model.toggleFav(widget.collectionId, index, item.id),
+              onPressed: () {
+                _bloc.dispatch(CollectionToggleFavEvent(_item.id));
+              },
               icon: Icon(
                 _item.isFav ? Icons.favorite : Icons.favorite_border,
                 color: _item.isFav ? Colors.red : null,

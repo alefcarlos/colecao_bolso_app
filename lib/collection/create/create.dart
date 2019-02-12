@@ -56,12 +56,8 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
     }
 
     _formKey.currentState.save();
-    var entity = CollectionItem(
-        collectionId: _selectedCollectionId,
-        isFav: _formData['isFav'],
-        number: _formData['number'],
-        quantity: _formData['quantity'],
-        tags: _tags);
+    var entity = CollectionItem(_selectedCollectionId, _formData['isFav'],
+        _formData['number'], _formData['quantity'], _tags);
 
     // widget.collectionItemModel.addCollectionItem(_selectedCollectionId, entity);
 

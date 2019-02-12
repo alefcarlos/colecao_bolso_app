@@ -1,20 +1,23 @@
-import 'package:flutter/material.dart';
-
 class CollectionItem {
   int _id;
-  final int collectionId;
-  final String number;
-  final bool isFav;
-  final int quantity;
-  final List<String> tags;
+  int _collectionId;
+  String _number;
+  bool _isFav;
+  int _quantity;
+  List<String> _tags;
 
   CollectionItem(
-      {@required this.collectionId,
-      @required this.number,
-      this.isFav = false,
-      this.quantity = 1,
-      this.tags});
+      this._collectionId, this._number, this._isFav, this._quantity, this._tags)
+      : assert(_quantity > 0);
 
   int get id => _id;
   setId(int id) => this._id = id;
+
+  int get collectionId => this._collectionId;
+  String get number => this._number;
+  bool get isFav => this._isFav;
+  int get quantity => this._quantity;
+  List<String> get tags => this._tags;
+
+  setFav(bool status) => this._isFav = status;
 }

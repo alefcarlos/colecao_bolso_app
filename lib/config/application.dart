@@ -14,7 +14,7 @@ class Application {
     Collection(5, "primeira", true, 10),
   ];
   static final List<CollectionItem> collectionItems = [
-    CollectionItem(collectionId: 1, number: "1", isFav: false, quantity: 2),
-    CollectionItem(collectionId: 1, number: "3", isFav: true, quantity: 1),
+    CollectionItem(1, "1", false, 2, null),
+    CollectionItem(1, "3", true, 1, null),
   ];
 }

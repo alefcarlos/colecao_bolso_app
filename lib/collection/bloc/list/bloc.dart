@@ -6,6 +6,7 @@ import '../../../bloc/exporter.dart';
 import 'state.dart';
 import 'event.dart';
 import '../../collection_service.dart';
+import '../../collection_item_model.dart';
 
 class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   final CollectionService service;
@@ -43,10 +44,31 @@ class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
         yield BlocErrorState(e);
       }
     }
+
+    if (event is CollectionToggleFavEvent &&
+        currentState is CollectionItemsLoadedState) {
+      try {
+        yield BlocLoadingIndicatorState();
+        var data = await _toggleFav(event.collectionId, currentState);
+        yield currentState.copyWith(
+            data: data, hasReachedMax: currentState.hasReachedMax);
+      } catch (e) {
+        yield BlocErrorState('Não foipossível carregar os itens, tente novamente...');
+      }
+    }
   }
 
   bool _hasReachedMax(BlocBaseState state) =>
       state is CollectionItemsLoadedState && state.hasReachedMax;
+
+  Future<List<CollectionItem>> _toggleFav(
+      int itemId, CollectionItemsLoadedState loadedState) async {
+    await service.toggleFav(itemId);
+    var updatedItemIndex = loadedState.data.indexWhere((x) => x.id == itemId);
+    var isFav = loadedState.data[updatedItemIndex].isFav;
+    loadedState.data[updatedItemIndex].setFav(!isFav);
+    return loadedState.data;
+  }
 
   static CollectionBloc of(BuildContext context) =>
       BlocProvider.of<CollectionBloc>(context);
