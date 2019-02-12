@@ -3,7 +3,6 @@ import '../config/app_config.dart';
 import '../collections/route_handler.dart';
 
 class AuthPage extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return _AuthPageState();

@@ -47,7 +47,8 @@ class CollectionPage extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Application.router.navigateTo(context, '/collection/$collectionId/item/create');
+              Application.router
+                  .navigateTo(context, '/collection/$collectionId/item/create');
             },
             tooltip: 'Adicionar item',
             child: Icon(Icons.camera_enhance),

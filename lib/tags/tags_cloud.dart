@@ -29,7 +29,7 @@ class _TagsCloud extends State<TagsCloud> {
   ];
 
   @override
-  void initState() { 
+  void initState() {
     widget._bloc.dispatch(TagsEvent.fetch);
     super.initState();
   }
@@ -68,7 +68,9 @@ class _TagsCloud extends State<TagsCloud> {
 
         if (state is TagsLoadedState) {
           var tags = state.tags;
-          return tags.length > 0 ? _buildTags(context, tags) : Empty(text: Text('Você ainda não tem itens cadastrados'));
+          return tags.length > 0
+              ? _buildTags(context, tags)
+              : Empty(text: Text('Você ainda não tem itens cadastrados'));
         }
 
         if (state is TagsErrorState) {

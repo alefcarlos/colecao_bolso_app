@@ -43,7 +43,9 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
     _formKey.currentState.save();
 
     var entity = Collection(
-        0, _formData['name'], _formData['isFav'], _formData['totalItems'], rgbColor: "${_formData['color'].red},${_formData['color'].green},${_formData['color'].blue}");
+        0, _formData['name'], _formData['isFav'], _formData['totalItems'],
+        rgbColor:
+            "${_formData['color'].red},${_formData['color'].green},${_formData['color'].blue}");
 
     widget.bloc.dispatch(CreateCollectionEvent(entity));
   }
@@ -83,8 +85,9 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
         labelText: 'Quantidade de itens',
         filled: true,
       ),
-      validator: (String value){
-        if (value.isEmpty) return 'É obrigatório informar uma quantidade de itens.';
+      validator: (String value) {
+        if (value.isEmpty)
+          return 'É obrigatório informar uma quantidade de itens.';
       },
       onSaved: (String value) {
         _formData['itemsCount'] = int.parse(value);

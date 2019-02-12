@@ -18,8 +18,7 @@ class EditCollectionItemPage extends StatefulWidget {
   final Object collectionItemModel;
 
   EditCollectionItemPage(
-      {this.collectionId,
-      @required this.collectionItemModel})
+      {this.collectionId, @required this.collectionItemModel})
       : assert(collectionItemModel != null);
 
   @override
@@ -58,12 +57,11 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
 
     _formKey.currentState.save();
     var entity = CollectionItem(
-      collectionId: _selectedCollectionId,
-      isFav: _formData['isFav'],
-      number: _formData['number'],
-      quantity: _formData['quantity'],
-      tags: _tags
-    );
+        collectionId: _selectedCollectionId,
+        isFav: _formData['isFav'],
+        number: _formData['number'],
+        quantity: _formData['quantity'],
+        tags: _tags);
 
     // widget.collectionItemModel.addCollectionItem(_selectedCollectionId, entity);
 
@@ -122,41 +120,41 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
     return ScopedModelDescendant(
       builder: (BuildContext context, Widget child, Model model) {
         return null;
-      //   if (model.collections.length > 0 && !model.isLoading) {
-      //     if (_selectedCollectionId == null) {
-      //       _selectedCollectionId = model.collections[0].id;
-      //     }
+        //   if (model.collections.length > 0 && !model.isLoading) {
+        //     if (_selectedCollectionId == null) {
+        //       _selectedCollectionId = model.collections[0].id;
+        //     }
 
-      //     return Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-      //       Text(
-      //         'Coleção',
-      //         style: TextStyle(fontSize: 18.0),
-      //       ),
-      //       SizedBox(
-      //         width: 25.0,
-      //       ),
-      //       DropdownButton(
-      //           value: _selectedCollectionId,
-      //           items: model.collections
-      //               .map((item) => DropdownMenuItem<int>(
-      //                   value: item.id, child: Text(item.name)))
-      //               .toList(),
-      //           onChanged: (int value) {
-      //             setState(() {
-      //               _selectedCollectionId = value;
-      //               print(_selectedCollectionId);
-      //             });
-      //           })
-      //     ]);
-      //   } else if (model.collections.length == 0 && !model.isLoading) {
-      //     return Center(
-      //         child: Text(
-      //       'É necessário criar uma coleção para adicionar item',
-      //       style: TextStyle(fontSize: 20.0),
-      //     ));
-      //   } else if (model.isLoading) {
-      //     return Center(child: CircularProgressIndicator());
-      //   }
+        //     return Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        //       Text(
+        //         'Coleção',
+        //         style: TextStyle(fontSize: 18.0),
+        //       ),
+        //       SizedBox(
+        //         width: 25.0,
+        //       ),
+        //       DropdownButton(
+        //           value: _selectedCollectionId,
+        //           items: model.collections
+        //               .map((item) => DropdownMenuItem<int>(
+        //                   value: item.id, child: Text(item.name)))
+        //               .toList(),
+        //           onChanged: (int value) {
+        //             setState(() {
+        //               _selectedCollectionId = value;
+        //               print(_selectedCollectionId);
+        //             });
+        //           })
+        //     ]);
+        //   } else if (model.collections.length == 0 && !model.isLoading) {
+        //     return Center(
+        //         child: Text(
+        //       'É necessário criar uma coleção para adicionar item',
+        //       style: TextStyle(fontSize: 20.0),
+        //     ));
+        //   } else if (model.isLoading) {
+        //     return Center(child: CircularProgressIndicator());
+        //   }
       },
     );
   }

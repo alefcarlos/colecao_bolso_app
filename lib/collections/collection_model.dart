@@ -5,7 +5,8 @@ class Collection {
   int _itemCount;
   String rgbColor;
 
-  Collection(this._id, this._name, this._isFav, this._itemCount, {this.rgbColor = "158,158,158"});
+  Collection(this._id, this._name, this._isFav, this._itemCount,
+      {this.rgbColor = "158,158,158"});
 
   Collection.fromMap(dynamic data) {
     this._id = data["id"];

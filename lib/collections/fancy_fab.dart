@@ -90,7 +90,7 @@ class _CollectionsPageFabState extends State<CollectionsPageFab>
               .then((createdId) {
             if (createdId != null) {
               widget.collectionsBloc.dispatch(CollectionsFetchEvent());
-              
+
               showSnackBar(
                 context,
                 'Coleção criada com sucesso',

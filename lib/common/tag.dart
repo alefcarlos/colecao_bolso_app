@@ -29,8 +29,7 @@ class CollectionItemTag extends StatelessWidget {
         ),
         child: Text(
           '$tag',
-          style: TextStyle(color: Colors.white,fontSize: 15.0),
-          
+          style: TextStyle(color: Colors.white, fontSize: 15.0),
         ),
       );
     }).toList();

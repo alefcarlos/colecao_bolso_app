@@ -17,8 +17,8 @@ class CollectionRoute {
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     var collectionId = int.parse(params['id']?.first);
     var bloc = CollectionBloc.of(context);
-    
-        return CollectionPage(collectionId, bloc);
+
+    return CollectionPage(collectionId, bloc);
   });
 
   static final createItemHandler = Handler(
