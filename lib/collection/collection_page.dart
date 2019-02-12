@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'collection_items_grid.dart';
+import 'collection_items_page.dart';
 import 'collection_items_fav_page.dart';
 import '../config/app_config.dart';
 import 'bloc/list/exporter.dart';
@@ -40,7 +40,7 @@ class CollectionPage extends StatelessWidget {
           body: TabBarView(
             children: <Widget>[
               CollectionListItemsView(collectionId, bloc),
-              CollectionFavItemsPage(collectionId, bloc),
+              CollectionFavItemsPage(collectionId, bloc.service),
               // CollectionListItemsDefaultView(collection.id, collectionItemModel,
               //     collectionItemModel.getFavItems),
             ],

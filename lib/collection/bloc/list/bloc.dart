@@ -8,8 +8,8 @@ import 'event.dart';
 import '../../collection_service.dart';
 
 class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
-  final CollectionService _service;
-  CollectionBloc(this._service);
+  final CollectionService service;
+  CollectionBloc(this.service);
 
   @override
   Stream<BlocBaseEvent> transform(Stream<BlocBaseEvent> events) {
@@ -23,24 +23,14 @@ class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   @override
   Stream<BlocBaseState> mapEventToState(
       BlocBaseState currentState, BlocBaseEvent event) async* {
-    if (event is CollectionFetchFavItemsEvent) {
-      try {
-        yield BlocLoadingIndicatorState();
-        var data = await _service.fetchFav(event.collectionId);
-        yield CollectionItemsLoadedFavState(data);
-      } catch (e) {
-        yield BlocErrorState(e);
-      }
-    }
-
     if (event is CollectionFetchItemsEvent && !_hasReachedMax(currentState)) {
       try {
         if (currentState is BlocLoadingIndicatorState) {
-          final data = await _service.fetch(event.collectionId, 0, 10);
+          final data = await service.fetch(event.collectionId, 0, 10);
           yield CollectionItemsLoadedState(data: data, hasReachedMax: false);
         }
         if (currentState is CollectionItemsLoadedState) {
-          final data = await _service.fetch(
+          final data = await service.fetch(
               event.collectionId, currentState.data.length, 10);
           yield data.isEmpty
               ? currentState.copyWith(hasReachedMax: true)

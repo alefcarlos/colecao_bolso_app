@@ -42,15 +42,6 @@ class CollectionItemsLoadedState extends BlocBaseState {
 //   String toString() => "CollectionLoadingState, data.length(${data.length})";
 // }
 
-class CollectionItemsLoadedFavState extends BlocBaseState {
-  final List<CollectionItem> data;
-  CollectionItemsLoadedFavState(this.data) : super([data]);
-
-  @override
-  String toString() =>
-      "CollectionItemsLoadedFavState, data.length(${data.length})";
-}
-
 // class CollectionLoadingRepeatedItemsState extends BlocBaseState {
 //   final List<CollectionItem> data;
 //   CollectionLoadingRepeatedItemsState(this.data) : super([data]);
