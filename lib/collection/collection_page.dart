@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'collection_items_page.dart';
-import 'collection_items_fav_page.dart';
+import 'list/collection_items_page.dart';
+import 'list/collection_items_fav_page.dart';
 import '../config/app_config.dart';
 import 'bloc/list/exporter.dart';
-import 'collection_items_repeated_page.dart';
+import 'list/collection_items_repeated_page.dart';
 
 class CollectionPage extends StatelessWidget {
   final int collectionId;

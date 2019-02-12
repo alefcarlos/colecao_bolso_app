@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/list/exporter.dart';
-import '../common/common.dart';
-import '../bloc/exporter.dart';
+import '../bloc/list/exporter.dart';
+import '../../common/common.dart';
+import '../../bloc/exporter.dart';
 import 'collection_items_grid.dart';
 
 class CollectionListItemsView extends StatefulWidget {

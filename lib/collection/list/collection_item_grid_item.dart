@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'collection_item_model.dart';
-import '../common/common.dart';
-import 'bloc/list/exporter.dart';
+import '../collection_item_model.dart';
+import '../../common/common.dart';
+import '../bloc/list/exporter.dart';
 
 class CollectionItemGridItem extends StatelessWidget {
   final CollectionItem _item;

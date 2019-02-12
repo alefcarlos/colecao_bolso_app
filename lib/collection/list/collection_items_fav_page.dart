@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../common/common.dart';
-import 'bloc/fav/exporter.dart';
-import '../bloc/exporter.dart';
-import 'collection_service.dart';
+import '../../common/common.dart';
+import '../bloc/fav/exporter.dart';
+import '../../bloc/exporter.dart';
+import '../collection_service.dart';
 import 'collection_item_simple_list.dart';
 
 class CollectionFavItemsPage extends StatefulWidget {

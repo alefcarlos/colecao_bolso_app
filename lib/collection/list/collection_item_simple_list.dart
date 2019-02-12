@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'collection_item_model.dart';
+import '../collection_item_model.dart';
 
 class CollectionItemSimpleList extends StatelessWidget {
   final List<CollectionItem> _data;

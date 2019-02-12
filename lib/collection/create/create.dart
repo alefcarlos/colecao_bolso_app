@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_tags/input_tags.dart';
 
-import 'collection_item_model.dart';
+import '../collection_item_model.dart';
 import 'create_result_model.dart';
 
-import '../widgets/forms-input/image.dart';
-import '../common/common.dart';
+import '../../widgets/forms-input/image.dart';
+import '../../common/common.dart';
 
 class EditCollectionItemPage extends StatefulWidget {
   /// É possível criamos um item para uma determinada coleção, basta informar o ID da mesma
