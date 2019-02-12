@@ -44,7 +44,7 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
 
     if (event is CollectionsFetchEvent) {
       if (event.fromScroll && _hasReachedMax(currentState)) return;
-      yield CollectionsLoadingState();
+      // yield CollectionsLoadingState();
       try {
         if (currentState is CollectionsLoadingState) {
           final collections = await _service.fetch(0, 10);

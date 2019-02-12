@@ -23,17 +23,13 @@ class CollectionRoute {
 
   static final createItemHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    // var model = CollectionItemModel.of(context);
-    // var model2 = CollectionModel.of(context);
+
     return EditCollectionItemPage(collectionItemModel: null);
   });
 
   static final createCollectionItemHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     var index = int.parse(params['id']?.first);
-
-    // var model = CollectionItemModel.of(context);
-    // var model2 = CollectionModel.of(context);
 
     return EditCollectionItemPage(
         collectionId: index, collectionItemModel: null);

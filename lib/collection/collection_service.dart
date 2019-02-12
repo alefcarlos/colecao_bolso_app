@@ -33,4 +33,12 @@ class CollectionService {
         .where((i) => i.collectionId == collectionId && i.isFav)
         .toList();
   }
+
+  Future<List<CollectionItem>> fetchRepeated(int collectionId) async {
+    await Future.delayed(Duration(seconds: 1));
+
+    return Application.collectionItems
+        .where((i) => i.collectionId == collectionId && i.quantity > 1)
+        .toList();
+  }
 }

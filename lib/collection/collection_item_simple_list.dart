@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'bloc/fav/exporter.dart';
+import 'collection_item_model.dart';
 
 class CollectionItemSimpleList extends StatelessWidget {
-  final CollectionItemsLoadedFavState _state;
+  final List<CollectionItem> _data;
 
-  CollectionItemSimpleList(this._state);
+  CollectionItemSimpleList(this._data);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ListView.builder(
         itemBuilder: (context, index) {
-          var item = _state.data[index];
+          var item = _data[index];
 
           return Column(
             children: [
@@ -25,7 +25,7 @@ class CollectionItemSimpleList extends StatelessWidget {
             ],
           );
         },
-        itemCount: _state.data.length,
+        itemCount: _data.length,
       ),
     );
   }
