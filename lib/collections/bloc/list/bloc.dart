@@ -47,21 +47,20 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
       // yield CollectionsLoadingState();
       try {
         if (currentState is CollectionsLoadingState) {
-          final collections = await _service.fetch(0, 10);
-          yield CollectionsLoadedState(data: collections, hasReachedMax: false);
+          final data = await _service.fetch(0, 10);
+          yield CollectionsLoadedState(
+              data: data,
+              hasReachedMax: data.last.id == Application.collections.length);
         }
         if (currentState is CollectionsLoadedState) {
           final data = await _service.fetch(currentState.data.length, 10);
 
           if (data.isEmpty) {
             yield currentState.copyWith(hasReachedMax: true);
-          } else if (data.last.id == Application.collections.length) {
-            yield currentState.copyWith(
-                data: currentState.data + data, hasReachedMax: true);
           } else {
             yield CollectionsLoadedState(
               data: currentState.data + data,
-              hasReachedMax: false,
+              hasReachedMax: data.last.id == Application.collections.length,
             );
           }
         }
@@ -74,19 +73,19 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   Future<List<Collection>> _delete(
       int collectionId, CollectionsLoadedState loadedState) async {
     await _service.delete(collectionId);
-    var deletedItemIndex =
-        loadedState.data.indexWhere((x) => x.id == collectionId);
-    loadedState.data.removeAt(deletedItemIndex);
+    // var deletedItemIndex =
+    //     loadedState.data.indexWhere((x) => x.id == collectionId);
+    // loadedState.data.removeAt(deletedItemIndex);
     return loadedState.data;
   }
 
   Future<List<Collection>> _toggleFav(
       int collectionId, CollectionsLoadedState loadedState) async {
     await _service.toggleFav(collectionId);
-    var updatedItemIndex =
-        loadedState.data.indexWhere((x) => x.id == collectionId);
-    var isFav = loadedState.data[updatedItemIndex].isFav;
-    loadedState.data[updatedItemIndex].setFav(!isFav);
+    // var updatedItemIndex =
+    //     loadedState.data.indexWhere((x) => x.id == collectionId);
+    // var isFav = loadedState.data[updatedItemIndex].isFav;
+    // loadedState.data[updatedItemIndex].setFav(!isFav);
     return loadedState.data;
   }
 

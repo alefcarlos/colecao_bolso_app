@@ -10,6 +10,10 @@ class CollectionItem {
       this._collectionId, this._number, this._isFav, this._quantity, this._tags)
       : assert(_quantity > 0);
 
+  CollectionItem.id(this._id, this._collectionId, this._number, this._isFav,
+      this._quantity, this._tags)
+      : assert(_quantity > 0);
+
   int get id => _id;
   setId(int id) => this._id = id;
 

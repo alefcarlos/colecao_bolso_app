@@ -64,9 +64,9 @@ class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   Future<List<CollectionItem>> _toggleFav(
       int itemId, CollectionItemsLoadedState loadedState) async {
     await service.toggleFav(itemId);
-    var updatedItemIndex = loadedState.data.indexWhere((x) => x.id == itemId);
-    var isFav = loadedState.data[updatedItemIndex].isFav;
-    loadedState.data[updatedItemIndex].setFav(!isFav);
+    // var updatedItemIndex = loadedState.data.indexWhere((x) => x.id == itemId);
+    // var isFav = loadedState.data[updatedItemIndex].isFav;
+    // loadedState.data[updatedItemIndex].setFav(!isFav);
     return loadedState.data;
   }
 
