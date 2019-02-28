@@ -86,6 +86,7 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
   Widget build(BuildContext context) {
     return BlocProviderTree(
       blocProviders: [
+        BlocProvider<TagsBloc>(bloc: tagsBloc),
         BlocProvider<CollectionsBloc>(bloc: collectionsBloc),
         BlocProvider<CreateCollectionBloc>(bloc: createCollectionBloc),
         BlocProvider<CollectionBloc>(bloc: collectionBloc),

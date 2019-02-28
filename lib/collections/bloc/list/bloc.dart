@@ -30,17 +30,27 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
     if (event is CollectionsDeleteEvent &&
         currentState is CollectionsLoadedState) {
       yield CollectionsLoadingState();
-      var data = await _delete(event.collectionId, currentState);
-      yield currentState.copyWith(
-          data: data, hasReachedMax: currentState.hasReachedMax);
+
+      try {
+        var data = await _delete(event.collectionId, currentState);
+        yield currentState.copyWith(
+            data: data, hasReachedMax: currentState.hasReachedMax);
+      } catch (_) {
+        yield BlocErrorState('Não foi possível realizar a deleção.');
+      }
     }
 
     if (event is CollectionsToggleFavEvent &&
         currentState is CollectionsLoadedState) {
       yield CollectionsLoadingState();
-      var data = await _toggleFav(event.collectionId, currentState);
-      yield currentState.copyWith(
-          data: data, hasReachedMax: currentState.hasReachedMax);
+
+      try {
+        var data = await _toggleFav(event.collectionId, currentState);
+        yield currentState.copyWith(
+            data: data, hasReachedMax: currentState.hasReachedMax);
+      } catch (_) {
+        yield BlocErrorState('Não foi possível realizar a ação.');
+      }
     }
 
     if (event is CollectionsFetchEvent) {
@@ -74,9 +84,9 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   Future<List<Collection>> _delete(
       int collectionId, CollectionsLoadedState loadedState) async {
     await _service.delete(collectionId);
-    // var deletedItemIndex =
-    //     loadedState.data.indexWhere((x) => x.id == collectionId);
-    // loadedState.data.removeAt(deletedItemIndex);
+    var deletedItemIndex =
+        loadedState.data.indexWhere((x) => x.id == collectionId);
+    loadedState.data.removeAt(deletedItemIndex);
     return loadedState.data;
   }
 
