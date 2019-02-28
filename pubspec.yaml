@@ -38,13 +38,15 @@ dependencies:
 
   flutter_scatter: ^0.1.0
 
-  flutter_bloc: ^0.5.4
+  flutter_bloc: ^0.7.0
 
   equatable: ^0.1.10
 
   http: ^0.12.0+1
 
   flutter_colorpicker: ^0.2.1
+
+  font_awesome_flutter: ^8.4.0
   
 dev_dependencies:
   flutter_test:

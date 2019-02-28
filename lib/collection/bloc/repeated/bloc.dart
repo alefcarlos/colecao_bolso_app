@@ -6,6 +6,7 @@ import '../../../bloc/exporter.dart';
 import 'state.dart';
 import 'event.dart';
 import '../../collection_service.dart';
+import 'dart:async';
 
 class CollectionRepeatedItemsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   final CollectionService _service;

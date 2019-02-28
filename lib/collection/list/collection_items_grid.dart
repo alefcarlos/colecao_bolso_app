@@ -19,7 +19,7 @@ class CollectionItemGrid extends StatelessWidget {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      _bloc.dispatch(CollectionFetchItemsEvent(_collectionId));
+      _bloc.dispatch(CollectionFetchItemsEvent(_collectionId, true));
     }
   }
 

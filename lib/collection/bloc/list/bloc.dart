@@ -7,6 +7,7 @@ import 'state.dart';
 import 'event.dart';
 import '../../collection_service.dart';
 import '../../collection_item_model.dart';
+import 'dart:async';
 
 class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   final CollectionService service;
@@ -24,21 +25,37 @@ class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   @override
   Stream<BlocBaseState> mapEventToState(
       BlocBaseState currentState, BlocBaseEvent event) async* {
-    if (event is CollectionFetchItemsEvent && !_hasReachedMax(currentState)) {
+    if (event is CollectionFetchItemsEvent) {
+      if (!event.fromScroll) yield BlocLoadingIndicatorState();
+
+      if (event.fromScroll && _hasReachedMax(currentState)) return;
       try {
         if (currentState is BlocLoadingIndicatorState) {
           final data = await service.fetch(event.collectionId, 0, 10);
           yield CollectionItemsLoadedState(data: data, hasReachedMax: false);
         }
         if (currentState is CollectionItemsLoadedState) {
-          final data = await service.fetch(
-              event.collectionId, currentState.data.length, 10);
-          yield data.isEmpty
-              ? currentState.copyWith(hasReachedMax: true)
-              : CollectionItemsLoadedState(
-                  data: currentState.data + data,
-                  hasReachedMax: false,
-                );
+          final data = await service.fetch(event.collectionId,
+              !event.fromScroll ? 0 : currentState.data.length, 10);
+
+          if (!event.fromScroll && data.isEmpty)
+            yield CollectionItemsLoadedState(
+              data: [],
+              hasReachedMax: false,
+            );
+          else if (!event.fromScroll && data.isNotEmpty) {
+            yield CollectionItemsLoadedState(
+              data: data,
+              hasReachedMax: false,
+            );
+          } else if (event.fromScroll) {
+            yield data.isEmpty
+                ? currentState.copyWith(hasReachedMax: true)
+                : CollectionItemsLoadedState(
+                    data: currentState.data + data,
+                    hasReachedMax: false,
+                  );
+          }
         }
       } catch (e) {
         yield BlocErrorState(e);
@@ -53,7 +70,8 @@ class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
         yield currentState.copyWith(
             data: data, hasReachedMax: currentState.hasReachedMax);
       } catch (e) {
-        yield BlocErrorState('Não foipossível carregar os itens, tente novamente...');
+        yield BlocErrorState(
+            'Não foipossível carregar os itens, tente novamente...');
       }
     }
   }

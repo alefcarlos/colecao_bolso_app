@@ -8,6 +8,7 @@ import '../../collections_service.dart';
 import '../../collection_model.dart';
 import '../../../bloc/exporter.dart';
 import '../../../config/application.dart';
+import 'dart:async';
 
 class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   final CollectionsService _service;

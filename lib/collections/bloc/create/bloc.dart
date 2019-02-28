@@ -5,6 +5,7 @@ import '../../../bloc/exporter.dart';
 import 'state.dart';
 import 'event.dart';
 import '../../collections_service.dart';
+import 'dart:async';
 
 class CreateCollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   final CollectionsService _service;

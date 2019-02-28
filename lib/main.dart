@@ -55,6 +55,8 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
   CollectionsBloc collectionsBloc;
   CreateCollectionBloc createCollectionBloc;
   CollectionBloc collectionBloc;
+  CollectionFavItemsBloc collectionFavItemsBloc;
+  CollectionRepeatedItemsBloc collectionRepeatedItemsBloc;
 
   @override
   void initState() {
@@ -62,6 +64,9 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
     collectionsBloc = CollectionsBloc(widget.collectionsService);
     createCollectionBloc = CreateCollectionBloc(widget.collectionsService);
     collectionBloc = CollectionBloc(widget.collectionService);
+    collectionFavItemsBloc = CollectionFavItemsBloc(widget.collectionService);
+    collectionRepeatedItemsBloc =
+        CollectionRepeatedItemsBloc(widget.collectionService);
     super.initState();
   }
 
@@ -71,29 +76,22 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
     collectionsBloc.dispose();
     createCollectionBloc.dispose();
     collectionBloc.dispose();
+    collectionFavItemsBloc.dispose();
+    collectionRepeatedItemsBloc.dispose();
     super.dispose();
-  }
-
-  _injectBloc({@required Widget child}) {
-    return BlocProvider<TagsBloc>(
-      bloc: tagsBloc,
-      child: BlocProvider<CollectionsBloc>(
-        bloc: collectionsBloc,
-        child: BlocProvider<CreateCollectionBloc>(
-          bloc: createCollectionBloc,
-          child: BlocProvider<CollectionBloc>(
-            bloc: collectionBloc,
-            child: child,
-          ),
-        ),
-      ),
-    );
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return _injectBloc(
+    return BlocProviderTree(
+      blocProviders: [
+        BlocProvider<CollectionsBloc>(bloc: collectionsBloc),
+        BlocProvider<CreateCollectionBloc>(bloc: createCollectionBloc),
+        BlocProvider<CollectionBloc>(bloc: collectionBloc),
+        BlocProvider<CollectionFavItemsBloc>(bloc: collectionFavItemsBloc),
+        BlocProvider<CollectionRepeatedItemsBloc>(bloc: collectionRepeatedItemsBloc),
+      ],
       child: MaterialApp(
         title: 'Coleção de Bolso',
         theme: ThemeData(
@@ -114,9 +112,9 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
           tabBarTheme: TabBarTheme(labelColor: Colors.white),
           accentColor: Colors.deepOrangeAccent,
         ),
-        // home: AuthPage(),
         onGenerateRoute: Application.router.generator,
       ),
     );
   }
 }
+
