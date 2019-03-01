@@ -6,12 +6,10 @@ import 'collections_list.dart';
 import 'bloc/list/exporter.dart';
 
 class CollectionsPage extends StatelessWidget {
-  final CollectionsBloc collectionsBloc;
-
-  CollectionsPage(this.collectionsBloc);
-
   @override
   Widget build(BuildContext context) {
+    var bloc = CollectionsBloc.of(context);
+    
     return Scaffold(
       drawer: CollectionsDrawer(),
       appBar: AppBar(
@@ -19,8 +17,8 @@ class CollectionsPage extends StatelessWidget {
         // the App.build method, and use it to set our appbar title.
         title: Text('Minhas coleções'),
       ),
-      body: CollectionsList(collectionsBloc),
-      floatingActionButton: CollectionsPageFab(collectionsBloc),
+      body: CollectionsList(bloc),
+      floatingActionButton: CollectionsPageFab(bloc),
     );
   }
 }

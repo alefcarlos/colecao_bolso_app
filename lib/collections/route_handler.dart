@@ -2,8 +2,6 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import './collections_page.dart';
 import './create.dart';
-import 'bloc/list/exporter.dart';
-import 'bloc/create/exporter.dart';
 
 class CollectionsRoute {
   static String collectionsRoute = '/collections';
@@ -11,15 +9,13 @@ class CollectionsRoute {
 
   static final collectionsHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    var bloc = CollectionsBloc.of(context);
 
-    return CollectionsPage(bloc);
+    return CollectionsPage();
   });
 
   static final createCollectionHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    var bloc = CreateCollectionBloc.of(context);
-    return CreateCollectionPage(bloc);
+    return CreateCollectionPage();
   });
 
   static void configureRoutes(Router router) {

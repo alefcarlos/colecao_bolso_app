@@ -9,14 +9,15 @@ import 'list/collection_items_repeated_page.dart';
 
 class CollectionPage extends StatelessWidget {
   final int collectionId;
-  final CollectionBloc bloc;
-  final CollectionRepeatedItemsBloc repeatedBloc;
-  final CollectionFavItemsBloc favBloc;
 
-  CollectionPage(this.collectionId, this.bloc, this.repeatedBloc, this.favBloc);
+  CollectionPage(this.collectionId);
 
   @override
   Widget build(BuildContext context) {
+    var bloc = CollectionBloc.of(context);
+    var repeatedBloc = CollectionRepeatedItemsBloc.of(context);
+    var favBloc = CollectionFavItemsBloc.of(context);
+
     return Container(
       child: DefaultTabController(
         length: 3,

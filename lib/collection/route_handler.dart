@@ -1,8 +1,5 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'bloc/list/exporter.dart';
-import 'bloc/fav/exporter.dart';
-import 'bloc/repeated/exporter.dart';
 
 import 'collection_page.dart';
 import 'create/create_page.dart';
@@ -19,11 +16,8 @@ class CollectionRoute {
   static final collectionItemsHandler = new Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     var collectionId = int.parse(params['id']?.first);
-    var bloc = CollectionBloc.of(context);
-    var favBloc = CollectionFavItemsBloc.of(context);
-    var repeatedBloc = CollectionRepeatedItemsBloc.of(context);
 
-    return CollectionPage(collectionId, bloc, repeatedBloc, favBloc);
+    return CollectionPage(collectionId);
   });
 
   static final createItemHandler = Handler(
