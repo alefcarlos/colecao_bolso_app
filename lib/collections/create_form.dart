@@ -170,7 +170,7 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
 
         if (state is CreateCollectionCreatingSuccessfulState) {
           _onWidgetDidBuild(() {
-            widget.bloc.dispatch(CreateCollectionClearStateEvent());
+            widget.bloc.dispatch(ClearEvent());
             Navigator.pop(context, state.collectionId);
           });
         }

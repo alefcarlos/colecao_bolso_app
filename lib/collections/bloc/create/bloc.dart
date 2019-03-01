@@ -24,7 +24,7 @@ class CreateCollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
     //   yield CreateCollectionsLoadedState(data: data);
     // }
 
-    if (event is CreateCollectionClearStateEvent) {
+    if (event is ClearEvent) {
       yield CreateCollectionUnintialized();
     }
 

@@ -14,3 +14,4 @@ class CollectionsToggleFavEvent extends BlocBaseEvent {
   final int collectionId;
   CollectionsToggleFavEvent(this.collectionId) : super([collectionId]);
 }
+

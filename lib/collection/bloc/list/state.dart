@@ -33,19 +33,3 @@ class CollectionItemsLoadedState extends BlocBaseState {
   String toString() =>
       "CollectionItemsLoadedState, data.lenght(${data.length}, hasReachedMax($hasReachedMax))";
 }
-
-// class CollectionLoadingItemsState extends BlocBaseState {
-//   final List<CollectionItem> data;
-//   CollectionLoadingItemsState(this.data) : super([data]);
-
-//   @override
-//   String toString() => "CollectionLoadingState, data.length(${data.length})";
-// }
-
-// class CollectionLoadingRepeatedItemsState extends BlocBaseState {
-//   final List<CollectionItem> data;
-//   CollectionLoadingRepeatedItemsState(this.data) : super([data]);
-
-//   @override
-//   String toString() => "CollectionLoadingState, data.length(${data.length})";
-// }

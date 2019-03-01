@@ -74,6 +74,7 @@ class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
             'Não foipossível carregar os itens, tente novamente...');
       }
     }
+  
   }
 
   bool _hasReachedMax(BlocBaseState state) =>

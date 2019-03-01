@@ -5,7 +5,7 @@ import 'bloc/fav/exporter.dart';
 import 'bloc/repeated/exporter.dart';
 
 import 'collection_page.dart';
-import 'create/create.dart';
+import 'create/create_page.dart';
 
 class CollectionRoute {
   static String collectionItemsRoute = '/collection/:id';
@@ -28,16 +28,14 @@ class CollectionRoute {
 
   static final createItemHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-
-    return EditCollectionItemPage(collectionItemModel: null);
+    return CreateCollectionItemPage();
   });
 
   static final createCollectionItemHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    var index = int.parse(params['id']?.first);
+    var collectionId = int.parse(params['id']?.first);
 
-    return EditCollectionItemPage(
-        collectionId: index, collectionItemModel: null);
+    return CreateCollectionItemPage(collectionId: collectionId);
   });
 
   static void configureRoutes(Router router) {

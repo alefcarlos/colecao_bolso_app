@@ -8,10 +8,10 @@ class Application {
       "https://my-json-server.typicode.com/alefcarlos/colecao_bolso_app/";
   static final List<Collection> collections = [
     Collection(1, "primeira", true, 10),
-    Collection(2, "primeira", true, 10),
-    Collection(3, "primeira", false, 10),
-    Collection(4, "primeira", true, 10),
-    Collection(5, "primeira", true, 10),
+    Collection(2, "segunda", true, 10),
+    Collection(3, "terceira", false, 10),
+    Collection(4, "quarta", true, 10),
+    Collection(5, "quinta", true, 10),
   ];
   static final List<CollectionItem> collectionItems = [
     CollectionItem.id(1, 1, "1", false, 2, null),

@@ -57,6 +57,7 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
   CollectionBloc collectionBloc;
   CollectionFavItemsBloc collectionFavItemsBloc;
   CollectionRepeatedItemsBloc collectionRepeatedItemsBloc;
+  CreateCollectionItemBloc createCollectionItemBloc;
 
   @override
   void initState() {
@@ -67,6 +68,7 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
     collectionFavItemsBloc = CollectionFavItemsBloc(widget.collectionService);
     collectionRepeatedItemsBloc =
         CollectionRepeatedItemsBloc(widget.collectionService);
+        createCollectionItemBloc = CreateCollectionItemBloc(widget.collectionsService);
     super.initState();
   }
 
@@ -78,6 +80,7 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
     collectionBloc.dispose();
     collectionFavItemsBloc.dispose();
     collectionRepeatedItemsBloc.dispose();
+    createCollectionItemBloc.dispose();
     super.dispose();
   }
 
@@ -92,6 +95,7 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
         BlocProvider<CollectionBloc>(bloc: collectionBloc),
         BlocProvider<CollectionFavItemsBloc>(bloc: collectionFavItemsBloc),
         BlocProvider<CollectionRepeatedItemsBloc>(bloc: collectionRepeatedItemsBloc),
+        BlocProvider<CreateCollectionItemBloc>(bloc: createCollectionItemBloc),
       ],
       child: MaterialApp(
         title: 'Coleção de Bolso',

@@ -1,33 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_tags/input_tags.dart';
 
-import '../collection_item_model.dart';
 import 'create_result_model.dart';
-
 import '../../widgets/forms-input/image.dart';
 import '../../common/common.dart';
+import '../collection_item_model.dart';
+import 'collection_selector.dart';
+import '../bloc/create/exporter.dart';
 
-class EditCollectionItemPage extends StatefulWidget {
+class CreateCollectionItemForm extends StatefulWidget {
   /// É possível criamos um item para uma determinada coleção, basta informar o ID da mesma
   final int collectionId;
 
-  /// Quando collectionId for nulo, deve ser passado valor
-  // final CollectionModel collectionModel;
+  CreateCollectionItemForm(this.collectionId);
 
-  final Object collectionItemModel;
-
-  EditCollectionItemPage(
-      {this.collectionId, @required this.collectionItemModel})
-      : assert(collectionItemModel != null);
-
-  @override
-  State<StatefulWidget> createState() {
-    return _EditCollectionItemPageState();
-  }
+  _CreateCollectionItemFormState createState() =>
+      _CreateCollectionItemFormState();
 }
 
-class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
+class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
   int _selectedCollectionId;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formData = {
@@ -59,7 +50,7 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
     var entity = CollectionItem(_selectedCollectionId, _formData['isFav'],
         _formData['number'], _formData['quantity'], _tags);
 
-    // widget.collectionItemModel.addCollectionItem(_selectedCollectionId, entity);
+    //TODO: evento de criação
 
     var result = CreateItemResult(_selectedCollectionId, entity.id);
     Navigator.pop(context, result);
@@ -112,49 +103,6 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
     );
   }
 
-  buildCollectionField() {
-    return ScopedModelDescendant(
-      builder: (BuildContext context, Widget child, Model model) {
-        return null;
-        //   if (model.collections.length > 0 && !model.isLoading) {
-        //     if (_selectedCollectionId == null) {
-        //       _selectedCollectionId = model.collections[0].id;
-        //     }
-
-        //     return Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        //       Text(
-        //         'Coleção',
-        //         style: TextStyle(fontSize: 18.0),
-        //       ),
-        //       SizedBox(
-        //         width: 25.0,
-        //       ),
-        //       DropdownButton(
-        //           value: _selectedCollectionId,
-        //           items: model.collections
-        //               .map((item) => DropdownMenuItem<int>(
-        //                   value: item.id, child: Text(item.name)))
-        //               .toList(),
-        //           onChanged: (int value) {
-        //             setState(() {
-        //               _selectedCollectionId = value;
-        //               print(_selectedCollectionId);
-        //             });
-        //           })
-        //     ]);
-        //   } else if (model.collections.length == 0 && !model.isLoading) {
-        //     return Center(
-        //         child: Text(
-        //       'É necessário criar uma coleção para adicionar item',
-        //       style: TextStyle(fontSize: 20.0),
-        //     ));
-        //   } else if (model.isLoading) {
-        //     return Center(child: CircularProgressIndicator());
-        //   }
-      },
-    );
-  }
-
   Widget _buildTagsInput() {
     return InputTags(
       tags: [],
@@ -174,7 +122,15 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
 
   List<Widget> _buildFields(BuildContext context) {
     return [
-      buildCollectionField(),
+      CollectionSelector(
+        bloc: CreateCollectionItemBloc.of(context),
+        selectedId: _selectedCollectionId,
+        onChanged: (int result) => {
+              setState(() {
+                _selectedCollectionId = result;
+              })
+            },
+      ),
       _buildNumberTextField(),
       SizedBox(
         height: 10.0,
@@ -202,17 +158,12 @@ class _EditCollectionItemPageState extends State<EditCollectionItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Novo item'),
-      ),
-      body: Container(
-        margin: EdgeInsets.all(10.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: _buildFields(context),
-          ),
+    return Container(
+      margin: EdgeInsets.all(10.0),
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: _buildFields(context),
         ),
       ),
     );
