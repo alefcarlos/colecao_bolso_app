@@ -1,0 +1,1 @@
+enum TagsEvent { fetch }

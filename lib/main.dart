@@ -2,12 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
 
-import './collections/collections.dart';
-import './tags/tags.dart';
-import './collection/collection.dart';
+import './collections/exporter.dart';
+import './tags/exporter.dart';
+import './collection/exporter.dart';
 import './config/app_config.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
@@ -21,25 +20,21 @@ void main() {
   BlocSupervisor().delegate = SimpleBlocDelegate();
 
   runApp(ColecaoDeBolsoApp(
-    collectionModel: CollectionModel(),
-    collectionItemModel: CollectionItemModel(),
-    itemTagModel: ItemTagModel(),
     tagsService: TagsService(httpClient: http.Client()),
+    collectionsService: CollectionsService(httpClient: http.Client()),
+    collectionService: CollectionService(httpClient: http.Client()),
   ));
 }
 
 class ColecaoDeBolsoApp extends StatefulWidget {
-  final CollectionModel collectionModel;
-  final CollectionItemModel collectionItemModel;
-  final ItemTagModel itemTagModel;
   final TagsService tagsService;
+  final CollectionsService collectionsService;
+  final CollectionService collectionService;
 
-  ColecaoDeBolsoApp({
-    @required this.collectionModel,
-    @required this.collectionItemModel,
-    @required this.itemTagModel,
-    @required this.tagsService,
-  }) {
+  ColecaoDeBolsoApp(
+      {@required this.tagsService,
+      @required this.collectionsService,
+      @required this.collectionService}) {
     final router = new Router();
 
     //Configurar rotas
@@ -57,68 +52,74 @@ class ColecaoDeBolsoApp extends StatefulWidget {
 
 class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
   TagsBloc tagsBloc;
+  CollectionsBloc collectionsBloc;
+  CreateCollectionBloc createCollectionBloc;
+  CollectionBloc collectionBloc;
+  CollectionFavItemsBloc collectionFavItemsBloc;
+  CollectionRepeatedItemsBloc collectionRepeatedItemsBloc;
+  CreateCollectionItemBloc createCollectionItemBloc;
 
   @override
   void initState() {
     tagsBloc = TagsBloc(widget.tagsService);
+    collectionsBloc = CollectionsBloc(widget.collectionsService);
+    createCollectionBloc = CreateCollectionBloc(widget.collectionsService);
+    collectionBloc = CollectionBloc(widget.collectionService);
+    collectionFavItemsBloc = CollectionFavItemsBloc(widget.collectionService);
+    collectionRepeatedItemsBloc =
+        CollectionRepeatedItemsBloc(widget.collectionService);
+        createCollectionItemBloc = CreateCollectionItemBloc(widget.collectionsService, widget.collectionService);
     super.initState();
   }
 
   @override
   void dispose() {
     tagsBloc.dispose();
+    collectionsBloc.dispose();
+    createCollectionBloc.dispose();
+    collectionBloc.dispose();
+    collectionFavItemsBloc.dispose();
+    collectionRepeatedItemsBloc.dispose();
+    createCollectionItemBloc.dispose();
     super.dispose();
-  }
-
-  _injectScopedModels({@required Widget child}) {
-    return ScopedModel<CollectionModel>(
-      model: widget.collectionModel,
-      child: ScopedModel<CollectionItemModel>(
-        model: widget.collectionItemModel,
-        child: ScopedModel<ItemTagModel>(
-          model: widget.itemTagModel,
-          child: child,
-        ),
-      ),
-    );
-  }
-
-  _injectBloc({@required Widget child}) {
-    return BlocProvider<TagsBloc>(
-      bloc: tagsBloc,
-      child: child,
-    );
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return _injectScopedModels(
-      child: _injectBloc(
-        child: MaterialApp(
-          title: 'Coleção de Bolso',
-          theme: ThemeData(
-            // This is the theme of your application.
-            //
-            // Try running your application with "flutter run". You'll see the
-            // application has a blue toolbar. Then, without quitting the app, try
-            // changing the primarySwatch below to Colors.green and then invoke
-            // "hot reload" (press "r" in the console where you ran "flutter run",
-            // or simply save your changes to "hot reload" in a Flutter IDE).
-            // Notice that the counter didn't reset back to zero; the application
-            // is not restarted.
-            primarySwatch: Colors.orange,
-            primaryTextTheme: TextTheme(
-              title: TextStyle(color: Colors.white),
-            ),
-            primaryIconTheme: IconThemeData(color: Colors.white),
-            tabBarTheme: TabBarTheme(labelColor: Colors.white),
-            accentColor: Colors.deepOrangeAccent,
+    return BlocProviderTree(
+      blocProviders: [
+        BlocProvider<TagsBloc>(bloc: tagsBloc),
+        BlocProvider<CollectionsBloc>(bloc: collectionsBloc),
+        BlocProvider<CreateCollectionBloc>(bloc: createCollectionBloc),
+        BlocProvider<CollectionBloc>(bloc: collectionBloc),
+        BlocProvider<CollectionFavItemsBloc>(bloc: collectionFavItemsBloc),
+        BlocProvider<CollectionRepeatedItemsBloc>(bloc: collectionRepeatedItemsBloc),
+        BlocProvider<CreateCollectionItemBloc>(bloc: createCollectionItemBloc),
+      ],
+      child: MaterialApp(
+        title: 'Coleção de Bolso',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.orange,
+          primaryTextTheme: TextTheme(
+            title: TextStyle(color: Colors.white),
           ),
-          // home: AuthPage(),
-          onGenerateRoute: Application.router.generator,
+          primaryIconTheme: IconThemeData(color: Colors.white),
+          tabBarTheme: TabBarTheme(labelColor: Colors.white),
+          accentColor: Colors.deepOrangeAccent,
         ),
+        onGenerateRoute: Application.router.generator,
       ),
     );
   }
 }
+

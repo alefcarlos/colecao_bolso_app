@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../tags/route_handler.dart';
 import '../config/app_config.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CollectionsDrawer extends StatelessWidget {
   @override
@@ -14,7 +15,7 @@ class CollectionsDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
-              Icons.bookmark,
+              FontAwesomeIcons.hashtag,
               color: Colors.black,
             ),
             title: Text(

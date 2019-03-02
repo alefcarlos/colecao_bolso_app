@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
-import 'collection_item_scoped_model.dart';
-import '../collections/collection_scoped_model.dart';
-import 'collection_items_listview.dart';
-import 'collection_items_default_listview.dart';
+import 'list/collection_items_page.dart';
+import 'list/collection_items_fav_page.dart';
 import '../config/app_config.dart';
+import 'bloc/list/exporter.dart';
+import 'bloc/fav/exporter.dart';
+import 'bloc/repeated/exporter.dart';
+import 'list/collection_items_repeated_page.dart';
 
 class CollectionPage extends StatelessWidget {
-  final int index;
+  final int collectionId;
 
-  CollectionPage(this.index);
+  CollectionPage(this.collectionId);
 
   @override
   Widget build(BuildContext context) {
-    var collectionModel = CollectionModel.of(context);
-    var collectionItemModel = CollectionItemModel.of(context);
-    var collection = collectionModel.collections[index];
+    var bloc = CollectionBloc.of(context);
+    var repeatedBloc = CollectionRepeatedItemsBloc.of(context);
+    var favBloc = CollectionFavItemsBloc.of(context);
 
     return Container(
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(collection.name),
+            title: Text('Detalhes da coleção'),
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(
@@ -43,16 +45,23 @@ class CollectionPage extends StatelessWidget {
           ),
           body: TabBarView(
             children: <Widget>[
-              CollectionListItemsView(collection.id, collectionItemModel),
-              CollectionListItemsDefaultView(collection.id, collectionItemModel,
-                  collectionItemModel.getRepeatedItems),
-              CollectionListItemsDefaultView(collection.id, collectionItemModel,
-                  collectionItemModel.getFavItems),
+              CollectionListItemsView(collectionId, bloc),
+              CollectionRepeatedItemsPage(collectionId, repeatedBloc),
+              CollectionFavItemsPage(collectionId, favBloc),
             ],
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Application.router.navigateTo(context, '/collection/${collection.id}/item/create');
+              Application.router
+                  .navigateTo(context, '/collection/$collectionId/item/create')
+                  .then(
+                (result) {
+                  if (result != null) {
+                    bloc.dispatch(
+                        CollectionFetchItemsEvent(collectionId, false));
+                  }
+                },
+              );
             },
             tooltip: 'Adicionar item',
             child: Icon(Icons.camera_enhance),

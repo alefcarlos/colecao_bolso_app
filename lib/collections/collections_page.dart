@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
 import './fancy_fab.dart';
-import './collection_scoped_model.dart';
 import 'drawer.dart';
 import 'collections_list.dart';
+import 'bloc/list/exporter.dart';
 
 class CollectionsPage extends StatelessWidget {
-  final CollectionModel collectionModel;
-
-  CollectionsPage(this.collectionModel);
-
   @override
   Widget build(BuildContext context) {
+    var bloc = CollectionsBloc.of(context);
+    
     return Scaffold(
       drawer: CollectionsDrawer(),
       appBar: AppBar(
@@ -19,9 +17,8 @@ class CollectionsPage extends StatelessWidget {
         // the App.build method, and use it to set our appbar title.
         title: Text('Minhas coleções'),
       ),
-      // body:  Shimmers.listView(context),
-      body: CollectionsList(collectionModel),
-      floatingActionButton: CollectionsPageFab(),
+      body: CollectionsList(bloc),
+      floatingActionButton: CollectionsPageFab(bloc),
     );
   }
 }

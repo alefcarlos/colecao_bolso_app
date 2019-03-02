@@ -1,1 +1,0 @@
-enum TagsEvent { loading, ready }

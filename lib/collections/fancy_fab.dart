@@ -3,6 +3,7 @@ import '../config/app_config.dart';
 import '../common/common.dart';
 import 'route_handler.dart';
 import '../collection/route_handler.dart';
+import 'bloc/list/exporter.dart';
 
 //Based on https://medium.com/@agungsurya/create-a-simple-animated-floatingactionbutton-in-flutter-2d24f37cfbcc
 
@@ -10,8 +11,10 @@ class CollectionsPageFab extends StatefulWidget {
   final Function() onPressed;
   final String tooltip;
   final IconData icon;
+  final CollectionsBloc collectionsBloc;
 
-  CollectionsPageFab({this.onPressed, this.tooltip, this.icon});
+  CollectionsPageFab(this.collectionsBloc,
+      {this.onPressed, this.tooltip, this.icon});
 
   @override
   _CollectionsPageFabState createState() => _CollectionsPageFabState();
@@ -84,19 +87,21 @@ class _CollectionsPageFabState extends State<CollectionsPageFab>
           animate();
           Application.router
               .navigateTo(context, CollectionsRoute.createCollectionRoute)
-              .then(
-                (createdId) => createdId != null
-                    ? showSnackBar(
-                        context,
-                        'Coleção criada com sucesso',
-                        action: SnackBarAction(
-                          label: 'Ver coleção',
-                          onPressed: () => Application.router.navigateTo(
-                              context, '/collection/${createdId - 1}'),
-                        ),
-                      )
-                    : null,
+              .then((createdId) {
+            if (createdId != null) {
+              widget.collectionsBloc.dispatch(CollectionsFetchEvent());
+
+              showSnackBar(
+                context,
+                'Coleção criada com sucesso',
+                action: SnackBarAction(
+                  label: 'Ver coleção',
+                  onPressed: () => Application.router
+                      .navigateTo(context, '/collection/$createdId'),
+                ),
               );
+            }
+          });
         },
         tooltip: 'Adicionar coleção',
         child: Icon(Icons.add),
@@ -119,7 +124,7 @@ class _CollectionsPageFabState extends State<CollectionsPageFab>
                       action: SnackBarAction(
                         label: 'Ver item',
                         onPressed: () => Application.router.navigateTo(
-                            context, '/collection/${result.collectionId - 1}'),
+                            context, '/collection/${result.collectionId}'),
                       ),
                     )
                   : null);

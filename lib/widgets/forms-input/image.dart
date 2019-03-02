@@ -99,13 +99,11 @@ class _ImageInputState extends State<ImageInput> {
           SizedBox(height: 10.0),
           _imageFlie == null
               ? Text('Selecione uma imagem para um preview.')
-              : Image.file(
-                  _imageFlie,
+              : Image.file(_imageFlie,
                   fit: BoxFit.cover,
                   height: 300.0,
                   width: MediaQuery.of(context).size.width,
-                  alignment: Alignment.topCenter
-                ),
+                  alignment: Alignment.topCenter),
         ],
       ),
     );
