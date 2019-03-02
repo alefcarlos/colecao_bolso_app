@@ -53,7 +53,15 @@ class CollectionPage extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Application.router
-                  .navigateTo(context, '/collection/$collectionId/item/create');
+                  .navigateTo(context, '/collection/$collectionId/item/create')
+                  .then(
+                (result) {
+                  if (result != null) {
+                    bloc.dispatch(
+                        CollectionFetchItemsEvent(collectionId, false));
+                  }
+                },
+              );
             },
             tooltip: 'Adicionar item',
             child: Icon(Icons.camera_enhance),

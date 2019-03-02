@@ -50,4 +50,16 @@ class CollectionService {
     Application.collectionItems[index]
         .setFav(!Application.collectionItems[index].isFav);
   }
+
+  Future<void> add(CollectionItem model) async {
+    await Future.delayed(Duration(seconds: 1));
+    // var response = await httpClient.post('${Application.apiUri}/collections/',
+    //     body: json.encode(model.toMap()));
+
+    // if (response.statusCode != 201)
+    //   throw 'Não foi possível criar a coleção, tente novamente.';
+
+    model.setId(Application.collectionItems.length + 1);
+    Application.collectionItems.add(model);
+  }
 }

@@ -10,3 +10,17 @@ class CollectionsLoadedAllState extends BlocBaseState {
   @override
   String toString() => "CollectionsLoadedAllState, data.lenght(${data.length})";
 }
+
+class CreateCollectionItemCreatingState extends BlocBaseState{}
+
+class CreateCollectionItemCreatingSuccessfulState extends BlocBaseState {
+  final int collectionItemId;
+
+  CreateCollectionItemCreatingSuccessfulState(this.collectionItemId)
+      : super([collectionItemId]);
+
+  @override
+  String toString() {
+    return "CreateCollectionItemCreatingSuccessfulState";
+  }
+}

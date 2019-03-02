@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/exporter.dart';
 import '../bloc/create/exporter.dart';
+import '../../common/loading-indicator.dart';
 
 class CollectionSelector extends StatefulWidget {
   final int selectedId;
@@ -34,7 +35,7 @@ class _CollectionSelectorState extends State<CollectionSelector> {
       bloc: widget.bloc,
       builder: (BuildContext context, BlocBaseState state) {
         if (state is BlocLoadingIndicatorState) {
-          return Center(child: CircularProgressIndicator());
+          return LoadingIndicator();
         }
 
         if (state is CollectionsLoadedAllState) {
@@ -69,6 +70,8 @@ class _CollectionSelectorState extends State<CollectionSelector> {
             ],
           );
         }
+
+        return Container();
       },
     );
   }

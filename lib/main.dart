@@ -68,7 +68,7 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
     collectionFavItemsBloc = CollectionFavItemsBloc(widget.collectionService);
     collectionRepeatedItemsBloc =
         CollectionRepeatedItemsBloc(widget.collectionService);
-        createCollectionItemBloc = CreateCollectionItemBloc(widget.collectionsService);
+        createCollectionItemBloc = CreateCollectionItemBloc(widget.collectionsService, widget.collectionService);
     super.initState();
   }
 

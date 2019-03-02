@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'create_form.dart';
+import '../bloc/create/exporter.dart';
 
 class CreateCollectionItemPage extends StatelessWidget {
   /// É possível criamos um item para uma determinada coleção, basta informar o ID da mesma
@@ -9,11 +10,12 @@ class CreateCollectionItemPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var bloc = CreateCollectionItemBloc.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Novo item'),
       ),
-      body: CreateCollectionItemForm(collectionId),
+      body: CreateCollectionItemForm(collectionId, bloc),
     );
   }
 }

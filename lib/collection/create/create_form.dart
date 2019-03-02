@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tags/input_tags.dart';
-
-import 'create_result_model.dart';
 import '../../widgets/forms-input/image.dart';
 import '../../common/common.dart';
 import '../collection_item_model.dart';
 import 'collection_selector.dart';
 import '../bloc/create/exporter.dart';
+import '../../bloc/exporter.dart';
+import 'create_result_model.dart';
 
 class CreateCollectionItemForm extends StatefulWidget {
   /// É possível criamos um item para uma determinada coleção, basta informar o ID da mesma
   final int collectionId;
+  final CreateCollectionItemBloc bloc;
 
-  CreateCollectionItemForm(this.collectionId);
+  CreateCollectionItemForm(this.collectionId, this.bloc);
 
   _CreateCollectionItemFormState createState() =>
       _CreateCollectionItemFormState();
@@ -28,12 +30,19 @@ class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
   };
   List<String> _tags = [];
 
+  CreateCollectionItemBloc get bloc => widget.bloc;
+
   @override
   void initState() {
     _selectedCollectionId = widget.collectionId;
-    // widget.collectionModel.fetch();
     _tags = [];
     super.initState();
+  }
+
+  void _onWidgetDidBuild(Function callback) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      callback();
+    });
   }
 
   void _submitForm(BuildContext context) {
@@ -47,13 +56,10 @@ class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
     }
 
     _formKey.currentState.save();
-    var entity = CollectionItem(_selectedCollectionId, _formData['isFav'],
-        _formData['number'], _formData['quantity'], _tags);
+    var entity = CollectionItem(_selectedCollectionId, _formData['number'],
+        _formData['isFav'], _formData['quantity'], _tags);
 
-    //TODO: evento de criação
-
-    var result = CreateItemResult(_selectedCollectionId, entity.id);
-    Navigator.pop(context, result);
+    bloc.dispatch(CollectionItemCreateEvent(entity));
   }
 
   Widget _buildNumberTextField() {
@@ -120,10 +126,10 @@ class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
     );
   }
 
-  List<Widget> _buildFields(BuildContext context) {
+  List<Widget> _buildFields(BuildContext context, BlocBaseState state) {
     return [
       CollectionSelector(
-        bloc: CreateCollectionItemBloc.of(context),
+        bloc: bloc,
         selectedId: _selectedCollectionId,
         onChanged: (int result) => {
               setState(() {
@@ -148,24 +154,58 @@ class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
       SizedBox(
         height: 10.0,
       ),
-      RaisedButton(
-        color: Theme.of(context).accentColor,
-        child: Text('Salvar'),
-        onPressed: () => _submitForm(context),
-      ),
+      _buildSubmitButton(context, state)
     ];
+  }
+
+  Widget _buildSubmitButton(BuildContext context, BlocBaseState state) {
+    if (state is CreateCollectionItemCreatingState) {
+      return LoadingIndicator();
+    }
+
+    return RaisedButton(
+      color: Theme.of(context).accentColor,
+      onPressed: () => _submitForm(context),
+      child: Text('Salvar'),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10.0),
-      child: Form(
-        key: _formKey,
-        child: ListView(
-          children: _buildFields(context),
-        ),
-      ),
+    return BlocBuilder<BlocBaseEvent, BlocBaseState>(
+      bloc: bloc,
+      builder: (BuildContext context, BlocBaseState state) {
+        if (state is BlocErrorState) {
+          _onWidgetDidBuild(() {
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text('${state.error}'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          });
+        }
+
+        if (state is CreateCollectionItemCreatingSuccessfulState) {
+          _onWidgetDidBuild(() {
+            bloc.dispatch(ClearEvent());
+            Navigator.pop(
+              context,
+              CreateItemResult(_selectedCollectionId, state.collectionItemId),
+            );
+          });
+        }
+
+        return Container(
+          margin: EdgeInsets.all(10.0),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: _buildFields(context, state),
+            ),
+          ),
+        );
+      },
     );
   }
 }
