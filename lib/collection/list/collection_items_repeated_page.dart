@@ -9,7 +9,7 @@ class CollectionRepeatedItemsPage extends StatefulWidget {
   final int _collectionId;
   final CollectionRepeatedItemsBloc _bloc;
 
-  CollectionRepeatedItemsPage(this._collectionId, this._bloc);
+  const CollectionRepeatedItemsPage(this._collectionId, this._bloc);
 
   _CollectionRepeatedItemsPageState createState() =>
       _CollectionRepeatedItemsPageState();

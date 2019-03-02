@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'collection_page.dart';
 import 'create/create_page.dart';
+import '../config/application.dart';
 
 class CollectionRoute {
   static String collectionItemsRoute = '/collection/:id';
@@ -16,8 +17,9 @@ class CollectionRoute {
   static final collectionItemsHandler = new Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     var collectionId = int.parse(params['id']?.first);
+    var col = Application.collections.firstWhere((col) => col.id == collectionId);
 
-    return CollectionPage(collectionId);
+    return CollectionPage(collectionId, col.name);
   });
 
   static final createItemHandler = Handler(

@@ -9,7 +9,7 @@ class CollectionSelector extends StatefulWidget {
   final CreateCollectionItemBloc bloc;
   final Function onChanged;
 
-  CollectionSelector(
+  const CollectionSelector(
       {@required this.bloc, @required this.onChanged, this.selectedId})
       : assert(bloc != null),
         assert(onChanged != null);
@@ -20,11 +20,12 @@ class CollectionSelector extends StatefulWidget {
 
 class _CollectionSelectorState extends State<CollectionSelector> {
   CreateCollectionItemBloc get bloc => widget.bloc;
-  int get selectedId => widget.selectedId;
   Function get onChanged => widget.onChanged;
+  int selected;
 
   @override
   void initState() {
+    selected = widget.selectedId;
     bloc.dispatch(CollectionFetchAllEvent());
     super.initState();
   }
@@ -47,7 +48,11 @@ class _CollectionSelectorState extends State<CollectionSelector> {
             ));
           }
 
-          var selected = selectedId == null ? state.data.first.id : selectedId;
+          var disabled = widget.selectedId != null;
+          selected = selected == null ? state.data.first.id : selected;
+          var selectedEntity = disabled
+              ? state.data.firstWhere((item) => item.id == selected)
+              : null;
 
           return Row(
             mainAxisSize: MainAxisSize.min,
@@ -60,12 +65,22 @@ class _CollectionSelectorState extends State<CollectionSelector> {
                 width: 25.0,
               ),
               DropdownButton(
+                disabledHint: disabled ? Text('${selectedEntity.name}') : null,
                 value: selected,
                 items: state.data
                     .map((item) => DropdownMenuItem<int>(
                         value: item.id, child: Text(item.name)))
                     .toList(),
-                onChanged: onChanged,
+                onChanged: disabled
+                    ? null
+                    : (int value) => {
+                          setState(
+                            () {
+                              selected = value;
+                              onChanged(value);
+                            },
+                          )
+                        },
               )
             ],
           );

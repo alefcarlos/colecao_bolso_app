@@ -9,7 +9,7 @@ class CollectionFavItemsPage extends StatefulWidget {
   final int _collectionId;
   final CollectionFavItemsBloc _bloc;
 
-  CollectionFavItemsPage(this._collectionId, this._bloc);
+  const CollectionFavItemsPage(this._collectionId, this._bloc);
 
   _CollectionFavItemsPageState createState() => _CollectionFavItemsPageState();
 }

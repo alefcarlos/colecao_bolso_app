@@ -127,15 +127,13 @@ class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
   }
 
   List<Widget> _buildFields(BuildContext context, BlocBaseState state) {
-    return [
+    return <Widget>[
       CollectionSelector(
         bloc: bloc,
         selectedId: _selectedCollectionId,
-        onChanged: (int result) => {
-              setState(() {
-                _selectedCollectionId = result;
-              })
-            },
+        onChanged: (int result) {
+          _selectedCollectionId = result;
+        },
       ),
       _buildNumberTextField(),
       SizedBox(

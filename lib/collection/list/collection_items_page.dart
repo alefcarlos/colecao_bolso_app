@@ -9,7 +9,7 @@ class CollectionListItemsView extends StatefulWidget {
   final int _collectionId;
   final CollectionBloc _bloc;
 
-  CollectionListItemsView(this._collectionId, this._bloc);
+  const CollectionListItemsView(this._collectionId, this._bloc);
 
   _CollectionListItemsViewState createState() =>
       _CollectionListItemsViewState();

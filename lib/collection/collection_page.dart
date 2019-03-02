@@ -9,8 +9,8 @@ import 'list/collection_items_repeated_page.dart';
 
 class CollectionPage extends StatelessWidget {
   final int collectionId;
-
-  CollectionPage(this.collectionId);
+  final String collectionName;
+  CollectionPage(this.collectionId, this.collectionName);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CollectionPage extends StatelessWidget {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Detalhes da coleção'),
+            title: Text(collectionName),
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(
