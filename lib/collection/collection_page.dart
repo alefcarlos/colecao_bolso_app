@@ -7,10 +7,40 @@ import 'bloc/fav/exporter.dart';
 import 'bloc/repeated/exporter.dart';
 import 'list/collection_items_repeated_page.dart';
 
-class CollectionPage extends StatelessWidget {
+class CollectionPage extends StatefulWidget {
   final int collectionId;
   final String collectionName;
   CollectionPage(this.collectionId, this.collectionName);
+
+  @override
+  State<StatefulWidget> createState() => _CollectionPageState();
+}
+
+class _CollectionPageState extends State<CollectionPage> {
+  PageController _pageController;
+  var _page = 0;
+
+  @override
+  void initState() {
+    _pageController = new PageController();
+    super.initState();
+  }
+
+  void navigationTapped(int page) {
+    _pageController.jumpToPage(page);
+  }
+
+  void onPageChanged(int page) {
+    setState(() {
+      this._page = page;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,55 +48,53 @@ class CollectionPage extends StatelessWidget {
     var repeatedBloc = CollectionRepeatedItemsBloc.of(context);
     var favBloc = CollectionFavItemsBloc.of(context);
 
-    return Container(
-      child: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(collectionName),
-            bottom: TabBar(
-              tabs: <Widget>[
-                Tab(
-                  icon: Icon(Icons.view_list,
-                      color: Theme.of(context).primaryIconTheme.color),
-                  text: 'Itens',
-                ),
-                Tab(
-                  icon: Icon(Icons.playlist_add_check,
-                      color: Theme.of(context).primaryIconTheme.color),
-                  text: 'Repetidos',
-                ),
-                Tab(
-                  icon: Icon(Icons.favorite_border, color: Colors.red),
-                  text: 'Favoritos',
-                )
-              ],
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.collectionName),
+      ),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: onPageChanged,
+        children: <Widget>[
+          CollectionListItemsView(widget.collectionId, bloc),
+          CollectionRepeatedItemsPage(widget.collectionId, repeatedBloc),
+          CollectionFavItemsPage(widget.collectionId, favBloc),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: navigationTapped,
+        currentIndex: _page,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.view_list),
+            title: Text('Itens'),
           ),
-          body: TabBarView(
-            children: <Widget>[
-              CollectionListItemsView(collectionId, bloc),
-              CollectionRepeatedItemsPage(collectionId, repeatedBloc),
-              CollectionFavItemsPage(collectionId, favBloc),
-            ],
+          BottomNavigationBarItem(
+            icon: Icon(Icons.playlist_add_check),
+            title: Text('Repetidos'),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Application.router
-                  .navigateTo(context, '/collection/$collectionId/item/create')
-                  .then(
-                (result) {
-                  if (result != null) {
-                    bloc.dispatch(
-                        CollectionFetchItemsEvent(collectionId, false));
-                  }
-                },
-              );
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            title: Text('Favoritos'),
+          )
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Application.router
+              .navigateTo(
+                  context, '/collection/$widget.collectionId/item/create')
+              .then(
+            (result) {
+              if (result != null) {
+                bloc.dispatch(
+                    CollectionFetchItemsEvent(widget.collectionId, false));
+              }
             },
-            tooltip: 'Adicionar item',
-            child: Icon(Icons.camera_enhance),
-          ),
-        ),
+          );
+        },
+        tooltip: 'Adicionar item',
+        child: Icon(Icons.camera_enhance),
       ),
     );
   }
