@@ -4,10 +4,10 @@ import 'package:flutter_tags/input_tags.dart';
 import '../../widgets/forms-input/image.dart';
 import '../../common/common.dart';
 import '../collection_item_model.dart';
-import 'collection_selector.dart';
 import '../bloc/create/exporter.dart';
 import '../../bloc/exporter.dart';
 import 'create_result_model.dart';
+import '../../config/app_config.dart';
 
 class CreateCollectionItemForm extends StatefulWidget {
   /// É possível criamos um item para uma determinada coleção, basta informar o ID da mesma
@@ -29,14 +29,22 @@ class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
     'isFav': false
   };
   List<String> _tags = [];
+  FocusNode quantityFocusNode;
 
   CreateCollectionItemBloc get bloc => widget.bloc;
 
   @override
   void initState() {
+    quantityFocusNode = FocusNode();
     _selectedCollectionId = widget.collectionId;
     _tags = [];
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    quantityFocusNode.dispose();
+    super.dispose();
   }
 
   void _onWidgetDidBuild(Function callback) {
@@ -64,10 +72,12 @@ class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
 
   Widget _buildNumberTextField() {
     return TextFormField(
+      autofocus: true,
       initialValue: _formData['number'].toString(),
       decoration: InputDecoration(
         labelText: 'Nº do item',
       ),
+      textInputAction: TextInputAction.next,
       validator: (String value) {
         if (value.isEmpty) {
           return 'Informe valor válido.';
@@ -76,11 +86,19 @@ class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
       onSaved: (String value) {
         _formData['number'] = value;
       },
+      onFieldSubmitted: (value) {
+        if (value.isNotEmpty)
+          FocusScope.of(context).requestFocus(quantityFocusNode);
+        else {
+          showSnackBar(context, 'Informe um número para seu item!');
+        }
+      },
     );
   }
 
   Widget _buildQuantityTextField() {
     return TextFormField(
+      focusNode: quantityFocusNode,
       initialValue: _formData['quantity'].toString(),
       decoration: InputDecoration(
         labelText: 'Quantidade',
@@ -112,7 +130,8 @@ class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
   Widget _buildTagsInput() {
     return InputTags(
       tags: [],
-      placeholder: 'Adicione tagas a seu item',
+      placeholder: 'Adicione tags ao seu item',
+      lowerCase: true,
       onDelete: (tag) {
         setState(() {
           _tags.removeWhere((item) => item == tag);
@@ -128,13 +147,22 @@ class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
 
   List<Widget> _buildFields(BuildContext context, BlocBaseState state) {
     return <Widget>[
-      CollectionSelector(
-        bloc: bloc,
-        selectedId: _selectedCollectionId,
-        onChanged: (int result) {
-          _selectedCollectionId = result;
-        },
-      ),
+      RaisedButton(
+          color: Theme.of(context).accentColor,
+          onPressed: () {
+            Application.router.navigateTo(context, '/collections/search').then(
+              (result) {
+                if (result != null) {
+                  setState(() {
+                    _selectedCollectionId = result;
+                  });
+                }
+              },
+            );
+          },
+          child: Text(
+            'Selecionar coleção',
+          )),
       _buildNumberTextField(),
       SizedBox(
         height: 10.0,

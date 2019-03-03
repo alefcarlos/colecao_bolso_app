@@ -10,6 +10,7 @@ import 'list/collection_items_repeated_page.dart';
 class CollectionPage extends StatefulWidget {
   final int collectionId;
   final String collectionName;
+
   CollectionPage(this.collectionId, this.collectionName);
 
   @override
@@ -83,7 +84,7 @@ class _CollectionPageState extends State<CollectionPage> {
         onPressed: () {
           Application.router
               .navigateTo(
-                  context, '/collection/$widget.collectionId/item/create')
+                  context, '/collection/${widget.collectionId}/item/create')
               .then(
             (result) {
               if (result != null) {

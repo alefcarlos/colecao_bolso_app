@@ -1,3 +1,4 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 
 import './fancy_fab.dart';
@@ -9,13 +10,22 @@ class CollectionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var bloc = CollectionsBloc.of(context);
-    
+
     return Scaffold(
       drawer: CollectionsDrawer(),
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text('Minhas coleções'),
+        actions: <Widget>[
+          IconButton(
+              icon: const Icon(Icons.settings_brightness),
+              tooltip: 'Alterar tema',
+              onPressed: () {
+                DynamicTheme.of(context).setBrightness(
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Brightness.light
+                        : Brightness.dark);
+              }),
+        ],
       ),
       body: CollectionsList(bloc),
       floatingActionButton: CollectionsPageFab(bloc),

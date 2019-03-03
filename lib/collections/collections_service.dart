@@ -71,4 +71,10 @@ class CollectionsService {
     // final data = json.decode(response.body) as List;
     // return data.map((item) => Collection.fromMap(item)).toList();
   }
+
+  Future<List<Collection>> search(String term) async {
+    await Future.delayed(Duration(seconds: 1));
+
+    return Application.collections.where((col) => col.name.contains(term.trim())).toList();
+  }
 }

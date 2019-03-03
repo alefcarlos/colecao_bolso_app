@@ -4,6 +4,8 @@ abstract class BlocBaseState extends Equatable {
   BlocBaseState([List props = const []]) : super(props);
 }
 
+class UnintializedPageState extends BlocBaseState {}
+
 class BlocLoadingIndicatorState extends BlocBaseState {
   @override
   String toString() => "BlocLoadingIndicatorState";
