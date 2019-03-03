@@ -24,6 +24,19 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
     'isFav': false,
     'color': Colors.grey
   };
+  FocusNode totalFocusNode;
+
+  @override
+  void initState() {
+    totalFocusNode = FocusNode();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    totalFocusNode.dispose();
+    super.dispose();
+  }
 
   _changeColor(Color color) => setState(() {
         _formData['color'] = color;
@@ -66,13 +79,21 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
     return TextFormField(
       decoration: InputDecoration(
         labelText: 'Nome',
-        filled: true,
       ),
+      autofocus: true,
+      textInputAction: TextInputAction.next,
       validator: (String value) {
         if (value.isEmpty) return 'O campo nome é obrigatório!';
       },
       onSaved: (String value) {
         _formData['name'] = value;
+      },
+      onFieldSubmitted: (value) {
+        if (value.isNotEmpty)
+          FocusScope.of(context).requestFocus(totalFocusNode);
+        else {
+          showSnackBar(context, 'Informe um nome para sua coleção!');
+        }
       },
     );
   }
@@ -83,12 +104,12 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
           TextInputType.numberWithOptions(decimal: false, signed: false),
       decoration: InputDecoration(
         labelText: 'Quantidade de itens',
-        filled: true,
       ),
       validator: (String value) {
         if (value.isEmpty)
           return 'É obrigatório informar uma quantidade de itens.';
       },
+      focusNode: totalFocusNode,
       onSaved: (String value) {
         _formData['itemsCount'] = int.parse(value);
       },
