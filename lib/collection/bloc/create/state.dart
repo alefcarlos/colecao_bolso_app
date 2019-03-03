@@ -7,7 +7,7 @@ import '../../../bloc/state_base.dart';
 //   String toString() => "CollectionsLoadedAllState, data.lenght(${data.length})";
 // }
 
-class CreateCollectionItemCreatingState extends BlocBaseState{}
+class CreateCollectionItemCreatingState extends BlocBaseState {}
 
 class CreateCollectionItemCreatingSuccessfulState extends BlocBaseState {
   final int collectionItemId;

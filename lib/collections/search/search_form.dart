@@ -130,7 +130,7 @@ class _SearchResultItem extends StatelessWidget {
             color: item.isFav ? Colors.red : null,
           ),
           onTap: () {
-              Navigator.pop(context, item.id);
+            Navigator.pop(context, item.id);
           },
         ),
         Divider()

@@ -4,4 +4,4 @@ abstract class BlocBaseEvent extends Equatable {
   BlocBaseEvent([List props = const []]) : super(props);
 }
 
-class ClearEvent extends BlocBaseEvent{}
+class ClearEvent extends BlocBaseEvent {}

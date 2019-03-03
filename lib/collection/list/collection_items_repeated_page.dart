@@ -17,7 +17,6 @@ class CollectionRepeatedItemsPage extends StatefulWidget {
 
 class _CollectionRepeatedItemsPageState
     extends State<CollectionRepeatedItemsPage> {
-
   CollectionRepeatedItemsBloc get bloc => widget._bloc;
 
   @override

@@ -18,11 +18,12 @@ class CollectionListItemsView extends StatefulWidget {
 class _CollectionListItemsViewState extends State<CollectionListItemsView> {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
-  
+
   @override
   void initState() {
     _scrollController.addListener(_onScroll);
-    widget._bloc.dispatch(CollectionFetchItemsEvent(widget._collectionId, false));
+    widget._bloc
+        .dispatch(CollectionFetchItemsEvent(widget._collectionId, false));
     super.initState();
   }
 
@@ -34,7 +35,8 @@ class _CollectionListItemsViewState extends State<CollectionListItemsView> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      widget._bloc.dispatch(CollectionFetchItemsEvent(widget._collectionId, true));
+      widget._bloc
+          .dispatch(CollectionFetchItemsEvent(widget._collectionId, true));
     }
   }
 

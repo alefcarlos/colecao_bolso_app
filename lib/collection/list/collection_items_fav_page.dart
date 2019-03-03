@@ -15,7 +15,6 @@ class CollectionFavItemsPage extends StatefulWidget {
 }
 
 class _CollectionFavItemsPageState extends State<CollectionFavItemsPage> {
-
   CollectionFavItemsBloc get bloc => widget._bloc;
 
   @override

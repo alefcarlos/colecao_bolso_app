@@ -17,7 +17,8 @@ class CollectionRoute {
   static final collectionItemsHandler = new Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     var collectionId = int.parse(params['id']?.first);
-    var col = Application.collections.firstWhere((col) => col.id == collectionId);
+    var col =
+        Application.collections.firstWhere((col) => col.id == collectionId);
 
     return CollectionPage(collectionId, col.name);
   });

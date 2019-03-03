@@ -5,6 +5,7 @@ class SearchStateEmpty extends BlocBaseState {
   @override
   String toString() => 'SearchStateEmpty';
 }
+
 class SearchStateSuccessState extends BlocBaseState {
   final List<Collection> data;
   SearchStateSuccessState(this.data) : super([data]);

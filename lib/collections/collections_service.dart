@@ -75,6 +75,8 @@ class CollectionsService {
   Future<List<Collection>> search(String term) async {
     await Future.delayed(Duration(seconds: 1));
 
-    return Application.collections.where((col) => col.name.contains(term.trim())).toList();
+    return Application.collections
+        .where((col) => col.name.contains(term.trim()))
+        .toList();
   }
 }

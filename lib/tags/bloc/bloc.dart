@@ -6,6 +6,7 @@ import 'event.dart';
 import 'state.dart';
 import '../tags_service.dart';
 import 'dart:async';
+
 class TagsBloc extends Bloc<TagsEvent, TagsState> {
   final TagsService _service;
 
