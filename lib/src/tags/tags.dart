@@ -1,3 +1,5 @@
+library tags;
+
 export 'tag_model.dart';
 export 'tags_page.dart';
 export 'tags_service.dart';

@@ -7,17 +7,17 @@ import 'package:colecao_bolso_app/application/shared/shared.dart';
 
 import './tag_model.dart';
 import 'bloc/exporter.dart';
+import 'tags_service.dart';
 
 class TagsCloud extends StatefulWidget {
-  final TagsBloc _bloc;
-
-  TagsCloud(this._bloc) : assert(_bloc != null);
-
   @override
   State<StatefulWidget> createState() => _TagsCloud();
 }
 
 class _TagsCloud extends State<TagsCloud> {
+  TagsBloc _bloc;
+
+
   final Random _random = Random();
   final List<Color> _tagColors = const [
     Colors.red,
@@ -31,8 +31,15 @@ class _TagsCloud extends State<TagsCloud> {
 
   @override
   void initState() {
-    widget._bloc.dispatch(TagsEvent.fetch);
+    _bloc = TagsBloc(TagsService.of(context));
+    _bloc.dispatch(TagsEvent.fetch);
     super.initState();
+  }
+
+  @override
+  void dispose() { 
+    _bloc.dispose();
+    super.dispose();
   }
 
   Widget _buildTags(context, List<ItemTag> tags) {
@@ -61,7 +68,7 @@ class _TagsCloud extends State<TagsCloud> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TagsEvent, TagsState>(
-      bloc: widget._bloc,
+      bloc: _bloc,
       builder: (BuildContext context, TagsState state) {
         if (state is TagsLoadingState) {
           return LoadingIndicator();

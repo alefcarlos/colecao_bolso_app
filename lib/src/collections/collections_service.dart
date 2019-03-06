@@ -8,8 +8,6 @@ import '../config/application.dart';
 import 'collection_model.dart';
 
 class CollectionsService extends ServiceBase {
-  static bool makeError = false;
-
   final http.Client httpClient;
   CollectionsService({@required this.httpClient}) : assert(httpClient != null);
 

@@ -52,13 +52,8 @@ class _CollectionsListState extends State<CollectionsList> {
 
           return RefreshIndicator(
             onRefresh: _refreshData,
-            child: ListView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              children: [
-                Empty(
-                  text: Text(state.error),
-                ),
-              ],
+            child: EmptyForRefreshIndicator(
+              text: Text(state.error),
             ),
           );
         }

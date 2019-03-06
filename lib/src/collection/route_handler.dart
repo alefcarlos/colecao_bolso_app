@@ -5,7 +5,7 @@ import 'collection_page.dart';
 import 'create/create_page.dart';
 import '../config/application.dart';
 
-class CollectionRoute {
+abstract class CollectionRoute {
   static String collectionItemsRoute = '/collection/:id';
 
   /// Rota /collection/item/create

@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
-import 'package:colecao_bolso_app/application/service/service.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:colecao_bolso_app/application/service/service.dart';
+import 'package:colecao_bolso_app/src/tags/tags.dart';
 
 import 'src/collections/exporter.dart';
-import 'src/tags/exporter.dart';
 import 'src/collection/exporter.dart';
 import 'src/config/app_config.dart';
 
@@ -53,7 +53,6 @@ class ColecaoDeBolsoApp extends StatefulWidget {
 }
 
 class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
-  TagsBloc tagsBloc;
   CollectionsBloc collectionsBloc;
   CreateCollectionBloc createCollectionBloc;
   CollectionBloc collectionBloc;
@@ -63,7 +62,6 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
 
   @override
   void initState() {
-    tagsBloc = TagsBloc(widget.tagsService);
     collectionsBloc = CollectionsBloc(widget.collectionsService);
     createCollectionBloc = CreateCollectionBloc(widget.collectionsService);
     collectionBloc = CollectionBloc(widget.collectionService);
@@ -77,7 +75,6 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
 
   @override
   void dispose() {
-    tagsBloc.dispose();
     collectionsBloc.dispose();
     createCollectionBloc.dispose();
     collectionBloc.dispose();
@@ -90,7 +87,8 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
   Widget _injectServices({@required Widget child}) {
     return ServiceProviderTree(
       providers: [
-        ServiceProvider<CollectionsService>(service: widget.collectionsService)
+        ServiceProvider<CollectionsService>(service: widget.collectionsService),
+        ServiceProvider<TagsService>(service: widget.tagsService)
       ],
       child: child,
     );
@@ -102,7 +100,6 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
     return _injectServices(
       child: BlocProviderTree(
         blocProviders: [
-          BlocProvider<TagsBloc>(bloc: tagsBloc),
           BlocProvider<CollectionsBloc>(bloc: collectionsBloc),
           BlocProvider<CreateCollectionBloc>(bloc: createCollectionBloc),
           BlocProvider<CollectionBloc>(bloc: collectionBloc),

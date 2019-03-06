@@ -2,7 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import './tags_page.dart';
 
-class TagsRoute {
+abstract class TagsRoute {
   static String tags = '/tags';
 
   static final tagsHandler = Handler(

@@ -1,10 +1,11 @@
+import 'package:colecao_bolso_app/application/service/service.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'collection_item_model.dart';
 import '../config/app_config.dart';
 import 'dart:async';
 
-class CollectionService {
+class CollectionService extends ServiceBase {
   final http.Client httpClient;
 
   CollectionService({@required this.httpClient}) : assert(httpClient != null);
