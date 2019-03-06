@@ -1,14 +1,15 @@
 import 'package:bloc/bloc.dart';
+import 'package:colecao_bolso_app/application/service/service.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
-import './collections/exporter.dart';
-import './tags/exporter.dart';
-import './collection/exporter.dart';
-import './config/app_config.dart';
+import 'src/collections/exporter.dart';
+import 'src/tags/exporter.dart';
+import 'src/collection/exporter.dart';
+import 'src/config/app_config.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -59,7 +60,6 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
   CollectionFavItemsBloc collectionFavItemsBloc;
   CollectionRepeatedItemsBloc collectionRepeatedItemsBloc;
   CreateCollectionItemBloc createCollectionItemBloc;
-  CollectionsSearchBloc collectionsSearchBloc;
 
   @override
   void initState() {
@@ -72,7 +72,6 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
         CollectionRepeatedItemsBloc(widget.collectionService);
     createCollectionItemBloc =
         CreateCollectionItemBloc(widget.collectionService);
-    collectionsSearchBloc = CollectionsSearchBloc(widget.collectionsService);
     super.initState();
   }
 
@@ -85,53 +84,63 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
     collectionFavItemsBloc.dispose();
     collectionRepeatedItemsBloc.dispose();
     createCollectionItemBloc.dispose();
-    collectionsSearchBloc.dispose();
     super.dispose();
+  }
+
+  Widget _injectServices({@required Widget child}) {
+    return ServiceProviderTree(
+      providers: [
+        ServiceProvider<CollectionsService>(service: widget.collectionsService)
+      ],
+      child: child,
+    );
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProviderTree(
-      blocProviders: [
-        BlocProvider<TagsBloc>(bloc: tagsBloc),
-        BlocProvider<CollectionsBloc>(bloc: collectionsBloc),
-        BlocProvider<CreateCollectionBloc>(bloc: createCollectionBloc),
-        BlocProvider<CollectionBloc>(bloc: collectionBloc),
-        BlocProvider<CollectionFavItemsBloc>(bloc: collectionFavItemsBloc),
-        BlocProvider<CollectionRepeatedItemsBloc>(
-            bloc: collectionRepeatedItemsBloc),
-        BlocProvider<CreateCollectionItemBloc>(bloc: createCollectionItemBloc),
-        BlocProvider<CollectionsSearchBloc>(bloc: collectionsSearchBloc),
-      ],
-      child: DynamicTheme(
-        defaultBrightness: Brightness.light,
-        data: (brightness) => ThemeData(
-              // This is the theme of your application.
-              //
-              // Try running your application with "flutter run". You'll see the
-              // application has a blue toolbar. Then, without quitting the app, try
-              // changing the primarySwatch below to Colors.green and then invoke
-              // "hot reload" (press "r" in the console where you ran "flutter run",
-              // or simply save your changes to "hot reload" in a Flutter IDE).
-              // Notice that the counter didn't reset back to zero; the application
-              // is not restarted.
-              primarySwatch: Colors.orange,
-              primaryTextTheme: TextTheme(
-                title: TextStyle(color: Colors.white),
+    return _injectServices(
+      child: BlocProviderTree(
+        blocProviders: [
+          BlocProvider<TagsBloc>(bloc: tagsBloc),
+          BlocProvider<CollectionsBloc>(bloc: collectionsBloc),
+          BlocProvider<CreateCollectionBloc>(bloc: createCollectionBloc),
+          BlocProvider<CollectionBloc>(bloc: collectionBloc),
+          BlocProvider<CollectionFavItemsBloc>(bloc: collectionFavItemsBloc),
+          BlocProvider<CollectionRepeatedItemsBloc>(
+              bloc: collectionRepeatedItemsBloc),
+          BlocProvider<CreateCollectionItemBloc>(
+              bloc: createCollectionItemBloc),
+        ],
+        child: DynamicTheme(
+          defaultBrightness: Brightness.light,
+          data: (brightness) => ThemeData(
+                // This is the theme of your application.
+                //
+                // Try running your application with "flutter run". You'll see the
+                // application has a blue toolbar. Then, without quitting the app, try
+                // changing the primarySwatch below to Colors.green and then invoke
+                // "hot reload" (press "r" in the console where you ran "flutter run",
+                // or simply save your changes to "hot reload" in a Flutter IDE).
+                // Notice that the counter didn't reset back to zero; the application
+                // is not restarted.
+                primarySwatch: Colors.orange,
+                primaryTextTheme: TextTheme(
+                  title: TextStyle(color: Colors.white),
+                ),
+                primaryIconTheme: IconThemeData(color: Colors.white),
+                tabBarTheme: TabBarTheme(labelColor: Colors.white),
+                accentColor: Colors.deepOrangeAccent,
+                brightness: brightness,
               ),
-              primaryIconTheme: IconThemeData(color: Colors.white),
-              tabBarTheme: TabBarTheme(labelColor: Colors.white),
-              accentColor: Colors.deepOrangeAccent,
-              brightness: brightness,
-            ),
-        themedWidgetBuilder: (context, theme) {
-          return MaterialApp(
-            title: 'Coleção de Bolso',
-            theme: theme,
-            onGenerateRoute: Application.router.generator,
-          );
-        },
+          themedWidgetBuilder: (context, theme) {
+            return MaterialApp(
+              title: 'Coleção de Bolso',
+              theme: theme,
+              onGenerateRoute: Application.router.generator,
+            );
+          },
+        ),
       ),
     );
   }
