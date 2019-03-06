@@ -19,11 +19,10 @@ class CollectionsList extends StatefulWidget {
 class _CollectionsListState extends State<CollectionsList> {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
-  Completer<void> _refreshCompleter;
+  Completer<void> _refreshCompleter = Completer<void>();
 
   @override
   void initState() {
-    _refreshCompleter = Completer<void>();
     _scrollController.addListener(_onScroll);
     widget._collectionsBloc.dispatch(CollectionsFetchEvent());
     super.initState();
@@ -52,10 +51,13 @@ class _CollectionsListState extends State<CollectionsList> {
 
           return RefreshIndicator(
             onRefresh: _refreshData,
-            child: SingleChildScrollView(
-              child: Empty(
-                text: Text(state.error),
-              ),
+            child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              children: [
+                Empty(
+                  text: Text(state.error),
+                ),
+              ],
             ),
           );
         }
@@ -65,18 +67,14 @@ class _CollectionsListState extends State<CollectionsList> {
           _refreshCompleter = Completer();
 
           if (state.data.isEmpty) {
-            return RefreshIndicator(
-              onRefresh: _refreshData,
-              child: SingleChildScrollView(
-                child: Empty(
-                  text: Text('Você ainda não cadastrou nenhuma coleção.'),
-                ),
-              ),
+            return Empty(
+              text: Text('Você ainda não cadastrou nenhuma coleção.'),
             );
           }
           return RefreshIndicator(
             onRefresh: _refreshData,
             child: ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 if (index >= state.data.length) {
                   return BottomLoader();

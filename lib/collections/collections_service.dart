@@ -6,6 +6,8 @@ import '../config/application.dart';
 import 'collection_model.dart';
 
 class CollectionsService {
+  static bool makeError = false;
+
   final http.Client httpClient;
   CollectionsService({@required this.httpClient}) : assert(httpClient != null);
 
