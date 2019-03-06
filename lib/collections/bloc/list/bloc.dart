@@ -22,14 +22,14 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
   }
 
   @override
-  BlocBaseState get initialState => CollectionsLoadingState();
+  BlocBaseState get initialState => BlocLoadingIndicatorState();
 
   @override
   Stream<BlocBaseState> mapEventToState(
       BlocBaseState currentState, BlocBaseEvent event) async* {
     if (event is CollectionsDeleteEvent &&
         currentState is CollectionsLoadedState) {
-      yield CollectionsLoadingState();
+      yield BlocLoadingIndicatorState();
 
       try {
         var data = await _delete(event.collectionId, currentState);
@@ -42,7 +42,7 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
 
     if (event is CollectionsToggleFavEvent &&
         currentState is CollectionsLoadedState) {
-      yield CollectionsLoadingState();
+      yield BlocLoadingIndicatorState();
 
       try {
         var data = await _toggleFav(event.collectionId, currentState);
@@ -55,9 +55,8 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
 
     if (event is CollectionsFetchEvent) {
       if (event.fromScroll && _hasReachedMax(currentState)) return;
-      // yield CollectionsLoadingState();
       try {
-        if (currentState is CollectionsLoadingState) {
+        if (currentState is BlocLoadingIndicatorState) {
           final data = await _service.fetch(0, 10);
           yield CollectionsLoadedState(
               data: data,
@@ -76,7 +75,7 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
           }
         }
       } catch (e) {
-        yield BlocErrorState(e);
+        yield BlocErrorState('Não foi possível carregar as coleções, tente novamente.');
       }
     }
   }

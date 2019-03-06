@@ -2,8 +2,6 @@ import 'package:meta/meta.dart';
 import '../../collection_model.dart';
 import '../../../bloc/state_base.dart';
 
-class CollectionsLoadingState extends BlocBaseState {}
-
 class CollectionsLoadedState extends BlocBaseState {
   final List<Collection> data;
   final bool hasReachedMax;
