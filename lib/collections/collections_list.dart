@@ -67,8 +67,10 @@ class _CollectionsListState extends State<CollectionsList> {
           if (state.data.isEmpty) {
             return RefreshIndicator(
               onRefresh: _refreshData,
-              child: Empty(
-                text: Text('Você ainda não cadastrou nenhuma coleção.'),
+              child: SingleChildScrollView(
+                child: Empty(
+                  text: Text('Você ainda não cadastrou nenhuma coleção.'),
+                ),
               ),
             );
           }
