@@ -60,7 +60,7 @@ class CollectionsBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
           final data = await _service.fetch(0, 10);
           yield CollectionsLoadedState(
               data: data,
-              hasReachedMax: data.last.id == Application.collections.length);
+              hasReachedMax: data.isEmpty ? true : data.last.id == Application.collections.length);
         }
         if (currentState is CollectionsLoadedState) {
           final data = await _service.fetch(currentState.data.length, 10);
