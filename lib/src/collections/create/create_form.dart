@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/block_picker.dart';
 import 'package:colecao_bolso_app/application/shared/shared.dart';
 
-import 'collection_model.dart';
-import 'bloc/create/exporter.dart';
+import '../collection_model.dart';
+import '../bloc/create/exporter.dart';
 import 'package:colecao_bolso_app/application/bloc/bloc.dart';
+import '../collections_service.dart';
 
 class CollectionCreateForm extends StatefulWidget {
-  final CreateCollectionBloc bloc;
-
-  CollectionCreateForm(this.bloc);
+  CollectionCreateForm();
 
   @override
   _CollectionCreateFormState createState() => _CollectionCreateFormState();
 }
 
 class _CollectionCreateFormState extends State<CollectionCreateForm> {
+  CreateCollectionBloc createCollectionBloc;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formData = {
     'name': '',
@@ -28,12 +28,14 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
 
   @override
   void initState() {
+    createCollectionBloc = CreateCollectionBloc(CollectionsService.of(context));
     totalFocusNode = FocusNode();
     super.initState();
   }
 
   @override
   void dispose() {
+    createCollectionBloc.dispose();
     totalFocusNode.dispose();
     super.dispose();
   }
@@ -60,7 +62,7 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
         rgbColor:
             "${_formData['color'].red},${_formData['color'].green},${_formData['color'].blue}");
 
-    widget.bloc.dispatch(CreateCollectionEvent(entity));
+    createCollectionBloc.dispatch(CreateCollectionEvent(entity));
   }
 
   Widget _buildSubmitButton(BuildContext context, BlocBaseState state) {
@@ -176,7 +178,7 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BlocBaseEvent, BlocBaseState>(
-      bloc: widget.bloc,
+      bloc: createCollectionBloc,
       builder: (BuildContext context, BlocBaseState state) {
         if (state is CreateCollectionCreatingFailedState) {
           _onWidgetDidBuild(() {
@@ -191,7 +193,7 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
 
         if (state is CreateCollectionCreatingSuccessfulState) {
           _onWidgetDidBuild(() {
-            widget.bloc.dispatch(ClearEvent());
+            createCollectionBloc.dispatch(ClearEvent());
             Navigator.pop(context, state.collectionId);
           });
         }

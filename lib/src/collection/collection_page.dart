@@ -6,6 +6,7 @@ import 'bloc/list/exporter.dart';
 import 'bloc/fav/exporter.dart';
 import 'bloc/repeated/exporter.dart';
 import 'list/collection_items_repeated_page.dart';
+import 'collection_service.dart';
 
 class CollectionPage extends StatefulWidget {
   final int collectionId;
@@ -18,13 +19,31 @@ class CollectionPage extends StatefulWidget {
 }
 
 class _CollectionPageState extends State<CollectionPage> {
-  PageController _pageController;
+  CollectionBloc collectionBloc;
+  CollectionFavItemsBloc collectionFavItemsBloc;
+  CollectionRepeatedItemsBloc collectionRepeatedItemsBloc;
+
+  PageController _pageController = PageController();
   var _page = 0;
 
   @override
   void initState() {
-    _pageController = new PageController();
+    var collectionService = CollectionService.of(context);
+    collectionBloc = CollectionBloc(collectionService);
+    collectionFavItemsBloc = CollectionFavItemsBloc(collectionService);
+    collectionRepeatedItemsBloc =
+        CollectionRepeatedItemsBloc(collectionService);
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    collectionBloc.dispose();
+    collectionFavItemsBloc.dispose();
+    collectionRepeatedItemsBloc.dispose();
+    super.dispose();
   }
 
   void navigationTapped(int page) {
@@ -38,17 +57,7 @@ class _CollectionPageState extends State<CollectionPage> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var bloc = CollectionBloc.of(context);
-    var repeatedBloc = CollectionRepeatedItemsBloc.of(context);
-    var favBloc = CollectionFavItemsBloc.of(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.collectionName),
@@ -57,9 +66,10 @@ class _CollectionPageState extends State<CollectionPage> {
         controller: _pageController,
         onPageChanged: onPageChanged,
         children: <Widget>[
-          CollectionListItemsView(widget.collectionId, bloc),
-          CollectionRepeatedItemsPage(widget.collectionId, repeatedBloc),
-          CollectionFavItemsPage(widget.collectionId, favBloc),
+          CollectionListItemsView(widget.collectionId, collectionBloc),
+          CollectionRepeatedItemsPage(
+              widget.collectionId, collectionRepeatedItemsBloc),
+          CollectionFavItemsPage(widget.collectionId, collectionFavItemsBloc),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -88,7 +98,7 @@ class _CollectionPageState extends State<CollectionPage> {
               .then(
             (result) {
               if (result != null) {
-                bloc.dispatch(
+                collectionBloc.dispatch(
                     CollectionFetchItemsEvent(widget.collectionId, false));
               }
             },

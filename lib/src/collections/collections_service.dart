@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:colecao_bolso_app/application/service/service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 import '../config/application.dart';
 import 'collection_model.dart';
 
 class CollectionsService extends ServiceBase {
   final http.Client httpClient;
-  CollectionsService({@required this.httpClient}) : assert(httpClient != null);
+  CollectionsService({http.Client httpClient}) : this.httpClient = httpClient ?? http.Client();
 
   Future<List<Collection>> fetch(int startIndex, int limit) async {
     await Future.delayed(Duration(seconds: 1));

@@ -1,7 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import './collections_page.dart';
-import './create_page.dart';
+import './create/create_page.dart';
 import 'search/search_form.dart';
 
 class CollectionsRoute {

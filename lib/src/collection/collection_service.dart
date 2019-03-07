@@ -1,5 +1,5 @@
 import 'package:colecao_bolso_app/application/service/service.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'collection_item_model.dart';
 import '../config/app_config.dart';
@@ -8,7 +8,7 @@ import 'dart:async';
 class CollectionService extends ServiceBase {
   final http.Client httpClient;
 
-  CollectionService({@required this.httpClient}) : assert(httpClient != null);
+  CollectionService({http.Client httpClient}) : this.httpClient = httpClient ?? http.Client();
 
   Future<List<CollectionItem>> fetch(
       int collectionId, int startIndex, int limit) async {
@@ -63,4 +63,7 @@ class CollectionService extends ServiceBase {
     model.setId(Application.collectionItems.length + 1);
     Application.collectionItems.add(model);
   }
+
+  static CollectionService of(BuildContext context) =>
+      ServiceProvider.of<CollectionService>(context);
 }

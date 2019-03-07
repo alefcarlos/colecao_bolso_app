@@ -9,19 +9,20 @@ import '../collection_item_model.dart';
 import '../bloc/create/exporter.dart';
 import 'create_result_model.dart';
 import '../../config/app_config.dart';
+import '../collection_service.dart';
 
 class CreateCollectionItemForm extends StatefulWidget {
   /// É possível criamos um item para uma determinada coleção, basta informar o ID da mesma
   final int collectionId;
-  final CreateCollectionItemBloc bloc;
 
-  CreateCollectionItemForm(this.collectionId, this.bloc);
+  CreateCollectionItemForm(this.collectionId);
 
   _CreateCollectionItemFormState createState() =>
       _CreateCollectionItemFormState();
 }
 
 class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
+  CreateCollectionItemBloc bloc;
   int _selectedCollectionId;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formData = {
@@ -32,10 +33,9 @@ class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
   List<String> _tags = [];
   FocusNode quantityFocusNode;
 
-  CreateCollectionItemBloc get bloc => widget.bloc;
-
   @override
   void initState() {
+    bloc = CreateCollectionItemBloc(CollectionService.of(context));
     quantityFocusNode = FocusNode();
     _selectedCollectionId = widget.collectionId;
     _tags = [];
@@ -44,6 +44,7 @@ class _CreateCollectionItemFormState extends State<CreateCollectionItemForm> {
 
   @override
   void dispose() {
+    bloc.dispose();
     quantityFocusNode.dispose();
     super.dispose();
   }

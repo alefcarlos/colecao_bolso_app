@@ -17,7 +17,6 @@ class TagsCloud extends StatefulWidget {
 class _TagsCloud extends State<TagsCloud> {
   TagsBloc _bloc;
 
-
   final Random _random = Random();
   final List<Color> _tagColors = const [
     Colors.red,
