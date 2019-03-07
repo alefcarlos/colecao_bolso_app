@@ -36,6 +36,7 @@ dependencies:
   cached_network_image: ^0.6.2
   dynamic_theme: ^1.0.1
   unicorndial: ^1.1.5
+  fancy_bottom_navigation: ^0.3.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

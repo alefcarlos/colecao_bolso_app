@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'list/collection_items_page.dart';
 import 'list/collection_items_fav_page.dart';
 import '../config/app_config.dart';
@@ -72,21 +73,20 @@ class _CollectionPageState extends State<CollectionPage> {
           CollectionFavItemsPage(widget.collectionId, collectionFavItemsBloc),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: navigationTapped,
-        currentIndex: _page,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.view_list),
-            title: Text('Itens'),
+      bottomNavigationBar: FancyBottomNavigation(
+        onTabChangedListener: onPageChanged,
+        tabs: [
+          TabData(
+            iconData: Icons.view_list,
+            title: 'Itens',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.playlist_add_check),
-            title: Text('Repetidos'),
+          TabData(
+            iconData: Icons.playlist_add_check,
+            title: 'Repetidos',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            title: Text('Favoritos'),
+          TabData(
+            iconData: Icons.favorite,
+            title: 'Favoritos',
           )
         ],
       ),
