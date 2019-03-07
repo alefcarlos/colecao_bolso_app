@@ -29,27 +29,24 @@ class _CollectionsPageState extends State<CollectionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      bloc: _bloc,
-      child: Scaffold(
-        drawer: CollectionsDrawer(),
-        appBar: AppBar(
-          title: Text('Minhas coleções'),
-          actions: <Widget>[
-            IconButton(
-                icon: const Icon(Icons.settings_brightness),
-                tooltip: 'Alterar tema',
-                onPressed: () {
-                  DynamicTheme.of(context).setBrightness(
-                      Theme.of(context).brightness == Brightness.dark
-                          ? Brightness.light
-                          : Brightness.dark);
-                }),
-          ],
-        ),
-        body: CollectionsList(_bloc),
-        floatingActionButton: CollectionsPageFab(_bloc),
+    return Scaffold(
+      drawer: CollectionsDrawer(),
+      appBar: AppBar(
+        title: Text('Minhas coleções'),
+        actions: <Widget>[
+          IconButton(
+              icon: const Icon(Icons.settings_brightness),
+              tooltip: 'Alterar tema',
+              onPressed: () {
+                DynamicTheme.of(context).setBrightness(
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Brightness.light
+                        : Brightness.dark);
+              }),
+        ],
       ),
+      body: CollectionsList(_bloc),
+      floatingActionButton: CollectionsPageFab(_bloc),
     );
   }
 }
