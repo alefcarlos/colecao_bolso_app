@@ -36,7 +36,7 @@ class _TagsCloud extends State<TagsCloud> {
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     _bloc.dispose();
     super.dispose();
   }

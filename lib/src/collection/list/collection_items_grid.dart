@@ -4,7 +4,6 @@ import 'package:colecao_bolso_app/application/shared/shared.dart';
 import '../bloc/list/exporter.dart';
 import 'collection_item_grid_item.dart';
 
-
 class CollectionItemGrid extends StatelessWidget {
   final CollectionBloc _bloc;
   final int _collectionId;

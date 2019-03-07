@@ -9,7 +9,8 @@ import 'tag_model.dart';
 
 class TagsService extends ServiceBase {
   final http.Client httpClient;
-  TagsService({http.Client httpClient}) : this.httpClient = httpClient ?? http.Client();
+  TagsService({http.Client httpClient})
+      : this.httpClient = httpClient ?? http.Client();
 
   Future<List<ItemTag>> fetch(int limit) async {
     final response =

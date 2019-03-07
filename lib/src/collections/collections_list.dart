@@ -21,7 +21,7 @@ class _CollectionsListState extends State<CollectionsList> {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
   Completer<void> _refreshCompleter = Completer<void>();
-  
+
   @override
   void initState() {
     _scrollController.addListener(_onScroll);

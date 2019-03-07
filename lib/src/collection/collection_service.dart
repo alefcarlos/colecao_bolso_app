@@ -8,7 +8,8 @@ import 'dart:async';
 class CollectionService extends ServiceBase {
   final http.Client httpClient;
 
-  CollectionService({http.Client httpClient}) : this.httpClient = httpClient ?? http.Client();
+  CollectionService({http.Client httpClient})
+      : this.httpClient = httpClient ?? http.Client();
 
   Future<List<CollectionItem>> fetch(
       int collectionId, int startIndex, int limit) async {

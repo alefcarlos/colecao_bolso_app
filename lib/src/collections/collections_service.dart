@@ -8,7 +8,8 @@ import 'collection_model.dart';
 
 class CollectionsService extends ServiceBase {
   final http.Client httpClient;
-  CollectionsService({http.Client httpClient}) : this.httpClient = httpClient ?? http.Client();
+  CollectionsService({http.Client httpClient})
+      : this.httpClient = httpClient ?? http.Client();
 
   Future<List<Collection>> fetch(int startIndex, int limit) async {
     await Future.delayed(Duration(seconds: 1));
