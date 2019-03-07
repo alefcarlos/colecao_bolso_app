@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'list/collection_items_page.dart';
 import 'list/collection_items_fav_page.dart';
-import '../config/app_config.dart';
 import 'bloc/list/exporter.dart';
 import 'bloc/fav/exporter.dart';
 import 'bloc/repeated/exporter.dart';
@@ -23,7 +22,7 @@ class _CollectionPageState extends State<CollectionPage> {
   CollectionBloc collectionBloc;
   CollectionFavItemsBloc collectionFavItemsBloc;
   CollectionRepeatedItemsBloc collectionRepeatedItemsBloc;
-
+  GlobalKey bottomNavigationKey = GlobalKey();
   PageController _pageController = PageController();
   var _page = 0;
 
@@ -52,13 +51,13 @@ class _CollectionPageState extends State<CollectionPage> {
   }
 
   void onPageChanged(int page) {
-    setState(() {
-      this._page = page;
-    });
+    final FancyBottomNavigationState fState = bottomNavigationKey.currentState;
+    fState.setPage(page);
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_page);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.collectionName),
@@ -74,7 +73,9 @@ class _CollectionPageState extends State<CollectionPage> {
         ],
       ),
       bottomNavigationBar: FancyBottomNavigation(
-        onTabChangedListener: onPageChanged,
+        key: bottomNavigationKey,
+        // initialSelection: _page,
+        onTabChangedListener: navigationTapped,
         tabs: [
           TabData(
             iconData: Icons.view_list,
@@ -90,23 +91,23 @@ class _CollectionPageState extends State<CollectionPage> {
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Application.router
-              .navigateTo(
-                  context, '/collection/${widget.collectionId}/item/create')
-              .then(
-            (result) {
-              if (result != null) {
-                collectionBloc.dispatch(
-                    CollectionFetchItemsEvent(widget.collectionId, false));
-              }
-            },
-          );
-        },
-        tooltip: 'Adicionar item',
-        child: Icon(Icons.camera_enhance),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Application.router
+      //         .navigateTo(
+      //             context, '/collection/${widget.collectionId}/item/create')
+      //         .then(
+      //       (result) {
+      //         if (result != null) {
+      //           collectionBloc.dispatch(
+      //               CollectionFetchItemsEvent(widget.collectionId, false));
+      //         }
+      //       },
+      //     );
+      //   },
+      //   tooltip: 'Adicionar item',
+      //   child: Icon(Icons.camera_enhance),
+      // ),
     );
   }
 }
