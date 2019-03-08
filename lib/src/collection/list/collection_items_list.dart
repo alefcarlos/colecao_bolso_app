@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:colecao_bolso_app/application/shared/shared.dart';
 
 import '../bloc/list/exporter.dart';
-import 'collection_item_grid_item.dart';
+import 'collection_item_list_item.dart';
 import '../../collections/collection_model.dart';
 
-class CollectionItemGrid extends StatelessWidget {
+class CollectionItemList extends StatelessWidget {
   final CollectionBloc _bloc;
   final CollectionItemsLoadedState _state;
   final Collection _collection;
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
 
-  CollectionItemGrid(
+  CollectionItemList(
       this._bloc, this._state, this._collection) {
     _scrollController.addListener(_onScroll);
   }
@@ -34,7 +34,7 @@ class CollectionItemGrid extends StatelessWidget {
               return BottomLoader();
             }
 
-            return CollectionItemGridItem(_state.data[index], _collection);
+            return CollectionItemListItem(_state.data[index], _collection);
           },
           itemCount: _state.hasReachedMax
               ? _state.data.length

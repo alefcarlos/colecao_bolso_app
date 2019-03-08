@@ -2,10 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/block_picker.dart';
 import 'package:colecao_bolso_app/application/shared/shared.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:colecao_bolso_app/application/bloc/bloc.dart';
 
 import '../collection_model.dart';
 import '../bloc/create/exporter.dart';
-import 'package:colecao_bolso_app/application/bloc/bloc.dart';
 import '../collections_service.dart';
 
 class CollectionCreateForm extends StatefulWidget {
@@ -24,12 +25,14 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
     'isFav': false,
     'color': Colors.grey
   };
+  FocusNode nameFocusNode;
   FocusNode totalFocusNode;
 
   @override
   void initState() {
     createCollectionBloc = CreateCollectionBloc(CollectionsService.of(context));
     totalFocusNode = FocusNode();
+    nameFocusNode = FocusNode();
     super.initState();
   }
 
@@ -37,6 +40,7 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
   void dispose() {
     createCollectionBloc.dispose();
     totalFocusNode.dispose();
+    nameFocusNode.dispose();
     super.dispose();
   }
 
@@ -83,6 +87,7 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
         labelText: 'Nome',
       ),
       autofocus: true,
+      focusNode: nameFocusNode,
       textInputAction: TextInputAction.next,
       validator: (String value) {
         if (value.isEmpty) return 'O campo nome é obrigatório!';
@@ -113,7 +118,7 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
       },
       focusNode: totalFocusNode,
       onSaved: (String value) {
-        _formData['itemsCount'] = int.parse(value);
+        _formData['totalItems'] = int.parse(value);
       },
     );
   }
@@ -198,12 +203,23 @@ class _CollectionCreateFormState extends State<CollectionCreateForm> {
           });
         }
 
-        return Container(
-          margin: EdgeInsets.all(10.0),
-          child: Form(
-            key: _formKey,
-            child: ListView(
-              children: _buildFields(context, state),
+        return FormKeyboardActions(
+          actions: [
+            KeyboardAction(
+              focusNode: nameFocusNode,
+              displayCloseWidget: false,
+            ),
+            KeyboardAction(
+              focusNode: totalFocusNode,
+            )
+          ],
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                children: _buildFields(context, state),
+              ),
             ),
           ),
         );

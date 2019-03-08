@@ -13,6 +13,14 @@ class CollectionsDrawer extends StatelessWidget {
             automaticallyImplyLeading: false,
             title: Text('Menu'),
           ),
+          UserAccountsDrawerHeader(
+            accountEmail: Text('alef.carlos@gmail.com'),
+            accountName: Text('Alef'),
+            currentAccountPicture: CircleAvatar(
+              child: Text('AL'),
+            ),
+            onDetailsPressed: () => {print('onDetailsPressed')},
+          ),
           ListTile(
             leading: Icon(
               FontAwesomeIcons.hashtag,

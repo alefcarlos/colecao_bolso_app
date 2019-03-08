@@ -20,6 +20,7 @@ class CollectionDetailPage extends StatelessWidget {
                 child: CachedNetworkImage(
                     fit: BoxFit.cover,
                     height: 300.0,
+                    width: MediaQuery.of(context).size.width,
                     imageUrl:
                         "https://ptanime.com/wp-content/uploads/2016/10/JoJos-Bizarre-adventura-part-3-stardust-crusaders-viz-hardcover-volume1.jpg",
                     placeholder: (context, url) => CircularProgressIndicator(),
