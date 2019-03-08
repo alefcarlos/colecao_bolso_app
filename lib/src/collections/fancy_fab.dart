@@ -15,7 +15,7 @@ class CollectionsPageFab extends StatelessWidget {
   Widget build(BuildContext context) {
     return UnicornDialer(
       backgroundColor: Color.fromRGBO(255, 255, 255, 0.6),
-      parentButtonBackground: Colors.redAccent,
+      parentButtonBackground: Theme.of(context).accentColor,
       orientation: UnicornOrientation.VERTICAL,
       parentButton: Icon(Icons.more_vert),
       childButtons: [

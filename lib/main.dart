@@ -63,13 +63,13 @@ class _ColecaoDeBolsoAppState extends State<ColecaoDeBolsoApp> {
       child: DynamicTheme(
         defaultBrightness: Brightness.light,
         data: (brightness) => ThemeData(
-              primarySwatch: Colors.orange,
+              primarySwatch: Colors.deepPurple,
               primaryTextTheme: TextTheme(
                 title: TextStyle(color: Colors.white),
               ),
               primaryIconTheme: IconThemeData(color: Colors.white),
               tabBarTheme: TabBarTheme(labelColor: Colors.white),
-              accentColor: Colors.deepOrangeAccent,
+              accentColor: Colors.deepPurpleAccent,
               brightness: brightness,
             ),
         themedWidgetBuilder: (context, theme) {
