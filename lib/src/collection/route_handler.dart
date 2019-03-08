@@ -20,7 +20,7 @@ abstract class CollectionRoute {
     var col =
         Application.collections.firstWhere((col) => col.id == collectionId);
 
-    return CollectionPage(collectionId, col.name);
+    return CollectionPage(collectionId, col);
   });
 
   static final createItemHandler = Handler(

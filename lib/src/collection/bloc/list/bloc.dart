@@ -32,7 +32,7 @@ class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
       try {
         if (currentState is BlocLoadingIndicatorState) {
           final data = await service.fetch(event.collectionId, 0, 10);
-          yield CollectionItemsLoadedState(data: data, hasReachedMax: false);
+          yield CollectionItemsLoadedState(data: data,  hasReachedMax: true);
         }
         if (currentState is CollectionItemsLoadedState) {
           final data = await service.fetch(event.collectionId,
@@ -41,7 +41,7 @@ class CollectionBloc extends Bloc<BlocBaseEvent, BlocBaseState> {
           if (!event.fromScroll && data.isEmpty)
             yield CollectionItemsLoadedState(
               data: [],
-              hasReachedMax: false,
+              hasReachedMax: true,
             );
           else if (!event.fromScroll && data.isNotEmpty) {
             yield CollectionItemsLoadedState(

@@ -8,28 +8,21 @@ class CollectionItemTag extends StatelessWidget {
 
   List<Widget> _builTagItem(BuildContext context) {
     if (_tags == null) {
-      return [
-        Center(
-          child: Text(
-            'Sem marcadores',
-            style: TextStyle(fontSize: 17.0),
-          ),
-        )
-      ];
+      return [Container()];
     }
 
     return _tags.take(count).map((tag) {
       return Container(
         margin: EdgeInsets.symmetric(horizontal: 3.5),
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(6.0),
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          color: Colors.green,
-          borderRadius: BorderRadius.circular(65.0),
+          color: Colors.green[400],
+          borderRadius: BorderRadius.circular(10.0),
         ),
         child: Text(
           '$tag',
-          style: TextStyle(color: Colors.white, fontSize: 15.0),
+          style: TextStyle(color: Colors.white),
         ),
       );
     }).toList();

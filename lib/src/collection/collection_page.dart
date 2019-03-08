@@ -7,12 +7,14 @@ import 'bloc/fav/exporter.dart';
 import 'bloc/repeated/exporter.dart';
 import 'list/collection_items_repeated_page.dart';
 import 'collection_service.dart';
+import '../config/application.dart';
+import '../collections/collection_model.dart';
 
 class CollectionPage extends StatefulWidget {
   final int collectionId;
-  final String collectionName;
+  final Collection collection;
 
-  CollectionPage(this.collectionId, this.collectionName);
+  CollectionPage(this.collectionId, this.collection);
 
   @override
   State<StatefulWidget> createState() => _CollectionPageState();
@@ -24,7 +26,6 @@ class _CollectionPageState extends State<CollectionPage> {
   CollectionRepeatedItemsBloc collectionRepeatedItemsBloc;
   GlobalKey bottomNavigationKey = GlobalKey();
   PageController _pageController = PageController();
-  var _page = 0;
 
   @override
   void initState() {
@@ -57,16 +58,35 @@ class _CollectionPageState extends State<CollectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_page);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.collectionName),
+        title: Text(widget.collection.name),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add_circle_outline),
+            tooltip: 'Adicionar item',
+            onPressed: () {
+              Application.router
+                  .navigateTo(
+                      context, '/collection/${widget.collectionId}/item/create')
+                  .then(
+                (result) {
+                  if (result != null) {
+                    collectionBloc.dispatch(
+                        CollectionFetchItemsEvent(widget.collectionId, false));
+                  }
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: PageView(
         controller: _pageController,
         onPageChanged: onPageChanged,
         children: <Widget>[
-          CollectionListItemsView(widget.collectionId, collectionBloc),
+          CollectionListItemsView(
+              widget.collectionId, collectionBloc, widget.collection),
           CollectionRepeatedItemsPage(
               widget.collectionId, collectionRepeatedItemsBloc),
           CollectionFavItemsPage(widget.collectionId, collectionFavItemsBloc),
@@ -74,7 +94,6 @@ class _CollectionPageState extends State<CollectionPage> {
       ),
       bottomNavigationBar: FancyBottomNavigation(
         key: bottomNavigationKey,
-        // initialSelection: _page,
         onTabChangedListener: navigationTapped,
         tabs: [
           TabData(
@@ -91,23 +110,6 @@ class _CollectionPageState extends State<CollectionPage> {
           )
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Application.router
-      //         .navigateTo(
-      //             context, '/collection/${widget.collectionId}/item/create')
-      //         .then(
-      //       (result) {
-      //         if (result != null) {
-      //           collectionBloc.dispatch(
-      //               CollectionFetchItemsEvent(widget.collectionId, false));
-      //         }
-      //       },
-      //     );
-      //   },
-      //   tooltip: 'Adicionar item',
-      //   child: Icon(Icons.camera_enhance),
-      // ),
     );
   }
 }

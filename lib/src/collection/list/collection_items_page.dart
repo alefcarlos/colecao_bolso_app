@@ -5,12 +5,14 @@ import 'package:colecao_bolso_app/application/shared/shared.dart';
 import '../bloc/list/exporter.dart';
 import 'package:colecao_bolso_app/application/bloc/bloc.dart';
 import 'collection_items_grid.dart';
+import '../../collections/collection_model.dart';
 
 class CollectionListItemsView extends StatefulWidget {
   final int _collectionId;
   final CollectionBloc _bloc;
+  final Collection _collection;
 
-  const CollectionListItemsView(this._collectionId, this._bloc);
+  const CollectionListItemsView(this._collectionId, this._bloc, this._collection);
 
   _CollectionListItemsViewState createState() =>
       _CollectionListItemsViewState();
@@ -62,7 +64,7 @@ class _CollectionListItemsViewState extends State<CollectionListItemsView> {
               text: Text('Que pena, ainda não há nenhum item cadastrado.'),
             );
           }
-          return CollectionItemGrid(widget._bloc, state, widget._collectionId);
+          return CollectionItemGrid(widget._bloc, state, widget._collection);
         }
       },
     );
