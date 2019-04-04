@@ -13,11 +13,13 @@ class _ImageInputState extends State<ImageInput> {
 
   void _getImage(BuildContext context, ImageSource source) async {
     var result = await ImagePicker.pickImage(source: source, maxWidth: 400.0);
-    var cropeed = await cropImage(path: result.path, title: 'Ajustar imagem');
+    if (result != null) {
+      var cropeed = await cropImage(path: result.path, title: 'Ajustar imagem');
 
-    setState(() {
-      _imageFlie = cropeed;
-    });
+      setState(() {
+        _imageFlie = cropeed;
+      });
+    }
 
     Navigator.pop(context);
   }
